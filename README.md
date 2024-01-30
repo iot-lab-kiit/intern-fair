@@ -1,1 +1,1 @@
-# Intern-fair
+# InterFair
