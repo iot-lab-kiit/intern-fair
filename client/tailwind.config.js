@@ -6,6 +6,9 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      sans: ["Gilroy-Medium", "Gilroy-Bold", "Gilroy-Light"],
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -13,12 +16,12 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       screens: {
-        "Mobile Small": "600px",
-        "Mobile Medium": "800px",
-        "Tablet Portrait": "1200px",
-        "Tablet Landscape": "1600px",
+        "mbSmall": "600px",
+        "mbMedium": "800px",
+        "tbPortrait": "1200px",
+        "tbLandscape": "1600px",
         Desktop: "2000px",
-        "Large Desktop": "2400px",
+        "lgDesktop": "2400px",
       },
     },
   },

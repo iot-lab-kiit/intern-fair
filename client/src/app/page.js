@@ -7,7 +7,7 @@ import Mission from "@/components/homepage/Mission";
 
 export default function Home() {
   return (
-    <main className="flex flex-col gap-8">
+    <main className="flex flex-col gap-8 max-w-[120rem]">
       <Navbar />
       <Hero />
       <About />
