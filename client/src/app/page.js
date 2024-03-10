@@ -1,13 +1,13 @@
-import Navbar from "@/components/Navbar";
-import About from "@/components/homepage/About";
-import Courses from "@/components/homepage/Courses";
-import Faq from "@/components/homepage/Faq";
-import Hero from "@/components/homepage/Hero";
-import Mission from "@/components/homepage/Mission";
+import Navbar from "@/components/Navbar/Navbar";
+import About from "@/components/homepage/About/About";
+import Courses from "@/components/homepage/Courses/Courses";
+import Faq from "@/components/homepage/Faq/Faq";
+import Hero from "@/components/homepage/Hero/Hero";
+import Mission from "@/components/homepage/Mission/Mission";
 
 export default function Home() {
   return (
-    <main className="flex flex-col gap-8 max-w-[120rem]">
+    <main className="flex flex-col gap-8 max-w-[100vw]">
       <Navbar />
       <Hero />
       <About />
