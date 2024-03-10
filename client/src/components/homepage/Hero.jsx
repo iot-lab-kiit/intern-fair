@@ -15,51 +15,51 @@ const Hero = () => {
           </span>
         </span>
       </h1>
-      <div class="flex flex-wrap items-center justify-center gap-6 mt-16 ml-3 mbSmall:max-md:ml-9 mbMedium:max-lg:ml-6">
-        <div class="flex items-center gap-3">
-          <span class="text-primary text-lg">Courses</span>
+      <div className="flex flex-wrap items-center justify-center gap-6 mt-16 ml-3 mbSmall:max-md:ml-9 mbMedium:max-lg:ml-6">
+        <div className="flex items-center gap-3">
+          <span className="text-primary text-lg">Courses</span>
           <img
             src="icons/mdi_star-four-points.png"
             alt="Icon 1"
-            class="w-5 h-5"
+            className="w-5 h-5"
           />
         </div>
-        <div class="flex items-center gap-3">
-          <span class="text-primary text-lg">Resources</span>
+        <div className="flex items-center gap-3">
+          <span className="text-primary text-lg">Resources</span>
           <img
             src="icons/mdi_star-four-points.png"
             alt="Icon 2"
-            class="w-5 h-5"
+            className="w-5 h-5"
           />
         </div>
-        <div class="flex items-center gap-3">
-          <span class="text-primary text-lg">Mock Test</span>
+        <div className="flex items-center gap-3">
+          <span className="text-primary text-lg">Mock Test</span>
           <img
             src="icons/mdi_star-four-points.png"
             alt="Icon 2"
-            class="w-5 h-5"
+            className="w-5 h-5"
           />
         </div>
-        <div class="flex items-center gap-3">
-          <span class="text-primary text-lg">Interviews Prep</span>
+        <div className="flex items-center gap-3">
+          <span className="text-primary text-lg">Interviews Prep</span>
           <img
             src="icons/mdi_star-four-points.png"
             alt="Icon 2"
-            class="w-5 h-5 mbSmall:max-md:hidden"
+            className="w-5 h-5 mbSmall:max-md:hidden"
           />
         </div>
-        <div class="flex items-center gap-3">
-          <span class="text-primary text-lg mbSmall:max-md:hidden">
+        <div className="flex items-center gap-3">
+          <span className="text-primary text-lg mbSmall:max-md:hidden">
             Latest Trends
           </span>
           <img
             src="icons/mdi_star-four-points.png"
             alt="Icon 2"
-            class="w-5 h-5 mbSmall:max-md:hidden mbMedium:max-lg:hidden"
+            className="w-5 h-5 mbSmall:max-md:hidden mbMedium:max-lg:hidden"
           />
         </div>
-        <div class="flex items-center gap-3">
-          <span class="text-primary text-lg mbSmall:max-md:hidden mbMedium:max-lg:hidden">
+        <div className="flex items-center gap-3">
+          <span className="text-primary text-lg mbSmall:max-md:hidden mbMedium:max-lg:hidden">
             Many More
           </span>
         </div>
