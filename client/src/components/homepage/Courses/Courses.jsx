@@ -1,8 +1,6 @@
-import React from 'react'
-
 const Courses = () => {
   return (
-    <div></div>
+    <div>Courses</div>
   )
 }
 
