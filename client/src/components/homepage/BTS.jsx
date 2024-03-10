@@ -4,7 +4,7 @@ import TitleCard from "@/components/ui/TitleCard";
 import Image from "next/image";
 const BTS = ({ align1, data }) => {
   return (
-    <div className=" flex items-center justify-center  overflow-hidden ">
+    <div className=" flex items-center justify-center  ">
       <div className="content flex  flex-col mx-10 xl:ml-40 lg:items-start xl:max-w-[120rem] lg: px-8 ">
         <div
           className={`flex items-center gap-10 justify-center md:flex-row-reverse md:items-start flex-col`}
