@@ -1,9 +1,9 @@
 import "./globals.css";
-import Footer from "@/components/Footer";
+import Footer from "@/components/Footer/Footer";
 
 export const metadata = {
   title: "InternFair",
-  description: "Created by IoT Lab, KIIT Web Team",
+  description: "Created by IoT Lab Web team, KIIT",
 };
 
 export default function RootLayout({ children }) {
