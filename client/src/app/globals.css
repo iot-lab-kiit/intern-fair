@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -10,16 +9,28 @@
 }
 
 @font-face {
-  font-family: 'Gilroy-Bold';
-  src: local('Gilroy-Bold'), url(../fonts/Gilroy-Bold.ttf) format('truetype');
+  font-family: "Gilroy-Bold";
+  src: local("Gilroy-Bold"), url(../fonts/Gilroy-Bold.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'Gilroy-Medium';
-  src: local('Gilroy-Medium'), url(../fonts/Gilroy-Medium.ttf) format('truetype');
+  font-family: "Gilroy-Medium";
+  src: local("Gilroy-Medium"),
+    url(../fonts/Gilroy-Medium.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'Gilroy-Light';
-  src: local('Gilroy-Light'), url(../fonts/Gilroy-Light.ttf) format('truetype');
+  font-family: "Gilroy-Light";
+  src: local("Gilroy-Light"), url(../fonts/Gilroy-Light.ttf) format("truetype");
+}
+
+.swiper-pagination-bullet {
+  background-color: #1f3dd9 !important;
+  width: 7px !important;
+  height: 30px !important;
+  border-radius: 10px !important;
+}
+
+.swiper-pagination-bullet-active {
+  height: 60px !important;
 }
