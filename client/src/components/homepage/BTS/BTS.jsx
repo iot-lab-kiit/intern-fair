@@ -11,7 +11,7 @@ const BTS = ({ align1, data }) => {
         >
           <Carousel data={data.carousel2} />
 
-          <TitleCard title={data.BTS.title} />
+          <TitleCard title={data.BTS.title}  img="/icons/bst.png" />
         </div>
         <div
           className={`flex ${align1} justify-center xl:gap-[0em] lg-[11rem] md:gap-4 mt-10 max-h-[12rem]`}

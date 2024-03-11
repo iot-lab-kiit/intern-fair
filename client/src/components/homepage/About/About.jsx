@@ -11,7 +11,7 @@ const About = ({ align1, data }) => {
          
             <Carousel data={data.carousel1} />
           
-          <TitleCard title={data.about.title} />
+          <TitleCard title={data.about.title} img="/icons/us.png" />
         </div>
         <div
           className={`flex flex-row justify-center xl:gap-[16rem] lg-[11rem] md:gap-4 mt-5 max-h-[12rem]`}

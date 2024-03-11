@@ -26,13 +26,13 @@
       }
     ],
     "about": {
-      "title": " About us 🙌",
+      "title": " About us ",
       "description": "At KIIT College, we foster innovation and collaboration, empowering students to excel in engineering. With our comprehensive resources and supportive community, students gain the tools and knowledge needed to succeed. Our platform is also invaluable for last-minute exam and interview preparation, ensuring students are well-equipped for success. Join us to unleash your potential!",
       "fixedImg": "/images/fixedAbout.png"
     },
     "BTS":
     {
-      "title": "Behind the Scenes 🤫",
+      "title": "Behind the Scenes ",
       "description": "Take a look behind the scenes and see what makes our college tick! In this section, we'll show you the inner workings of our campus, from the efforts of our amazing staff to the projects and events that make our college unique. Get a glimpse into the daily life of our students and faculty, and learn about the passion and dedication that drive us forward. Explore behind the scenes with us and discover the stories that make our college community so special.",
       "fixedImg": "/images/fixedBTS.png"
     }
