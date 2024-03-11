@@ -10,8 +10,8 @@ export default function Home() {
     <main className="flex flex-col gap-8 max-w-[100vw]">
       <Navbar />
       <Hero />
-      {/* <About />
-      <Mission /> */}
+      {/* <About /> */}
+      <Mission />
       <Courses />
       {/* <Faq /> */}
     </main>
