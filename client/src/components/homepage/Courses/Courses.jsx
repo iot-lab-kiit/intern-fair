@@ -1,5 +1,7 @@
 import Image from "next/image";
-import Card from "./Card";
+import EmblaCarousel from "./EmblaCarousel";
+// import '../Courses/embla.css';
+const OPTIONS = { dragFree: true }
 const Courses = () => {
   return (
     <div className="w-screen max-w-full  flex flex-col items-center justify-center gap-6  mbMedium:px-16 mbSmall:px-5 mbMini:px-0 ">
@@ -28,7 +30,7 @@ const Courses = () => {
             <span>
               <Image
                 className="tbPortrait:w-[1vw] mbSmall:w-[1.4vw] mbMini:w-[2vw]"
-                src="/icons/Vector.png"
+                src="/icons/Vector.svg"
                 alt="Description of your image"
                 width={15}
                 height={20}
@@ -37,29 +39,7 @@ const Courses = () => {
           </button>
         </div>
       </div>
-      <div className=" flex w-screen max-w-full items-center justify-start gap-6  p-3">
-        <Card />
-      </div>
-      <div className="self-end w-40% max-w-[45%] h-16 p-6 flex items-center justify-center gap-4">
-        <button className="rounded-[50%] border border-[#081245] mbMini:w-16 mbXSmall:w-10 h-10 p-3 ">
-          <Image
-            className="-rotate-[135deg]"
-            src="/icons/Vector.png"
-            alt="Description of your image"
-            width={45}
-            height={40}
-          />
-        </button>
-        <button className="rounded-[50%] border border-[#081245] mbXSmall:w-10 h-10 p-3 mbMini:w-16">
-          <Image
-            className="rotate-45"
-            src="/icons/Vector.png"
-            alt="Description of your image"
-            width={45}
-            height={40}
-          />
-        </button>
-      </div>
+      <EmblaCarousel options={OPTIONS} />
     </div>
   );
 };
