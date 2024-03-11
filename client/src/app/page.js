@@ -8,12 +8,12 @@ import Mission from "@/components/homepage/Mission/Mission";
 export default function Home() {
   return (
     <main className="flex flex-col gap-8 max-w-[100vw]">
-      <Navbar />
+      {/* <Navbar />
       <Hero />
       <About />
-      <Mission />
+      <Mission /> */}
       <Courses />
-      <Faq />
+      {/* <Faq /> */}
     </main>
   );
 }
