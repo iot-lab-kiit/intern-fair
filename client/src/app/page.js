@@ -10,13 +10,15 @@ import data from "@/data/homepage/data.json";
 export default function Home() {
   return (
     <main className="flex flex-col gap-8 max-w-[100vw]">
-      {/* <Navbar /> */}
+
+      <Navbar />
       <Hero />
       <About align1="flex-row" data={data} />
-      {/* <Mission /> */}
-      {/* <Courses /> */}
+      <Mission /> 
+       <Courses />
       <BTS align1="flex-row-reverse" data={data}/>
       <Faq />
+
     </main>
   );
 }
