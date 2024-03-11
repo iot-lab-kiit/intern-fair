@@ -13,6 +13,10 @@ export default function Home() {
 
       <Navbar />
       <Hero />
+      {/* <About /> */}
+      <Mission />
+      <Courses />
+      {/* <Faq /> */}
       <About align1="flex-row" data={data} />
       <Mission /> 
        <Courses />
