@@ -19,6 +19,7 @@ module.exports = {
         mbMini: "290px",
         mbXSmall: "400px",
         mbSmall: "600px",
+        carousel:"932px",
         mbMedium: "800px",
         tbPortrait: "1200px",
         tbLandscape: "1600px",
