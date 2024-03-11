@@ -18,8 +18,10 @@ module.exports = {
       screens: {
         mbMini: "290px",
         mbXSmall: "400px",
+        mbMedSmall:"500px",
         mbSmall: "600px",
         mbMedium: "800px",
+        laptop:"1000px",
         tbPortrait: "1200px",
         tbLandscape: "1600px",
         Desktop: "2000px",
