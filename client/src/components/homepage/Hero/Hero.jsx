@@ -15,7 +15,7 @@ const Hero = () => {
           </span>
         </span>
       </h1>
-      <div className="flex flex-wrap items-center justify-center gap-6 mt-16 ml-3 mbSmall:max-md:ml-9 mbMedium:max-lg:ml-6 mbMini:max-mbXSmall:gap-10">
+      <div className="flex flex-wrap items-center justify-center gap-6 mt-16 ml-3 mbSmall:max-md:ml-9 mbMedium:max-lg:ml-6 mbMini:max-mbXSmall:gap-10 max-mbMedSmall:hidden">
         <div className="flex items-center gap-3">
           <span className="text-primary text-lg">Courses</span>
           <img

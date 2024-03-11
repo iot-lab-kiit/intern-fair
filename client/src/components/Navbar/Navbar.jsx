@@ -1,5 +1,3 @@
-import { usePathname } from "next/navigation";
-import { Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 import NavLink from "./NavLink";
