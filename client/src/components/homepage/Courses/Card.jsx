@@ -4,7 +4,7 @@ const Card = () => {
     // tbPortrait:w-[35vw] mbMedium:w-[45vw] mbSmall:w-[70vw]  mbMini:w-full
     <div className="m-2 border-[#DCDCE7]  border-2 rounded-lg p-6 flex flex-col items-start justify-start gap-6 flex-grow-0 flex-shrink-0 min-w-0 pl-4 basis-1/2 laptop:basis-2/5 mbMedSmall:basis-3/5 mbXSmall:basis-3/4 mbMini:basis-4/5 tbLandscape:basis-4/12">
       <div className="flex items-center justify-between w-full">
-        <h1 className="font-Gilroy-Medium text-2xl mbMedium:text-xl mbMini:text-[1rem]">
+        <h1 className="font-Gilroy-Medium text-2xl mbMedium:text-xl mbMini:text-[0.85rem]">
           Web Development
         </h1>
         <button className="p-1 mbXSmall:px-5 rounded-lg bg-[#4543B5] text-white mbMini:px-3">
