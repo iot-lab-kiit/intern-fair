@@ -9,14 +9,17 @@ const commentSchema = new Schema({
   value: { type: String, required: true },
 });
 
-const commentSectionSchema = new Schema({
-  topicId: {
-    type: Schema.Types.ObjectId,
-    ref: "Topic",
-    required: true,
+const commentSectionSchema = new Schema(
+  {
+    topicId: {
+      type: Schema.Types.ObjectId,
+      ref: "Topic",
+      required: true,
+    },
+    comments: [commentSchema],
   },
-  comments: [commentSchema],
-});
+  { timestamps: true }
+);
 
 export default mongoose.models.CommentSection ||
   model("CommentSection", commentSectionSchema);
