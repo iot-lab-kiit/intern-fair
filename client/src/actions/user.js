@@ -15,6 +15,7 @@ export const getUser = async () => {
 
 export const createUser = async (userData) => {
   try {
+    // send email to user
     const user = await User.create(userData);
     return { data: user };
   } catch (error) {
