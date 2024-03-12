@@ -3,6 +3,7 @@ import About from "@/components/homepage/About/About";
 import Courses from "@/components/homepage/Courses/Courses";
 import Faq from "@/components/homepage/Faq/Faq";
 import Hero from "@/components/homepage/Hero/Hero";
+import LearningResources from "@/components/homepage/LearningResources/LearningResources";
 import Mission from "@/components/homepage/Mission/Mission";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <About />
       <Mission /> */}
       <Courses />
+      <LearningResources/>
       {/* <Faq /> */}
     </main>
   );
