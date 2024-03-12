@@ -15,11 +15,17 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors:{
+        primary: '#2B2B2B',
+        secondary: '#1F3DD9',
+        tertiary: '#F4F5FA',
+      },
       screens: {
         mbMini: "290px",
         mbXSmall: "400px",
         mbMedSmall:"500px",
         mbSmall: "600px",
+        carousel:"932px",
         mbMedium: "800px",
         laptop:"1000px",
         tbPortrait: "1200px",
