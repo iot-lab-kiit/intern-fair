@@ -2,39 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }
 
 @keyframes scrollRight {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(100%);
-  }
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
-
-@font-face {
-  font-family: 'Gilroy-Bold';
-  src: local('Gilroy-Bold'), url(../fonts/Gilroy-Bold.ttf) format('truetype');
+.swiper-wrapper {
+    transition-timing-function: linear !important;
 }
-
-@font-face {
-  font-family: 'Gilroy-Medium';
-  src: local('Gilroy-Medium'), url(../fonts/Gilroy-Medium.ttf) format('truetype');
+.swiper-text-clamp {
+    font-size: clamp(1px, 2vw, 12px);
+    text-overflow: ellipsis;
 }
 
 @font-face {
-  font-family: 'Gilroy-Light';
-  src: local('Gilroy-Light'), url(../fonts/Gilroy-Light.ttf) format('truetype');
+    font-family: "Gilroy-Bold";
+    src: local("Gilroy-Bold"), url(../fonts/Gilroy-Bold.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Gilroy-Medium";
+    src: local("Gilroy-Medium"), url(../fonts/Gilroy-Medium.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Gilroy-Light";
+    src: local("Gilroy-Light"), url(../fonts/Gilroy-Light.ttf) format("truetype");
 }
