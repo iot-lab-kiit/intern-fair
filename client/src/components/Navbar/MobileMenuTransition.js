@@ -40,8 +40,8 @@ const MobileMenuTransition = ({ children }) => {
         onEnter={() => setOpen(true)}
         onExit={() => setOpen(false)}
       >
-        <div className="sm:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1">{children}</div>
+        <div className="sm:hidden border-b border-[#ECECEC]">
+          <div className="px-2 pt-2">{children}</div>
         </div>
       </Transition>
     </div>

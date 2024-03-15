@@ -2,12 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import NavLink from "./NavLink";
 import MobileNavLink from "./MobileNavLink";
-import MobileMenuButton from "./MobileMenuButton";
 import MobileMenuTransition from "./MobileMenuTransition";
 
 const Navbar = () => {
   return (
-    <nav className="border-b border-gray-300">
+    <nav className="border-b border-[#ECECEC] max-sm:border-opacity-0">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
           {/* Mobile Menu Button */}
@@ -34,7 +33,7 @@ const Navbar = () => {
                   About&nbsp;Us
                 </NavLink>
                 <NavLink href="/courses">Courses</NavLink>
-                <NavLink href="/people">People</NavLink>
+                <NavLink href="/people" >People</NavLink>
                 <NavLink href="/contact">FAQ's</NavLink>
                 <NavLink href="/suggest">Suggestion&nbsp;Box</NavLink>
                 <Link href="/courses" passHref>
