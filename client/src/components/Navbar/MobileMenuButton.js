@@ -6,7 +6,7 @@ const MobileMenuButton = ({ onClick }) => {
     <div className="absolute inset-x-0 top-2 left-3 flex items-center sm:hidden">
       <button
         onClick={onClick}
-        className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+        className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-[#1F3DD9] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
         aria-expanded="false"
       >
         {/* Hamburger Icon */}
