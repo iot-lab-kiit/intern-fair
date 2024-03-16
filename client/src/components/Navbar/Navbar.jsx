@@ -51,13 +51,12 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <MobileMenuTransition>
         <div className="sm:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="px-2 pt-2">
             <MobileNavLink href="/">About Us</MobileNavLink>
             <MobileNavLink href="/team">Courses</MobileNavLink>
             <MobileNavLink href="/people">People</MobileNavLink>
             <MobileNavLink href="/contact">FAQ's</MobileNavLink>
             <MobileNavLink href="/suggest">Suggestion Box</MobileNavLink>
-            <MobileNavLink href="/login">Login</MobileNavLink>
           </div>
         </div>
       </MobileMenuTransition>

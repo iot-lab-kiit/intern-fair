@@ -31,16 +31,16 @@ const MobileMenuTransition = ({ children }) => {
       <MobileMenuButton onClick={() => setOpen((prevOpen) => !prevOpen)} />
       <Transition
         show={open}
-        enter="transition-all ease-in-out duration-300"
-        enterFrom="h-0"
+        enter="transition-x duration-300"
+        enterFrom="h-0 resize"
         enterTo="h-52 opacity-100"
-        leave="transition-all ease-in-out duration-300"
-        leaveFrom="h-52 opacity-100"
+        leave="transition-x duration-300"
+        leaveFrom="h-52 opacity-100 resize"
         leaveTo="h-0 opacity-0"
         onEnter={() => setOpen(true)}
         onExit={() => setOpen(false)}
       >
-        <div className="sm:hidden border-b border-[#ECECEC]">
+        <div className="sm:hidden" style={{ height: '210px' }}>
           <div className="px-2 pt-2">{children}</div>
         </div>
       </Transition>
