@@ -10,9 +10,10 @@ export default function Login() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   return (
     <>
-      <div className="content grid grid-cols-1 md:grid-cols-2 max-w-full mx-auto p-[1.75rem] sm:p-[0rem]">
+      <div className="content grid grid-cols-1 md:grid-cols-2 max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
         <div className="form-container flex flex-col  items-center space-y-6 mbMini:p-[0.25rem] mbXSmall:p-[1.5rem] mbSmall:p-[1.75rem] mbMedium:p-[1.5rem] ">
           <div className="back-button mb-4  flex  w-full md:w-[80%]">
             <div className="back-button flex gap-3 items-center justify-center">
@@ -63,7 +64,7 @@ export default function Login() {
               <input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                className="w-full h-12 border-2 rounded-lg px-4 focus:border-[#1F3DD9]"  
+                className="w-full h-12 border-2 rounded-lg px-4 focus:border-[#1F3DD9]"
               />
               <button
                 type="button"
@@ -72,15 +73,15 @@ export default function Login() {
               >
                 {showPassword ? (
                   <FaRegEye
-                  height={20}
-                  width={20}
-                  style={{ color: '#A3AED0' , width:'20px' }}
+                    height={20}
+                    width={20}
+                    style={{ color: "#A3AED0", width: "20px" }}
                   />
                 ) : (
-                  <FaRegEyeSlash 
-                  height={20}
-                  width={20}
-                  style={{ color: '#A3AED0' , width:'20px' }}
+                  <FaRegEyeSlash
+                    height={20}
+                    width={20}
+                    style={{ color: "#A3AED0", width: "20px" }}
                   />
                 )}
               </button>
@@ -107,13 +108,13 @@ export default function Login() {
           </form>
           <div className=" w-full md:w-[80%]">
             Not registered yet?{" "}
-            <a href="#" className="text-[#1F3DD9]">
+            <a href="/signup" className="text-[#1F3DD9]">
               Create an Account
             </a>
           </div>
         </div>
 
-        <div className="image-container w-full h-full hidden md:block">
+        <div className="image-container w-full md:w-auto h-screen  hidden md:block">
           <Image
             src="/images/signup.png"
             alt="signup-image"

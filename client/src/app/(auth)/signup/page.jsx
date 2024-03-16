@@ -13,7 +13,7 @@ export default function Signup() {
   return (
     <>
       <div className="content  grid grid-cols-1 md:grid-cols-2 max-w-full mx-auto p-[1.75rem] sm:p-[0rem]">
-        <div className="form-container flex flex-col  items-center  space-y-6 p-[1.5rem] mbMini:p-[0.25rem] mbXSmall:p-[1.5rem] mbSmall:p-[4rem] mbMedium:p-[1.5rem] ">
+        <div className="form-container flex flex-col  items-center  space-y-1 p-[1.5rem] mbMini:p-[0.25rem] mbXSmall:p-[1.5rem] mbSmall:p-[4rem] mbMedium:p-[1.5rem]  h-auto">
         <div className="back-button mb-4  flex  w-full md:w-[80%]">
           <div className="back-button flex gap-3 items-center justify-center">
             <div className="h-5 w-5">
@@ -106,11 +106,11 @@ export default function Signup() {
             </button>
           </form>
           <div className=" w-full md:w-[80%] font-medium">
-            Already have an account? <a href="#" className="text-[#1F3DD9] font-medium" >Login</a>
+            Already have an account? <a href="/login" className="text-[#1F3DD9] font-medium" >Login</a>
           </div>
         </div>
 
-        <div className="image-container w-full h-full hidden md:block">
+        <div className="image-container w-full h-screen hidden md:block">
           <Image
             src="/images/signup.png"
             alt="signup-image"
