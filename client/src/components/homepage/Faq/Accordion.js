@@ -18,11 +18,11 @@ const AccordionItem = ({ question, answer, isOpen, onClick }) => {
   className={`w-full text-left py-5 px-2 flex items-center justify-between text-lg focus:outline-none ${
     isOpen
       ? "text-[#1F3DD9] bg-gradient-to-r from-transparent via-rgba(0,0,0,0.04) to-transparent"
-      : ""
+      : "text-[#09123E]"
   } hover:bg-gradient-to-r from-transparent via-rgba(0,0,0,0.04) to-transparent`}
   onClick={onClick}
 >
-  <p className="text-[#09123E] mbXSmall:max-mbMedSmall:text-base mbMini:max-mbXSmall:text-sm max-mbMini:text-xs font-Gilroy-Medium">{question}</p>
+  <p className="mbXSmall:max-mbMedSmall:text-base mbMini:max-mbXSmall:text-sm max-mbMini:text-xs font-Gilroy-Medium">{question}</p>
   <span className="flex flex-shrink-0">  {isOpen ? (
       <AiOutlineMinus className="text-[#1F3DD9] text-2xl" />
     ) : (
