@@ -12,21 +12,22 @@ export default function Signup() {
   };
   return (
     <>
-      <div className="content  grid grid-cols-1 md:grid-cols-2 max-w-full mx-auto p-[1.75rem] sm:p-[0rem]">
-        <div className="form-container flex flex-col  items-center  space-y-6 p-[1.5rem] mbMini:p-[0.25rem] mbXSmall:p-[1.5rem] mbSmall:p-[4rem] mbMedium:p-[1.5rem] ">
-        <div className="back-button mb-4  flex  w-full md:w-[80%]">
-          <div className="back-button flex gap-3 items-center justify-center">
-            <div className="h-5 w-5">
-              <Image src="/images/back.png" height={20} width={20} />
+      <div className="content  flex justify-center items-center  max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
+        <div  className="flex flex-col justify-center items-center mx-auto gap-2 place-self-center">
+        <div className="back-button text-xl  flex  w-full sm:w-[70%] h-16 ">
+            <div className="back-button flex gap-3 items-center justify-center">
+              <div className="h-5 w-5">
+                <Image src="/images/back.png" height={20} width={20} />
+              </div>
+              <div>Back</div>
             </div>
-            <div>Back</div>
           </div>
-          </div>
-          <div className="header flex flex-col w-full md:w-[80%] text-center md:text-start">
+          <div className="form-container flex flex-col items-center justify-center gap-[1.8rem] h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
+       
+          <div className="header flex flex-col gap-4 w-full sm:w-[70%] text-center sm:text-start">
             <div className="font-extrabold text-3xl">Create an Account</div>
             <div>Enter your details to create your account!</div>
-          </div>
-          <div className="google-signup flex items-center justify-center bg-[#F4F5FA] w-[98%] sm:w-5/6 h-12 rounded-lg">
+            <div className="google-signup flex items-center justify-center bg-[#F4F5FA] w-full h-12 rounded-lg">
             <div className="mr-2">
               <Image
                 src="/images/Group.png"
@@ -37,16 +38,18 @@ export default function Signup() {
             </div>
             <div>Sign in with Google</div>
           </div>
-          {/* Or with lines */}
-          <div className="flex flex-col w-[80%]  items-center">
-            <Image
-              src="/images/Separator.png"
-              height={500}
-              width={800}
-              alt="separator"
-            />
+          
+          
           </div>
-          <form className="flex flex-col gap-3 w-full md:w-[80%]">
+          <div className="flex flex-col w-[60%]  items-center">
+              <Image
+                src="/images/Separator.png"
+                height={500}
+                width={800}
+                alt="separator"
+              />
+            </div>
+          <form className="flex flex-col gap-3 w-full sm:w-[70%]">
             <label htmlFor="name" className="text-[#182467]">
               Name*
             </label>
@@ -104,13 +107,16 @@ export default function Signup() {
             <button className="bg-[#1F3DD9] text-white h-12 w-1/2 rounded-lg">
               Sign Up
             </button>
-          </form>
-          <div className=" w-full md:w-[80%] font-medium">
-            Already have an account? <a href="#" className="text-[#1F3DD9] font-medium" >Login</a>
+            <div className=" w-full sm:w-[70%] font-medium">
+            Already have an account? <a href="/login" className="text-[#1F3DD9] font-medium" >Login</a>
           </div>
+          </form>
+          
         </div>
+        </div>
+        
 
-        <div className="image-container w-full h-full hidden md:block">
+        <div className="image-container w-[40%] h-screen  hidden lg:block">
           <Image
             src="/images/signup.png"
             alt="signup-image"

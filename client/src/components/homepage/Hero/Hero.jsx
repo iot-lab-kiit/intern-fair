@@ -82,7 +82,7 @@ const Hero = () => {
           />
         </Link>
         <Link
-          href="/Courses"
+          href="/login"
           target="_blank"
           rel="noopener noreferrer"
           className="flex justify-center items-center px-3 py-1.5 border-1 rounded-xl focus:outline-none cursor-pointer transition-transform duration-500 border-2 border-[#BFC2CE] rounded-10 shadow-inset-0 hover:shadow-inset-0 w-44 h-12"
