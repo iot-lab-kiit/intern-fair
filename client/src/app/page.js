@@ -8,6 +8,7 @@ import Mission from "@/components/homepage/Mission/Mission";
 import BTS from "@/components/homepage/BTS/BTS";
 import data from "@/data/homepage/data.json";
 import Suggestion from "@/components/homepage/Suggestion/Suggestion";
+import Community from "@/components/homepage/Community/Community";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
       <BTS align1="flex-row-reverse" data={data} />
       <Faq />
       <LearningResources />
+      <Community />
       <Suggestion />
     </main>
   );

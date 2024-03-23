@@ -13,7 +13,7 @@ const Suggestion = () => {
           Your opinion matters to us!
         </h1>
         <div className="w-[85%]  mbMini:w-full mbXSmall:w[100vw] mbSmall:w-full mbMedium:w-[35vw] laptop:w-[37vw] ">
-          <p className="text-[#EFF1F8] font-Gilroy-Medium font-normal leading-6 mbMini:text-[0.68rem] mbMini:leading-4  mbXSmall:text-[0.82rem] mbXSmall:leading-4 mbMedSmall:text-sm mbSmall:text-[0.85rem] mbMedium:text-[0.9rem] laptop:text-[1rem] laptop:leading-5  tbPortrait:text-[1.15rem] tbPortrait:leading-6 tbLandscape:text-[1.3rem] tbLandscape:leading-7">
+          <p className="text-[#EFF1F8] font-Gilroy-Medium font-normal leading-6 mbMini:text-[0.68rem] mbMini:leading-5  mbXSmall:text-[0.82rem] mbXSmall:leading-5 mbMedSmall:text-sm mbSmall:text-[0.85rem] mbSmall:leading-6 mbMedium:text-[0.9rem] mbMedium:leading-6 laptop:text-[1rem] laptop:leading-7  tbPortrait:text-[1.15rem] tbPortrait:leading-8 tbLandscape:text-[1.3rem]">
             Use the suggestion box below to share your thoughts, ideas, or
             suggestions. Whether it's about improving our services, facilities,
             or anything else related to your experience, we're all ears.
