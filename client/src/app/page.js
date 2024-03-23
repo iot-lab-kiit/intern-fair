@@ -12,12 +12,12 @@ export default function Home() {
   return (
     <main className="flex flex-col gap-8 max-w-[100vw]">
       <Navbar />
-      <Hero id="top" />
-      <About align1="flex-row" data={data} id="about"/>
-      <Mission id="mission" />
-      <Courses id="courses"/>
+      <Hero />
+      <About align1="flex-row" data={data}/>
+      <Mission  />
+      <Courses />
       <LearningResources />
-      <BTS align1="flex-row-reverse" data={data} id="bts" />
+      <BTS align1="flex-row-reverse" data={data} />
       <Faq />
       <Footer />
     </main>
