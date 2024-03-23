@@ -5,7 +5,7 @@ const Mission = () => {
   const videoId = "vCOSTG10Y4o";
 
   return (
-    <div className="container bg-[#081245] min-h-fit text-white max-w-full px-8 flex flex-col justify-center items-center ">
+    <div className="container bg-[#081245] min-h-fit text-white max-w-full px-8 flex flex-col justify-center items-center " id="mission">
       <div className="mission flex flex-col leading-64 max-w-[120rem] gap-20 mx-[0.25rem] sm:mx-14 md:mx-16 lg:mx-20 my-24 py-10">
         <div className="top flex mt-[-5rem] sm:mt-[-3rem] md:mt-[-1rem]">
           <div className="head flex bg-[#4E5680] items-center justify-center w-25 sm:w-40 rounded-3xl relative">

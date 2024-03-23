@@ -3,7 +3,7 @@ import TitleCard from "@/components/ui/TitleCard";
 import Image from "next/image";
 const About = ({ align1, data }) => {
   return (
-    <div className="flex items-center justify-center pb-10  overflow-hidden">
+    <div className="flex items-center justify-center pb-16  overflow-hidden" id="about">
       <div className="content flex flex-col mx-10 xl:ml-80 md:items-start xl:max-w-[120rem] lg: px-8">
         <div
           className={`flex items-center flex-col gap-10 justify-center tbPortrait:flex-row md:items-start max-h-[20rem] sm:max-h-none`}
