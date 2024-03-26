@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.24.0",
+    "@directus/sdk": "^15.0.3",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.18",
