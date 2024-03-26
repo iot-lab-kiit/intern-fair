@@ -1,7 +1,7 @@
-import { createDirectus, rest, graphql } from "@directus/sdk";
+import { createDirectus, rest, authentication } from "@directus/sdk";
 
-// Client with REST support
-export const clientR = createDirectus(process.env.DIRECTUS_URL).with(rest());
+export const client = createDirectus(process.env.DIRECTUS_URL)
+  .with(authentication())
+  .with(rest());
 
-// Client with GraphQL support
-export const clientG = createDirectus(process.env.DIRECTUS_URL).with(graphql());
+await client.login(process.env.USER, process.env.PASS);

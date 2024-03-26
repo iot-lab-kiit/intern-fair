@@ -1,4 +1,4 @@
-import { clientR } from "@/db/directus";
+import { client } from "@/db/directus";
 import { readRoles } from "@directus/sdk";
 
-export const result = await clientR.request(readRoles({ fields: ["id"] }));
+export const result = await client.request(readRoles());
