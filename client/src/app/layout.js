@@ -1,5 +1,6 @@
 import "./globals.css";
 import Footer from "@/components/Footer/Footer";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "InternFair",
@@ -10,6 +11,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <Toaster />
         {children}
         <Footer />
       </body>

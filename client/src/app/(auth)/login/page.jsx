@@ -3,8 +3,20 @@ import React, { useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
 import Image from "next/image";
+import { getUserr } from "@/actions/user";
 
 export default function Login() {
+  const [formData, setFormData] = useState({
+    email: "lorem@gmail.com",
+    password: "qwerty",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getUserr(formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -26,7 +38,9 @@ export default function Login() {
           <div className="form-container  flex flex-col items-center justify-center gap-[1.8rem] h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
             <div className="header flex flex-col gap-4 w-full sm:w-[70%] text-center sm:text-start">
               <div className="font-extrabold text-3xl md:text-5xl">Login</div>
-              <div className="text-xl">Enter your email and password to sign in!</div>
+              <div className="text-xl">
+                Enter your email and password to sign in!
+              </div>
             </div>
             <div className="google-signup flex items-center justify-center bg-[#F4F5FA] w-[98%] sm:w-[70%] h-12 rounded-lg">
               <div className="mr-2">
@@ -48,7 +62,10 @@ export default function Login() {
                 alt="separator"
               />
             </div>
-            <form className="flex  flex-col gap-3 w-full sm:w-[70%]">
+            <form
+              className="flex  flex-col gap-3 w-full sm:w-[70%]"
+              onSubmit={(e) => handleSubmit(e)}
+            >
               <label htmlFor="email" className="text-[#182467] text-xl">
                 Email*
               </label>
@@ -56,6 +73,10 @@ export default function Login() {
                 type="email"
                 id="email"
                 className="w-full h-12 border-2 rounded-lg px-4 focus:border-blue-500"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
               />
               <label htmlFor="password" className="text-[#182467] text-xl">
                 Password*
@@ -65,6 +86,10 @@ export default function Login() {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   className="w-full h-12 border-2 rounded-lg px-4 focus:border-[#1F3DD9]"
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                 />
                 <button
                   type="button"
@@ -106,15 +131,13 @@ export default function Login() {
                 Sign In
               </button>
               <div className=" w-full sm:w-[70%] text-base">
-            Not registered yet?{" "}
-            <a href="/signup" className="text-[#1F3DD9]">
-              Create an Account
-            </a>
-          </div> 
+                Not registered yet?{" "}
+                <a href="/signup" className="text-[#1F3DD9]">
+                  Create an Account
+                </a>
+              </div>
             </form>
           </div>
-
-          
         </div>
 
         <div className="image-container w-[45%] h-screen  hidden lg:block">
