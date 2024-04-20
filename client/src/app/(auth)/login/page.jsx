@@ -4,18 +4,31 @@ import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
 import Image from "next/image";
 import { getUserr } from "@/actions/user";
+import { toast } from "react-hot-toast";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
-  const [formData, setFormData] = useState({
-    email: "lorem@gmail.com",
-    password: "qwerty",
-  });
+  const router = useRouter();
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    getUserr(formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+
+    toast.promise(getUserr(formData), {
+      loading: "Creating Account...",
+      success: (res) => {
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
+        if (res.result.access_token)
+          document.cookie =
+            "user_session" + "=" + (res.result.access_token || "");
+        ("; path=/");
+        return <b>{res.message}</b>;
+      },
+      error: (err) => <b>{err.message}</b>,
+    });
   };
   const [showPassword, setShowPassword] = useState(false);
 
@@ -132,9 +145,9 @@ export default function Login() {
               </button>
               <div className=" w-full sm:w-[70%] text-base">
                 Not registered yet?{" "}
-                <a href="/signup" className="text-[#1F3DD9]">
+                <Link href="/signup" className="text-[#1F3DD9]">
                   Create an Account
-                </a>
+                </Link>
               </div>
             </form>
           </div>

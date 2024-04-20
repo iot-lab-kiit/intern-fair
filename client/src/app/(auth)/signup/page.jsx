@@ -5,12 +5,15 @@ import { FaRegEye } from "react-icons/fa6";
 import Image from "next/image";
 import { createUserr } from "@/actions/user";
 import { toast } from "react-hot-toast";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
-    name: "ddf dfdf",
-    email: "asd@gmail.com",
-    password: "asdf",
+    name: "",
+    email: "",
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -23,7 +26,12 @@ export default function Signup() {
 
     toast.promise(createUserr(formData), {
       loading: "Creating Account...",
-      success: (res) => <b>{res.message}</b>,
+      success: (res) => {
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+        return <b>{res.message}</b>;
+      },
       error: (err) => <b>{err.message}</b>,
     });
   };
@@ -149,9 +157,9 @@ export default function Signup() {
               </button>
               <div className=" w-full sm:w-[70%] font-medium">
                 Already have an account?{" "}
-                <a href="/login" className="text-[#1F3DD9] font-medium">
+                <Link href="/login" className="text-[#1F3DD9] font-medium">
                   Login
-                </a>
+                </Link>
               </div>
             </form>
           </div>

@@ -1,6 +1,7 @@
 "use server";
 import { client } from "@/db/directus";
-import { createUser, authentication, rest, login } from "@directus/sdk";
+import { createUser, login } from "@directus/sdk";
+import { RefreshSharp } from "@mui/icons-material";
 
 export const createUserr = async (data) => {
   try {
@@ -16,24 +17,20 @@ export const createUserr = async (data) => {
       })
     );
     if (!result) throw new Error("User not created");
-    return { success: true, message: "User created successfully", data: null };
+    return { success: true, message: "User created successfully", result };
   } catch (e) {
-    console.log(e);
-    throw new Error(e.message);
+    throw new Error(e.errors[0].message);
   }
 };
 
+// TODO : Implement custom token expiration time.
 export const getUserr = async (formData) => {
   try {
-    await client.login(process.env.USER, process.env.PASS);
-    const result = await client.request(
-      login(formData.email, formData.password)
-    );
-    // const result = await client.request(readUser(user_id));
-    console.log(result);
-    return { success: true, result };
+    const result = await client.login(formData.email, formData.password, {
+      mode: "cookie",
+    });
+    return { success: true, message: "User logged in successfully", result };
   } catch (e) {
-    console.log(e);
-    throw new Error(e.message);
+    throw new Error(e.errors[0].message);
   }
 };
