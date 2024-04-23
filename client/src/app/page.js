@@ -8,8 +8,6 @@ import Mission from "@/components/homepage/Mission/Mission";
 import BTS from "@/components/homepage/BTS/BTS";
 import data from "@/data/homepage/data.json";
 import Suggestion from "@/components/homepage/Suggestion/Suggestion";
-import Post from "../components/communityPage/Post/Post";
-import CommunityList from "@/components/communityPage/CommunityList/CommunityList";
 
 export default function Home() {
   return (
