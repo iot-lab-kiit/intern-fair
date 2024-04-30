@@ -1,8 +1,8 @@
 "use server";
 import { client } from "@/db/directus";
 import { createUser, login } from "@directus/sdk";
-import { RefreshSharp } from "@mui/icons-material";
 
+// Create an account
 export const createUserr = async (data) => {
   try {
     await client.login(process.env.USER, process.env.PASS);
@@ -22,7 +22,7 @@ export const createUserr = async (data) => {
     throw new Error(e.errors[0].message);
   }
 };
-
+// Login a user
 // TODO : Implement custom token expiration time.
 export const getUserr = async (formData) => {
   try {

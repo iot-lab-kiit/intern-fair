@@ -16,7 +16,7 @@ export default function Login() {
     e.preventDefault();
 
     toast.promise(getUserr(formData), {
-      loading: "Creating Account...",
+      loading: "Loggin in...",
       success: (res) => {
         setTimeout(() => {
           router.push("/");
