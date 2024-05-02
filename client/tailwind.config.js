@@ -25,6 +25,7 @@ module.exports = {
                 mbSmall: "600px",
                 mbMedium: "800px",
                 laptop: "1000px",
+                carousel:"932px",
                 tbPortrait: "1200px",
                 tbLandscape: "1600px",
                 Desktop: "2000px",
