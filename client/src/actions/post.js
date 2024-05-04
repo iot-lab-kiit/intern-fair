@@ -2,7 +2,7 @@
 import axios from "axios";
 
 axios.defaults.headers.common["Authorization"] = `Bearer ${
-  process.env.TOKEN || "y1L8fkNd81K2HlLZM5EKASL-z4lzxu9V"
+  process.env.TOKEN
 }`;
 // Create POST
 export const createPost = async (req, res) => {
