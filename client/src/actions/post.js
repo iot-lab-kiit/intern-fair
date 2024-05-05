@@ -1,77 +1,71 @@
 "use server";
-import axios from "axios";
+import { client } from "@/db/directus";
+import { createItem, updateItem, deleteItem, readItem } from "@directus/sdk";
 
-axios.defaults.headers.common["Authorization"] = `Bearer ${
-  process.env.TOKEN
-}`;
 // Create POST
-export const createPost = async (req, res) => {
+export const createPost = async (data) => {
   try {
-    const response = await axios.post(
-      "http://43.204.145.188/items/Post",
-      req.body
+    await client.login(process.env.USER, process.env.PASS);
+    const result = await client.request(
+      createItem("Post", {
+        content: data.content,
+        Tags: data.Tags,
+        status: data.status,
+      })
     );
-    if (!response) {
-      res.status(404).json({ message: "Post not created" });
-    }
-    res.status(200).json(response.data);
-  } catch (err) {
-    console.error(err);
+    if (!result) throw new Error("Post Not created");
+    return { success: true, message: "Post created successfully", result };
+  } catch (error) {
+    throw new Error(e.errors[0].message);
   }
 };
 //Get All POST
-export const getAllPost = async (req, res) => {
+export const getAllPost = async () => {
   try {
-    const response = await axios.get("http://43.204.145.188/items/Post");
-    if (!response) {
-      res.status(404).json({ message: "No Post Found" });
-    }
-    res.status(200).json(response.data);
+    await client.login(process.env.USER, process.env.PASS);
+    const result = await client.request(readItem("Post"));
+    if (!result) throw new Error("No post found");
+    return { success: true, message: "Found All Post", result };
   } catch (error) {
-    console.log(error);
+    throw new Error(e.errors[0].message);
   }
 };
 // Get POST By Id
-export const getPostById = async (req, res) => {
-  const id = req.params.id;
+export const getPostById = async (data) => {
   try {
-    const response = await axios.get(`http://43.204.145.188/items/Post/${id}`);
-    if (!response) {
-      res.status(404).json({ message: "Post By Id not Found" });
-    }
-    res.status(200).json(response.data);
+    await client.login(process.env.USER, process.env.PASS);
+    const result = await client.request(readItem("Post", data.id));
+    if (!result) throw new Error("No post found with that id");
+    return { success: true, message: "Post with the Id", result };
   } catch (error) {
-    console.log(error);
+    throw new Error(e.errors[0].message);
   }
 };
 // Update POst
-export const updatePost = async (req, res) => {
-  const id = req.params.id;
+export const updatePost = async (data) => {
   try {
-    const response = await axios.patch(
-      `http://43.204.145.188/items/Post/${id}`,
-      req.body
+    await client.login(process.env.USER, process.env.PASS);
+    const result = await client.request(
+      updateItem("Post", data.id, {
+        content: data.content,
+        Tags: data.Tags,
+        status: data.status,
+      })
     );
-    if (!response) {
-      res.status(404).json({ message: "Post not Updated" });
-    }
-    res.status(200).json(response.data);
+    if (!result) throw new Error("Post Not updated");
+    return { success: true, message: "Post Updated successfully", result };
   } catch (error) {
-    console.log(error);
+    throw new Error(e.errors[0].message);
   }
 };
 //Delete POST
-export const deletePost = async (req, res) => {
-  const id = req.params.id;
+export const deletePost = async (data) => {
   try {
-    const response = await axios.delete(
-      `http://43.204.145.188/items/Post/${id}`
-    );
-    if (!response) {
-      res.status(404).json({ message: "Post not Deleted" });
-    }
-    res.status(200).json(response.data);
+    await client.login(process.env.USER, process.env.PASS);
+    const result = await client.request(deleteItem("Post", data.id));
+    if (!result) throw new Error("Post Not Deleted");
+    return { success: true, message: "Post Deleted successfully", result };
   } catch (error) {
-    console.log(error);
+    throw new Error(e.errors[0].message);
   }
 };
