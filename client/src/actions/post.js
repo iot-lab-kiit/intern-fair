@@ -1,6 +1,12 @@
 "use server";
 import { client } from "@/db/directus";
-import { createItem, updateItem, deleteItem, readItem } from "@directus/sdk";
+import {
+  createItem,
+  updateItem,
+  deleteItem,
+  readItem,
+  readItems,
+} from "@directus/sdk";
 
 // Create POST
 export const createPost = async (data) => {
@@ -9,13 +15,12 @@ export const createPost = async (data) => {
     const result = await client.request(
       createItem("Post", {
         content: data.content,
-        Tags: data.Tags,
-        status: data.status,
+        Tags: data.Tags, // needs to be an array of string
       })
     );
     if (!result) throw new Error("Post Not created");
     return { success: true, message: "Post created successfully", result };
-  } catch (error) {
+  } catch (e) {
     throw new Error(e.errors[0].message);
   }
 };
@@ -23,10 +28,11 @@ export const createPost = async (data) => {
 export const getAllPost = async () => {
   try {
     await client.login(process.env.USER, process.env.PASS);
-    const result = await client.request(readItem("Post"));
+    const result = await client.request(readItems("Post"));
     if (!result) throw new Error("No post found");
     return { success: true, message: "Found All Post", result };
-  } catch (error) {
+  } catch (e) {
+    console.log(e);
     throw new Error(e.errors[0].message);
   }
 };
@@ -37,7 +43,7 @@ export const getPostById = async (data) => {
     const result = await client.request(readItem("Post", data.id));
     if (!result) throw new Error("No post found with that id");
     return { success: true, message: "Post with the Id", result };
-  } catch (error) {
+  } catch (e) {
     throw new Error(e.errors[0].message);
   }
 };
@@ -48,13 +54,12 @@ export const updatePost = async (data) => {
     const result = await client.request(
       updateItem("Post", data.id, {
         content: data.content,
-        Tags: data.Tags,
-        status: data.status,
+        Tags: data.Tags, // string array
       })
     );
     if (!result) throw new Error("Post Not updated");
     return { success: true, message: "Post Updated successfully", result };
-  } catch (error) {
+  } catch (e) {
     throw new Error(e.errors[0].message);
   }
 };
@@ -65,7 +70,7 @@ export const deletePost = async (data) => {
     const result = await client.request(deleteItem("Post", data.id));
     if (!result) throw new Error("Post Not Deleted");
     return { success: true, message: "Post Deleted successfully", result };
-  } catch (error) {
+  } catch (e) {
     throw new Error(e.errors[0].message);
   }
 };
