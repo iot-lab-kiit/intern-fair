@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
 import Image from "next/image";
@@ -16,14 +16,61 @@ export default function Signup() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  useEffect(() => {
+   
+    validateForm();
+  }, [formData]);
+
+  const validateForm = () => {
+
+    const isNameValid = formData.name.trim() !== "";
+    const isEmailValid = /\S+@\S+\.\S+/.test(formData.email);
+    const isPasswordValid =
+      formData.password.length >= 6 && formData.password.length <= 20;
+
+   
+    setIsFormValid(isNameValid && isEmailValid && isPasswordValid);
+  };
+ 
+
   const handleCreateUser = (e) => {
     e.preventDefault();
+    validateForm();
+    const isTermsChecked = e.target.check.checked;
 
+
+    if (!isFormValid || !isTermsChecked) {
+      
+      if (!isFormValid) {
+       
+        if (!formData.name) {
+          toast.error("Name is required");
+        }
+        if (!formData.email) {
+          toast.error("Email is required");
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+          toast.error("Invalid email");
+        }
+        if (!formData.password) {
+          toast.error("Password is required");
+        } else if (formData.password.length < 6) {
+          toast.error("Password must be at least 6 characters");
+        } else if (formData.password.length > 20) {
+          toast.error("Password cannot be more than 20 characters");
+        }
+      }
+      if (!isTermsChecked) {
+        toast.error("Please accept the Terms and Services");
+      }
+      return;
+    }
+    
     toast.promise(createUserr(formData), {
       loading: "Creating Account...",
       success: (res) => {
@@ -107,6 +154,7 @@ export default function Signup() {
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
+                  maxLength={20}
                   className="w-full h-12 border-2 rounded-lg px-4 focus:border-[#1F3DD9]"
                   value={formData.password}
                   onChange={(e) =>

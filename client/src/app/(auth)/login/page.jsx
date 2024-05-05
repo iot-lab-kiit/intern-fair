@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
 import Image from "next/image";
@@ -11,9 +11,51 @@ import { useRouter } from "next/navigation";
 export default function Login() {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [isFormValid, setIsFormValid] = useState(false);
+
+
+  useEffect(() => {
+   
+    validateForm();
+  }, [formData]);
+
+  const validateForm = () => {
+
+
+    const isEmailValid = /\S+@\S+\.\S+/.test(formData.email);
+    const isPasswordValid =
+      formData.password.length >= 6 && formData.password.length <= 20;
+
+   
+    setIsFormValid(isEmailValid && isPasswordValid);
+  };
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    validateForm();
+
+    if (!isFormValid) {
+       
+    
+      if (!formData.email) {
+        toast.error("Email is required");
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        toast.error("Invalid email");
+      }
+      if (!formData.password) {
+        toast.error("Password is required");
+      } else if (formData.password.length < 6) {
+        toast.error("Password must be at least 6 characters");
+      } else if (formData.password.length > 20) {
+        toast.error("Password cannot be more than 20 characters");
+      }
+      return;
+    }
+   
+
+   
 
     toast.promise(getUserr(formData), {
       loading: "Loggin in...",
@@ -35,6 +77,7 @@ export default function Login() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
 
   return (
     <>
