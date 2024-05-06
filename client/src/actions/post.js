@@ -2,9 +2,33 @@
 import { client } from "@/db/directus";
 import { createItem, updateItem, deleteItem, readItem } from "@directus/sdk";
 
+const validateData = (data) => {
+  if (!data.content || !data.Tags || !data.status) {
+    throw new Error("Missing Required Fields: Content, Status,Tags");
+  }
+
+  if (typeof data.Content !== "string") {
+    throw new Error("Content must be a string");
+  }
+
+  if (
+    !Array.isArray(data.Tags) ||
+    !data.Tags.every((tag) => typeof tag == "string")
+  ) {
+    throw new Error("Tags must be an array of String");
+  }
+
+  if (!["Draft", "Published", "Archived"].includes(data.status)) {
+    throw new Error(
+      "Status must be either 'draft' or 'published' or 'archive'"
+    );
+  }
+};
+
 // Create POST
 export const createPost = async (data) => {
   try {
+    validateData(data);
     await client.login(process.env.USER, process.env.PASS);
     const result = await client.request(
       createItem("Post", {
@@ -44,6 +68,7 @@ export const getPostById = async (data) => {
 // Update POst
 export const updatePost = async (data) => {
   try {
+    validateData(data);
     await client.login(process.env.USER, process.env.PASS);
     const result = await client.request(
       updateItem("Post", data.id, {
@@ -61,6 +86,9 @@ export const updatePost = async (data) => {
 //Delete POST
 export const deletePost = async (data) => {
   try {
+    if (!data.id) {
+      throw new Error("Please provide the id");
+    }
     await client.login(process.env.USER, process.env.PASS);
     const result = await client.request(deleteItem("Post", data.id));
     if (!result) throw new Error("Post Not Deleted");
