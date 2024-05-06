@@ -46,31 +46,34 @@ export default function Signup() {
 
 
     if (!isFormValid || !isTermsChecked) {
-      
       if (!isFormValid) {
-       
         if (!formData.name) {
           toast.error("Name is required");
+          return;
         }
         if (!formData.email) {
           toast.error("Email is required");
+          return;
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
           toast.error("Invalid email");
+          return;
         }
         if (!formData.password) {
           toast.error("Password is required");
+          return;
         } else if (formData.password.length < 6) {
           toast.error("Password must be at least 6 characters");
+          return;
         } else if (formData.password.length > 20) {
           toast.error("Password cannot be more than 20 characters");
+          return;
         }
       }
       if (!isTermsChecked) {
         toast.error("Please accept the Terms and Services");
+        return;
       }
-      return;
     }
-    
     toast.promise(createUserr(formData), {
       loading: "Creating Account...",
       success: (res) => {
