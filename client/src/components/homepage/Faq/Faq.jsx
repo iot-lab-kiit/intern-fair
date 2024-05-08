@@ -2,7 +2,10 @@ import Accordion from "./Accordion";
 
 const Faq = () => {
   return (
-    <div className="w-screen mx-auto max-w-full mbSmall:flex items-center justify-center gap-4 p-4">
+    <div
+      className="w-screen mx-auto max-w-full flex flex-col items-center justify-center gap-4 p-4 pb-16 "
+      id="faq"
+    >
       <div className="flex flex-col items-center justify-center gap-4 w-[75%] h-full mbMini:w-full ">
         <div className="">
           <button className=" text-[#09123E] p-2 px-4 text-lg mbMini:text-sm mbMini:px-2 mbMini:p-1 mbMedium:text-base mbMedium:p-2 mbMedium:px-4 mbSmall:text-base rounded-3xl font-medium bg-[#F4F5FA]">
@@ -13,7 +16,7 @@ const Faq = () => {
           Helpful Answers
         </h1>
         <div className="w-[85%] mbMini:w-[85vw] mbMini:max-mbXSmall:w-[70vw] mbSmall:w-[65vw] mbMedium:w-[53vw] laptop:w-[60vw]">
-          <p className="text-[#09123E] font-Gilroy-Medium font-medium tbLandscape:text-xl mbMedium:text-base mbSmall:text-base tbPortrait:text-lg max-mbXSmall:text-sm">
+          <p className="text-[#09123E] font-Gilroy-Medium font-medium  max-mbXSmall:text-sm text-center">
             Where we address common queries about our college and its offerings.
             Below, you'll find answers to the most frequently asked questions
             about admissions, programs, financial aid, campus life, and more. If
@@ -21,7 +24,7 @@ const Faq = () => {
             contact us for further assistance.
           </p>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 ">
           <Accordion />
         </div>
       </div>
