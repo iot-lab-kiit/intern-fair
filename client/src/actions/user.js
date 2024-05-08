@@ -1,6 +1,6 @@
 "use server";
 import { client } from "@/db/directus";
-import { createUser, login } from "@directus/sdk";
+import { createUser } from "@directus/sdk";
 
 // Create an account
 export const createUserr = async (data) => {
@@ -22,8 +22,8 @@ export const createUserr = async (data) => {
     throw new Error(e.errors[0].message);
   }
 };
+
 // Login a user
-// TODO : Implement custom token expiration time.
 export const getUserr = async (formData) => {
   try {
     const result = await client.login(formData.email, formData.password, {
