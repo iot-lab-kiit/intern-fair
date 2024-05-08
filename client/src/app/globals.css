@@ -45,3 +45,31 @@
     font-family: "Gilroy-Light";
     src: local("Gilroy-Light"), url(../fonts/Gilroy-Light.ttf) format("truetype");
 }
+
+/* === Scrollbars === */
+
+::-webkit-scrollbar {
+    @apply w-3;
+    @apply h-1;
+}
+
+::-webkit-scrollbar-track {
+    @apply !bg-black;
+}
+::-webkit-scrollbar-thumb {
+    @apply rounded-sm !bg-gray-400;
+}
+
+/* Firefox */
+html {
+    scrollbar-color: gray;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
