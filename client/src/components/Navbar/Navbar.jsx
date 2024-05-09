@@ -33,7 +33,7 @@ const Navbar = () => {
                   About&nbsp;Us
                 </NavLink>
                 <NavLink href="/courses">Courses</NavLink>
-                <NavLink href="/people" >People</NavLink>
+                <NavLink href="/community">People</NavLink>
                 <NavLink href="/contact">FAQ's</NavLink>
                 <NavLink href="/suggest">Suggestion&nbsp;Box</NavLink>
                 <Link href="/courses" passHref>
@@ -53,8 +53,8 @@ const Navbar = () => {
         <div className="sm:hidden">
           <div className="px-2 pt-2">
             <MobileNavLink href="/">About Us</MobileNavLink>
-            <MobileNavLink href="/team">Courses</MobileNavLink>
-            <MobileNavLink href="/people">People</MobileNavLink>
+            <MobileNavLink href="/courses">Courses</MobileNavLink>
+            <MobileNavLink href="/community">People</MobileNavLink>
             <MobileNavLink href="/contact">FAQ's</MobileNavLink>
             <MobileNavLink href="/suggest">Suggestion Box</MobileNavLink>
           </div>
