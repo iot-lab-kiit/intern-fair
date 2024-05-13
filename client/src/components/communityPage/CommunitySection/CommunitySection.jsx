@@ -1,21 +1,35 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Post from "../Post/Post";
 import CommunityList from "../CommunityList/CommunityList";
 import Image from "next/image";
+import { createPost, getAllPost } from "@/actions/post";
+
 const CommunitySection = () => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [postData, setPostData] = useState([]);
+  const [isEditing, setIsEditing] = useState(true);
+  const fileInputRef = useRef(null);
+  const [data, setData] = useState({ description: "", tags: "" });
 
-  const handleStartPostClick = () => {
-    setIsEditing(true);
+  // const handleFileInputChange = () => {
+  //   document.getElementById("fileInput").click();
+  // };
+  useEffect(() => {
+    getAllPost().then((res) => setPostData(res.result));
+  }, []);
+
+  const handleSubmit = async () => {
+    const file = fileInputRef.current.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    createPost(
+      { content: data.description, tag: data.tags.split(" ") },
+      formData
+    )
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
   };
 
-  const handleCancelClick = () => {
-    setIsEditing(false);
-  };
-  const handleFileInputChange = () => {
-    document.getElementById("fileInput").click();
-  };
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-7 mbXSmall:px-10 mbMedSmall:px-14 mbMedium:px-20">
@@ -43,10 +57,19 @@ const CommunitySection = () => {
       </div>
       <div className="flex flex-col laptop:flex-row items-center laptop:items-start justify-end gap-10 laptop:gap-8 p-6 max-w-full w-screen mt-10">
         <div className="order-2 laptop:order-2 flex flex-col gap-6 items-center justify-center w-full mbXSmall:w-[90%] mbSmall:w-[80%] mbMedium:w-[65%] laptop:w-[45%] tbPortrait:w-[45%] tbLandscape:w-1/2">
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+          {postData.map((item) => (
+            <Post
+              key={item.id}
+              id={item.id}
+              date_created={item.date_created}
+              description={item.content}
+              tag={item.tag}
+              image={item.image}
+              user_created={item.user_created}
+              likes={item.likes}
+              share={item.share}
+            />
+          ))}
           <CommunityList />
         </div>
 
@@ -61,82 +84,96 @@ const CommunitySection = () => {
               />
             </span>
           </div>
-          {isEditing ? (
-            <div className="w-full flex flex-col items-start gap-3 transition-all ease-in-out">
-              <textarea
-                placeholder="Write a description..."
-                className="border-[1.5px] border-[#DCDCE7] rounded-xl p-2 w-full h-[15rem] resize-none appearance-none"
-              ></textarea>
-              <input
-                type="text"
-                placeholder="Add up to 3 tags..."
-                className="border-[1.5px] border-[#DCDCE7] rounded-xl p-2 w-full"
-              />
-              <label
-                htmlFor="fileInput"
-                className="flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span className="w-4 h-4 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-7 laptop:h-7 inline-block rounded-full relative cursor-pointer">
-                  <Image
-                    src="/images/media.png"
-                    fill
-                    alt="Media"
-                    className="object-contain"
-                  />
-                </span>
-                <h1 className="text-sm mbMedSmall:text-base">Media</h1>
-                <input
-                  id="fileInput"
-                  type="file"
-                  className="hidden"
-                  onClick={handleFileInputChange}
+          {/* {isEditing ? ( */}
+          <div className="w-full flex flex-col items-start gap-3 transition-all ease-in-out">
+            <textarea
+              placeholder="Write a description..."
+              value={data.description}
+              onChange={(e) =>
+                setData({ ...data, description: e.target.value })
+              }
+              className="border-[1.5px] border-[#DCDCE7] rounded-xl p-2 w-full h-[15rem] resize-none appearance-none"
+            ></textarea>
+            <input
+              type="text"
+              value={data.tags}
+              placeholder="Add up to 3 tags..."
+              onChange={(e) => setData({ ...data, tags: e.target.value })}
+              className="border-[1.5px] border-[#DCDCE7] rounded-xl p-2 w-full"
+            />
+            <label
+              htmlFor="fileInput"
+              className="flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span className="w-4 h-4 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-7 laptop:h-7 inline-block rounded-full relative cursor-pointer">
+                <Image
+                  src="/images/media.png"
+                  fill
+                  alt="Media"
+                  className="object-contain"
                 />
-              </label>
-              <button
-                onClick={handleCancelClick}
-                className="flex items-center justify-center gap-2 self-center"
-              >
-                <span className="w-4 h-4 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-7 laptop:h-7 inline-block rounded-full relative cursor-pointer">
-                  <Image
-                    src="/images/cancel.png"
-                    fill
-                    alt="Media"
-                    className="object-contain"
-                  />
-                </span>
-                <h1>Cancel</h1>
-              </button>
-            </div>
-          ) : (
-            <div className="transition-all w-full ease-in-out flex flex-col justify-center items-start gap-2">
+              </span>
+              <h1 className="text-sm mbMedSmall:text-base">Media</h1>
               <input
-                type="text"
-                placeholder="Start a post"
-                onClick={handleStartPostClick}
-                className="border-[1.5px] border-[#DCDCE7] rounded-full w-full h-[3rem] p-4"
+                id="fileInput"
+                type="file"
+                ref={fileInputRef}
+                // className="hidden"
               />
-              <label
-                htmlFor="fileInput"
-                className="flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span className="w-4 h-4 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-7 laptop:h-7 inline-block rounded-full relative cursor-pointer">
-                  <Image
-                    src="/images/media.png"
-                    fill
-                    alt="Media"
-                    className="object-contain"
-                  />
-                </span>
-                <h1 className="text-sm mbMedSmall:text-base">Media</h1>
-                <input
-                  id="fileInput"
-                  type="file"
-                  className="hidden"
-                  onClick={handleFileInputChange}
+            </label>
+            {/* TODO: Improve the button */}
+            <button
+              className="border rounded-xl p-4 w-full"
+              onClick={() => handleSubmit()}
+            >
+              Submit
+            </button>
+            <button
+              onClick={() => setIsEditing(false)}
+              className="flex items-center justify-center gap-2 self-center"
+            >
+              <span className="w-4 h-4 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-7 laptop:h-7 inline-block rounded-full relative cursor-pointer">
+                <Image
+                  src="/images/cancel.png"
+                  fill
+                  alt="Media"
+                  className="object-contain"
                 />
-              </label>
-            </div>
-          )}
+              </span>
+              <h1>Cancel</h1>
+            </button>
+          </div>
+          {/* ) : ( */}
+          {/* <div className="transition-all w-full ease-in-out flex flex-col justify-center items-start gap-2">
+            <input
+              type="text"
+              placeholder="Start a post"
+              onClick={() => setIsEditing(true)}
+              className="border-[1.5px] border-[#DCDCE7] rounded-full w-full h-[3rem] p-4"
+            />
+            <label
+              htmlFor="fileInput"
+              className="flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span className="w-4 h-4 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-7 laptop:h-7 inline-block rounded-full relative cursor-pointer">
+                <Image
+                  src="/images/media.png"
+                  fill
+                  alt="Media"
+                  className="object-contain"
+                />
+              </span>
+              <h1 className="text-sm mbMedSmall:text-base">Media</h1>
+              <input
+                id="fileInput"
+                type="file"
+                className="hidden"
+                ref={fileInputRef}
+                onClick={handleFileInputChange}
+              />
+            </label>
+          </div>
+          )} */}
           {/* <input
                   type="text"
                   placeholder="Start a post"
