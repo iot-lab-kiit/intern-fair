@@ -11,6 +11,7 @@ import LearningResources from "@/components/homepage/LearningResources/page";
 export default function Home() {
   return (
     <main className="flex flex-col gap-8 max-w-[100vw]">
+      hyyy
       <Navbar />
       <Hero />
       <About align1="flex-row" data={data}/>
