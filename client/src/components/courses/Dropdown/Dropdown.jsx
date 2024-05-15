@@ -49,10 +49,10 @@ const Dropdown = ({ title, links }) => {
 };
 export const ClientOnlyDropdown = ({ DropDownData }) => {
   return (
-    <div>
+    <>
       {DropDownData.map((data, index) => (
         <Dropdown key={index} title={data.title} links={data.links} />
       ))}
-    </div>
+    </>
   );
 };
