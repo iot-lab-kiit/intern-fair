@@ -55,14 +55,19 @@ const page = () => {
       <Navigation />
 
       <div className="w-screen max-w-full flex flex-col items-center justify-center gap-6 mbMedium:px-16 mbSmall:px-5 mbMini:px-0 my-16">
-      <ExploreComponent buttonText="Courses for you 🤝" headingText="Tailored Courses for Your Success" contentText="Explore our comprehensive selection of courses tailored to meet your academic and career aspirants. From foundational subjects to advanced specialties, we offer a diverse range of courses designed to equip you with the knowledge and skills" />
+        <ExploreComponent
+          buttonText="Courses for you 🤝"
+          headingText="Tailored Courses for Your Success"
+          contentText="Explore our comprehensive selection of courses tailored to meet your academic and career aspirants. From foundational subjects to advanced specialties, we offer a diverse range of courses designed to equip you with the knowledge and skills"
+        />
       </div>
       {/* dropdowns */}
-      {/* <div className="w-screen max-w-full flex flex-col items-center justify-center gap-8 mbMedium:px-16 mbSmall:px-5 mbMini:px-0">
+      <div className="w-screen max-w-full flex flex-col items-center justify-center gap-8 mbMedium:px-16 mbSmall:px-5 mbMini:px-0">
         {DropDownData.map((data, index) => (
-          <Dropdown key={index} title={data.title} links={data.links} />
+          // <Dropdown key={index} title={data.title} links={data.links} />
+          <div key={index}>{data.title}</div>
         ))}
-      </div> */}
+      </div>
     </>
   );
 };
