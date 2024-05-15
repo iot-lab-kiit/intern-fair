@@ -44,7 +44,7 @@ const Dropdown = ({ title, links }) => {
         >
           {links.map((link, index) => (
             <Link
-              href={link.url}
+              href={"/courses" + link.url}
               className="border-b border-[#081245] w-full h-16 flex items-center justify-between"
             >
               <div key={index} className="w-full h-16 ">
