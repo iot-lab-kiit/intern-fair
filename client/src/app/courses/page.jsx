@@ -62,11 +62,11 @@ const page = () => {
         )} */}
       </div>
       {/* dropdowns */}
-      <div className="w-screen max-w-full flex flex-col items-center justify-center gap-8 mbMedium:px-16 mbSmall:px-5 mbMini:px-0">
+      {/* <div className="w-screen max-w-full flex flex-col items-center justify-center gap-8 mbMedium:px-16 mbSmall:px-5 mbMini:px-0">
         {DropDownData.map((data, index) => (
           <Dropdown key={index} title={data.title} links={data.links} />
         ))}
-      </div>
+      </div> */}
     </>
   );
 };
