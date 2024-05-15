@@ -8,8 +8,13 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 const Navigation = () => {
+  const router = useRouter();
+  const handleBackButtonClick = () => {
+    router.back();
+  };
   const items = [
     "Courses",
     "Mock test",
@@ -27,7 +32,9 @@ const Navigation = () => {
         className="back-button text-base flex justify-start w-[95%] h-16"
         style={{ margin: "0 5%" }}
       >
-        <div className="back-button flex gap-3 items-center justify-center">
+        <div className="back-button flex gap-3 items-center justify-center"
+        onClick={handleBackButtonClick}
+        >
           <div className="h-5 w-5">
             <Image src="/images/back.png" height={20} width={20} />
           </div>
