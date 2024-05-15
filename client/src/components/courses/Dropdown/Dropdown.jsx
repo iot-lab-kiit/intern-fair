@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const Dropdown = ({ title, links }) => {
+const Dropdown = ({ key, title, links }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -21,14 +21,14 @@ const Dropdown = ({ title, links }) => {
         <div className={`text-2xl font-bold ${isOpen ? "text-[#1F3DD9]" : ""}`}>
           {title}
         </div>
-        <div className="w-4">
+        {/* <div className="w-4">
           <Image
             src={isOpen ? "icons/vector-up.svg" : "icons/vector-down.svg"}
             alt="arrow"
             width={20}
             height={20}
           />
-        </div>
+        </div> */}
       </button>
       {/* Dropdown styling */}
       {/* <div className="w-screen max-w-full flex flex-col items-center justify-center gap-6 mbMedium:px-16 mbSmall:px-5 mbMini:px-0">
@@ -50,13 +50,13 @@ const Dropdown = ({ title, links }) => {
               <div key={index} className="w-full h-16 ">
                 <div className="flex flex-row justify-between text-2xl font-bold text-[#081245] hover:text-[#1F3DD9]">
                   <div className="px-14">{link.label}</div>
-                  <div className="w-4">
+                  {/* <div className="w-4">
                     <Image
                       width={20}
                       height={20}
                       src={"icons/Vector-black.svg"}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </Link>
