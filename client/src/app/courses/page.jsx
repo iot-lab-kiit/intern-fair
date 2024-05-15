@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar/Navbar";
 import Navigation from "@/components/courses/Navigation/Navigation";
-import ExploreComponent from "@/components/homepage/common/ExploreComponent";
-import Dropdown from "@/components/Courses/Dropdown/Dropdown";
+
 const page = () => {
   const DropDownData = [
     {
@@ -51,22 +50,8 @@ const page = () => {
   return (
     <>
       <Navbar />
-
       <Navigation />
-
-      <div className="w-screen max-w-full flex flex-col items-center justify-center gap-6 mbMedium:px-16 mbSmall:px-5 mbMini:px-0 my-16">
-        {/* {ExploreComponent(
-          "Courses for you 📚",
-          "Tailored Courses for Your Success",
-          "Explore our comprehensive selection of courses tailored to meet your academic and career aspirations. From foundational subjects to advanced specialties, we offer a diverse range of courses designed to equip you with the knowledge and skills."
-        )} */}
-      </div>
-      {/* dropdowns */}
-      {/* <div className="w-screen max-w-full flex flex-col items-center justify-center gap-8 mbMedium:px-16 mbSmall:px-5 mbMini:px-0">
-        {DropDownData.map((data, index) => (
-          <Dropdown key={index} title={data.title} links={data.links} />
-        ))}
-      </div> */}
+      hello
     </>
   );
 };
