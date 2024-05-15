@@ -1,7 +1,7 @@
 import React from "react";
 
-const Footer = () => {
-  return <div></div>;
+const Dropdown = () => {
+  return <div>Dropdown</div>;
 };
 
-export default Footer;
+export default Dropdown;
