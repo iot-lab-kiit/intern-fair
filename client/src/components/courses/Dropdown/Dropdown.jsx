@@ -47,8 +47,9 @@ const Dropdown = ({ key, title, links }) => {
             <Link
               href={"/courses" + link.url}
               className="border-b border-[#081245] w-full h-16 flex items-center justify-between"
+              key={index}
             >
-              <div key={index} className="w-full h-16 ">
+              <div className="w-full h-16 ">
                 <div className="flex flex-row justify-between text-2xl font-bold text-[#081245] hover:text-[#1F3DD9]">
                   <div className="px-14">{link.label}</div>
                   {/* <div className="w-4">
