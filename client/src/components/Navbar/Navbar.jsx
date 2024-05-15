@@ -1,10 +1,21 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import NavLink from "./NavLink";
 import MobileNavLink from "./MobileNavLink";
 import MobileMenuTransition from "./MobileMenuTransition";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const pathname = usePathname();
+
+  const hideNavbarRoutes = ["/login", "/signup"];
+
+  const shouldHideNavbar = hideNavbarRoutes.includes(pathname);
+
+  if (shouldHideNavbar) {
+    return null;
+  }
   return (
     <nav className="border-b border-[#ECECEC] max-sm:border-opacity-0">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">

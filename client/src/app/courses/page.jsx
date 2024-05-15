@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar/Navbar";
 import Navigation from "@/components/courses/Navigation/Navigation";
 import ExploreComponent from "@/components/homepage/common/ExploreComponent";
 import { ClientOnlyDropdown } from "@/components/courses/Dropdown/Dropdown";
@@ -50,8 +49,6 @@ const page = () => {
   ];
   return (
     <>
-      <Navbar />
-
       <Navigation />
 
       <div className="w-screen max-w-full flex flex-col items-center justify-center gap-6 mbMedium:px-16 mbSmall:px-5 mbMini:px-0 my-16">
