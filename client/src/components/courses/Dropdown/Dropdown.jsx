@@ -2,7 +2,6 @@
 import { useState } from "react";
 import Link from "next/link";
 
-
 const Dropdown = ({ title, links }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,5 +47,12 @@ const Dropdown = ({ title, links }) => {
     </>
   );
 };
-
-export default Dropdown;
+export const ClientOnlyDropdown = ({ DropDownData }) => {
+  return (
+    <div>
+      {DropDownData.map((data, index) => (
+        <Dropdown key={index} title={data.title} links={data.links} />
+      ))}
+    </div>
+  );
+};
