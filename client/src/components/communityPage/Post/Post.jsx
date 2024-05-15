@@ -10,15 +10,19 @@ const Post = ({
   date_created,
   user_created,
   likes,
-  share,
+  // share,
 }) => {
   const [expanded, setexpanded] = useState(false);
   const [liked, setliked] = useState(false);
+  const [saved, setsaved] = useState(false);
   const text =
     "🌍 CSS stands for Cascading Style Sheets. It is a style sheet language used to describe the presentation and formatting of HTML CSS consists of selectors, properties, and values. Selectors are patterns that target HTML elements, allowing developers to apply styles selectively. Properties are the styling attributes, such as color, font-size.";
 
   const toggleExpanded = () => {
     setexpanded(!expanded);
+  };
+  const toggleSave = () => {
+    setsaved(!saved);
   };
   const toggleLike = () => {
     setliked((prev) => !prev);
@@ -29,11 +33,11 @@ const Post = ({
       .then((res) => console.log(res))
       .catch((e) => console.log(e));
   };
-  const handleShare = (id, share) => {
-    updatePost(JSON.stringify({ id, share: share + 1 }))
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
-  };
+  // const handleShare = (id, share) => {
+  //   updatePost(JSON.stringify({ id, share: share + 1 }))
+  //     .then((res) => console.log(res))
+  //     .catch((e) => console.log(e));
+  // };
   return (
     // w-[28rem] tbPortrait:w-[32rem] min-[1400px]:w-[36rem] tbLandscape:w-[40rem]
     <div className="p-2 mbSmall:p-4 border-[1.5px] border-[#DCDCE7] w-full  rounded-lg">
@@ -95,18 +99,23 @@ const Post = ({
             onClick={() => handleLikes(id, likes)}
           >
             <div className="w-5 h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-6 laptop:h-6 tbPortrait:w-8 tbPortrait:h-8 inline-block rounded-full relative cursor-pointer">
-              <Image
-                src="/images/Heart.png"
-                fill
-                alt="about"
-                className="object-contain"
-              />
+              <button onClick={toggleLike}>
+                <Image
+                  src={liked ? "/icons/liked.svg" : "/images/Heart.png "}
+                  fill
+                  alt="about"
+                  className="object-contain"
+                />
+              </button>
+              {/* <GoHeart size={32} color="#FF0000" /> */}
+              {/* <FcLike size={32} color="#00FF00" /> */}
             </div>
             <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
               {likes}
             </p>
           </div>
-          <div
+          {/* currently share is removed */}
+          {/* <div
             className="flex items-center justify-center gap-2"
             onClick={() => handleShare(id, share)}
           >
@@ -121,16 +130,18 @@ const Post = ({
             <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
               {share}
             </p>
-          </div>
+          </div> */}
         </div>
         <div className="">
           <span className="w-5 h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-6 laptop:h-6 tbPortrait:w-8 tbPortrait:h-8 inline-block rounded-full relative cursor-pointer">
-            <Image
-              src="/images/Bookmark.png"
-              fill
-              alt="about"
-              className="object-contain"
-            />
+            <button onClick={toggleSave}>
+              <Image
+                src={saved ? "/icons/bookmarked.png" : "/icons/Bookmark.png"}
+                fill
+                alt="about"
+                className="object-contain"
+              />
+            </button>
           </span>
         </div>
       </div>
