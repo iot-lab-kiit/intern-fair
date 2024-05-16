@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getTopics, getSubtopicsByTopicId } from "@/actions/topic";
 import Navbar from "@/components/Navbar/Navbar";
 import Navigation from "@/components/courses/Navigation/Navigation";
@@ -14,8 +14,7 @@ const Page = () => {
     const fetchTopics = async () => {
       try {
         const topicsData = await getTopics();
-        setTopics(topicsData.result); // Set the topics state with fetched data
-        // console.log(topicsData.result);
+        setTopics(topicsData.result);
       } catch (error) {
         console.error("Error fetching topics:", error);
       }
@@ -23,6 +22,22 @@ const Page = () => {
 
     fetchTopics();
   }, []);
+
+  const fetchSubtopicsForTopic = async (subtopicIds) => {
+    const subtopicPromises = subtopicIds.map(async (subtopicId) => {
+      try {
+        const subtopicData = await getSubtopicsByTopicId(subtopicId);
+        return {
+          label: subtopicData.name,
+          url: "#",
+        };
+      } catch (error) {
+        console.error("Error fetching subtopic:", error);
+        return null;
+      }
+    });
+    return Promise.all(subtopicPromises);
+  };
 
   return (
     <>
@@ -33,27 +48,15 @@ const Page = () => {
         <ExploreComponent
           buttonText="Courses for you 🤝"
           headingText="Tailored Courses for Your Success"
-          contentText="Explore our comprehensive selection of courses tailored to meet your academic and career aspirants. From foundational subjects to advanced specialties, we offer a diverse range of courses designed to equip you with the knowledge and skills"
+          contentText="Explore our comprehensive selection of courses tailored to meet your academic and career aspirations. From foundational subjects to advanced specialties, we offer a diverse range of courses designed to equip you with the knowledge and skills."
         />
       </div>
-      {/* dropdowns */}
+
       <div className="w-screen max-w-full flex flex-col items-center justify-center gap-8 mbMedium:px-16 mbSmall:px-5 mbMini:px-0">
         <ClientOnlyDropdown
           DropDownData={topics.map((topic) => ({
             title: topic.name,
-            links: (topic.subTopicID ?? []).map(async (subtopicId) => {
-              try {
-                const subtopicData = await getSubtopicsByTopicId(subtopicId);
-                console.log(subtopicData.result);
-                return {
-                  label: subtopicData.result.name,
-                  url: "#",
-                };
-              } catch (error) {
-                console.error("Error fetching subtopic:", error);
-                return null;
-              }
-            }),
+            links: fetchSubtopicsForTopic(topic.subTopicID ?? []),
           }))}
         />
       </div>

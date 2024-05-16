@@ -37,16 +37,13 @@ export const getTopicById = async (id) => {
 // Get subtopics by their IDs
 export const getSubtopicsByTopicId = async (subtopicIds) => {
   try {
-    // const subtopicsPromises = subtopicIds.map((subtopicId) => {
-    //   return clientToken(process.env.TOKEN).request(
-    //     readItems("SubTopic", subtopicId)
-    //   );
-    // });
+
     console.log(subtopicIds);
-    const subTopicData = await clientToken(process.env.TOKEN).request(readItems("SubTopic", subtopicIds))
+    const subTopicData = await clientToken(process.env.TOKEN).request(
+      readItem("SubTopic", subtopicIds)
+    );
     console.log(subTopicData);
 
-    //const subtopics = await Promise.all(subtopicsPromises);
 
     return {
       success: true,
