@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState, useEffect } from "react";
 import { getTopics, getSubtopicsByTopicId } from "@/actions/topic";
@@ -26,7 +27,9 @@ const Page = () => {
 
   return (
     <>
+
       <Navbar />
+
       <Navigation />
       <div className="w-screen max-w-full flex flex-col items-center justify-center gap-6 mbMedium:px-16 mbSmall:px-5 mbMini:px-0 my-16">
         <ExploreComponent

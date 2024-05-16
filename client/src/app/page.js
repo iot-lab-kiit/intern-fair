@@ -11,11 +11,9 @@ import LearningResources from "@/components/homepage/LearningResources/page";
 export default function Home() {
   return (
     <main className="flex flex-col gap-8 max-w-[100vw]">
-
-      <Navbar />
       <Hero />
-      <About align1="flex-row" data={data}/>
-      <Mission  />
+      <About align1="flex-row" data={data} />
+      <Mission />
       <Courses />
       <LearningResources />
       <BTS align1="flex-row-reverse" data={data} />
