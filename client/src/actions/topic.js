@@ -5,17 +5,23 @@ import { readItem, readItems } from "@directus/sdk";
 // Get all topics
 export const getTopics = async () => {
   try {
+    // FIXME : Highly inefficient, need to optimize
     const result = await clientToken(process.env.TOKEN).request(
-      readItems("Topic")
+      readItems("Topic", {
+        fields: [
+          "id",
+          "name",
+          {
+            subTopicID: ["id", "name"],
+          },
+        ],
+      })
     );
-    console.log(result);
-    if (!result) {
-      throw new Error("No topics found");
-    }
-
-    return { success: true, message: "Found all topics", result: result };
+    if (!result) throw new Error("No topics found");
+    return { success: true, message: "Found all topics", result };
   } catch (e) {
-    throw new Error(e.errors[0].message);
+    console.log(e);
+    // throw new Error(e.errors[0].message || e.message);
   }
 };
 
@@ -25,33 +31,31 @@ export const getTopicById = async (id) => {
     const result = await clientToken(process.env.TOKEN).request(
       readItem("Topic", id)
     );
-    if (!result) {
-      throw new Error("Topic not found");
-    }
+    if (!result) throw new Error("Topic not found");
+
     return { success: true, message: "Found topic by ID", result: result };
   } catch (e) {
-    throw new Error(e.errors[0].message);
+    console.log(e);
+    throw new Error(e.errors[0].message || e.message);
   }
 };
 
 // Get subtopics by their IDs
 export const getSubtopicsByTopicId = async (subtopicIds) => {
   try {
-
-    console.log(subtopicIds);
     const subTopicData = await clientToken(process.env.TOKEN).request(
-      readItem("SubTopic", subtopicIds)
+      readItem("SubTopic", subtopicIds, {
+        fields: ["name", "MD", "decription"],
+      })
     );
-    console.log(subTopicData);
-
 
     return {
       success: true,
       message: "Found subtopics by IDs",
       result: subTopicData,
     };
-  } catch (error) {
-    console.error(error);
-    // throw new Error("Failed to fetch subtopics");
+  } catch (e) {
+    console.log(e);
+    throw new Error(e.errors[0].message || e.message);
   }
 };
