@@ -52,6 +52,7 @@ export const ClientOnlyDropdown = ({ DropDownData }) => {
     <>
       {DropDownData.map((data, index) => (
         <Dropdown key={index} title={data.title} links={data.links} />
+      
       ))}
     </>
   );

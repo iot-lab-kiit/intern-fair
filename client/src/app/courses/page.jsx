@@ -1,57 +1,32 @@
+"use client";
+import { useState, useEffect } from "react";
+import { getTopics, getSubtopicsByTopicId } from "@/actions/topic";
 import Navbar from "@/components/Navbar/Navbar";
 import Navigation from "@/components/courses/Navigation/Navigation";
 import ExploreComponent from "@/components/homepage/common/ExploreComponent";
 import { ClientOnlyDropdown } from "@/components/courses/Dropdown/Dropdown";
-const page = () => {
-  const DropDownData = [
-    {
-      title: "Web Development",
-      links: [
-        { label: "HTML", url: "/html" },
-        { label: "CSS", url: "/css" },
-        { label: "JS", url: "/js" },
-        { label: "React", url: "/react" },
-        { label: "Node", url: "/node" },
-        { label: "Express", url: "/express" },
-      ],
-    },
-    {
-      title: "App Development",
-      links: [
-        { label: "React", url: "/react" },
-        { label: "Flutter", url: "/flutter" },
-        { label: "Swift", url: "/swift" },
-      ],
-    },
-    {
-      title: "Data Science",
-      links: [
-        { label: "Python", url: "/python" },
-        { label: "R", url: "/r" },
-        { label: "SQL", url: "/sql" },
-      ],
-    },
-    {
-      title: "Machine Learning",
-      links: [
-        { label: "ML", url: "/ml" },
-        { label: "DL", url: "/dl" },
-        { label: "AI", url: "/ai" },
-      ],
-    },
-    {
-      title: "Cloud Computing",
-      links: [
-        { label: "AWS", url: "/aws" },
-        { label: "Azure", url: "/azure" },
-        { label: "GCP", url: "/gcp" },
-      ],
-    },
-  ];
+import Link from "next/link";
+
+const Page = () => {
+  const [topics, setTopics] = useState([]);
+
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const topicsData = await getTopics();
+        setTopics(topicsData.result); // Set the topics state with fetched data
+        // console.log(topicsData.result);
+      } catch (error) {
+        console.error("Error fetching topics:", error);
+      }
+    };
+
+    fetchTopics();
+  }, []);
+
   return (
     <>
       <Navbar />
-
       <Navigation />
 
       <div className="w-screen max-w-full flex flex-col items-center justify-center gap-6 mbMedium:px-16 mbSmall:px-5 mbMini:px-0 my-16">
@@ -63,10 +38,27 @@ const page = () => {
       </div>
       {/* dropdowns */}
       <div className="w-screen max-w-full flex flex-col items-center justify-center gap-8 mbMedium:px-16 mbSmall:px-5 mbMini:px-0">
-        <ClientOnlyDropdown DropDownData={DropDownData} />
+        <ClientOnlyDropdown
+          DropDownData={topics.map((topic) => ({
+            title: topic.name,
+            links: (topic.subTopicID ?? []).map(async (subtopicId) => {
+              try {
+                const subtopicData = await getSubtopicsByTopicId(subtopicId);
+                console.log(subtopicData.result);
+                return {
+                  label: subtopicData.result.name,
+                  url: "#",
+                };
+              } catch (error) {
+                console.error("Error fetching subtopic:", error);
+                return null;
+              }
+            }),
+          }))}
+        />
       </div>
     </>
   );
 };
 
-export default page;
+export default Page;
