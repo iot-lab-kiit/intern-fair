@@ -2,7 +2,6 @@ import Carousel from "@/components/ui/Carousel";
 import TitleCard from "@/components/ui/TitleCard";
 import Image from "next/image";
 const About = ({ align1, data }) => {
- 
   return (
     <div className=" flex items-center justify-center  overflow-hidden ">
       <div className="content flex flex-col mx-10 xl:ml-40 lg:items-start xl:max-w-[120rem] lg: px-8">
