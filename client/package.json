@@ -22,6 +22,7 @@
     "embla-carousel": "^8.0.0",
     "embla-carousel-react": "^8.0.0",
     "framer-motion": "^11.0.20",
+    "highlight.js": "^11.9.0",
     "mongoose": "^8.2.1",
     "next": "14.1.0",
     "react": "^18",
