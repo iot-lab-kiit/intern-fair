@@ -8,11 +8,13 @@ import ReactHtmlParser, {
 } from "react-html-parser";
 import { useEffect, useState } from "react";
 import { getSubtopicsByTopicId } from "@/actions/topic";
+import content from "@/data/courses/content";
+import CodeSnippet from "@/components/courses/CodeSnippet/CodeSnippet";
 
 const page = ({ params }) => {
   // params = { id : uuid}
-  const [data, setData] = useState({});
-
+  const [data, setData] = useState(content.data);
+  console.log(setData);
   useEffect(() => {
     const fetchSubTopics = async () => {
       try {
@@ -28,15 +30,31 @@ const page = ({ params }) => {
 
   return (
     <>
-      {/* {data.map((item) => (
-        <div key={item.id}>
-          <h1>{item.name}</h1>
-          <ReactMarkdown>{item.MD}</ReactMarkdown>
-          <br />
-          <div>{ReactHtmlParser(item.description)}</div>
-        </div>
-      ))} */}
-      {
+      <div className="w-full mbMedium:w-[80%] p-10 px-6 mbXSmall:px-10 mbMedium:px-16 flex flex-col items-start justify-center gap-4 mbMedSmall:gap-6 mbMedium:gap-8 ">
+        <h1 className="text-base mbXSmall:text-lg mbMedSmall:text-xl mbMedium:text-2xl tbPortrait:text-3xl tbLandscape:text-4xl text-[#081245] font-semibold">
+          {content.title}
+        </h1>
+        {data.map((item) => (
+          <div
+            key={item.id}
+            className="w-full flex flex-col items-start justify-center gap-5"
+          >
+            <h1 className="text-[#081245] text-sm mbXSmall:text-sm mbMedSmall:text-base mbMedium:text-lg tbPortrait:text-xl tbLandscape:text-2xl font-semibold">
+              {item.name}
+            </h1>
+            <p className="text-[#09123E] font-medium text-xs mbMedSmall:text-sm mbMedium:text-base tbPortrait:text-lg tbLandscape:text-xl">
+              {item.description}
+            </p>
+            {/* <ReactMarkdown>{item.MD}</ReactMarkdown> */}
+            <br />
+            {/* <div>{ReactHtmlParser(item.description)}</div> */}
+            {item.snippet && (
+              <CodeSnippet language={item.language} code={item.MD} />
+            )}
+          </div>
+        ))}
+      </div>
+      {/* {
         <div>
           <h1>{data.name}</h1>
           <>Markdown : </>
@@ -50,7 +68,7 @@ const page = ({ params }) => {
           <>HTML 2: </>
           <div dangerouslySetInnerHTML={{ __html: data.decription }}></div>
         </div>
-      }
+      } */}
     </>
   );
 };
