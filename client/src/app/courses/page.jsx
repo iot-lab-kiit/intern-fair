@@ -6,6 +6,7 @@ import Navigation from "@/components/courses/Navigation/Navigation";
 import ExploreComponent from "@/components/homepage/common/ExploreComponent";
 import { ClientOnlyDropdown } from "@/components/courses/Dropdown/Dropdown";
 import Link from "next/link";
+import { checkboxGroup } from "@nextui-org/react";
 
 const Page = () => {
   const [topics, setTopics] = useState([]);
@@ -23,27 +24,9 @@ const Page = () => {
     fetchTopics();
   }, []);
 
-  const fetchSubtopicsForTopic = async (subtopicIds) => {
-    const subtopicPromises = subtopicIds.map(async (subtopicId) => {
-      try {
-        const subtopicData = await getSubtopicsByTopicId(subtopicId);
-        return {
-          label: subtopicData.name,
-          url: "#",
-        };
-      } catch (error) {
-        console.error("Error fetching subtopic:", error);
-        return null;
-      }
-    });
-    return Promise.all(subtopicPromises);
-  };
-
   return (
     <>
-      <Navbar />
       <Navigation />
-
       <div className="w-screen max-w-full flex flex-col items-center justify-center gap-6 mbMedium:px-16 mbSmall:px-5 mbMini:px-0 my-16">
         <ExploreComponent
           buttonText="Courses for you 🤝"
@@ -53,12 +36,7 @@ const Page = () => {
       </div>
 
       <div className="w-screen max-w-full flex flex-col items-center justify-center gap-8 mbMedium:px-16 mbSmall:px-5 mbMini:px-0">
-        <ClientOnlyDropdown
-          DropDownData={topics.map((topic) => ({
-            title: topic.name,
-            links: fetchSubtopicsForTopic(topic.subTopicID ?? []),
-          }))}
-        />
+        <ClientOnlyDropdown DropDownData={topics} />
       </div>
     </>
   );
