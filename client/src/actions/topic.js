@@ -45,7 +45,7 @@ export const getTopicById = async (id) => {
 export const getSubtopicsByTopicId = async (subtopicIds) => {
   try {
     const subTopicData = await clientToken(process.env.TOKEN).request(
-      readItems("SubTopic", subtopicIds, {
+      readItem("SubTopic", subtopicIds, {
         fields: ["id", "name"],
       })
     );
@@ -67,12 +67,19 @@ export const getsubSubtopics = async (subtopicIds) => {
   try {
     const subSubTopicData = await clientToken(process.env.TOKEN).request(
       readItem("SubTopic", subtopicIds, {
-       
         fields: [
           "id",
           "name",
           {
-            subSubTopicID: ["id", "subTitle", "content","code_snippet","code_language","images","videos"],
+            subSubTopicID: [
+              "id",
+              "subTitle",
+              "content",
+              "code_snippet",
+              "code_language",
+              "images",
+              "videos",
+            ],
           },
         ],
       })
