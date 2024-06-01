@@ -17,6 +17,7 @@ export const getTopics = async () => {
         ],
       })
     );
+    console.log(result);
     if (!result) throw new Error("No topics found");
     return { success: true, message: "Found all topics", result };
   } catch (e) {
@@ -45,17 +46,53 @@ export const getSubtopicsByTopicId = async (subtopicIds) => {
   try {
     const subTopicData = await clientToken(process.env.TOKEN).request(
       readItem("SubTopic", subtopicIds, {
-        fields: ["name", "MD", "decription"],
+        fields: ["id", "name"],
       })
     );
-
+    console.log(subTopicData);
+    if (!subTopicData) throw new Error("No Subtopics found");
     return {
       success: true,
       message: "Found subtopics by IDs",
       result: subTopicData,
     };
-  } catch (e) {
-    console.log(e);
-    throw new Error(e.errors[0].message || e.message);
+  } catch (error) {
+    console.log(error);
+    // throw new Error(e.errors[0].message || e.message);
+  }
+};
+
+// Get subtopics by their IDs
+export const getsubSubtopics = async (subtopicIds) => {
+  try {
+    const subSubTopicData = await clientToken(process.env.TOKEN).request(
+      readItem("SubTopic", subtopicIds, {
+        fields: [
+          "id",
+          "name",
+          {
+            subSubTopicID: [
+              "id",
+              "subTitle",
+              "content",
+              "code_snippet",
+              "code_language",
+              "images",
+              "videos",
+            ],
+          },
+        ],
+      })
+    );
+    console.log(subSubTopicData);
+    if (!subSubTopicData) throw new Error("No Subtopics found");
+    return {
+      success: true,
+      message: "Found subtopics by IDs",
+      result: subSubTopicData,
+    };
+  } catch (error) {
+    console.log(error);
+    // throw new Error(e.errors[0].message || e.message);
   }
 };
