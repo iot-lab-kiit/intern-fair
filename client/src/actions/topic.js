@@ -10,6 +10,7 @@ export const getTopics = async () => {
         fields: ["id", "name", { subTopicID: ["id", "name"] }],
       })
     );
+    console.log(result);
     if (!result) throw new Error("No topics found");
     return { success: true, message: "Found all topics", result };
   } catch (e) {
@@ -38,7 +39,7 @@ export const getSubtopicsByTopicId = async (subtopicIds) => {
   try {
     const subTopicData = await clientToken(process.env.TOKEN).request(
       readItem("SubTopic", subtopicIds, {
-        fields: ["name", "MD", "decription"],
+        fields: ["id", "name"],
       })
     );
     if (!subTopicData) throw new Error("No Subtopics found");
