@@ -5,16 +5,9 @@ import { readItem, readItems } from "@directus/sdk";
 // Get all topics
 export const getTopics = async () => {
   try {
-    // FIXME : Highly inefficient, need to optimize
     const result = await clientToken(process.env.TOKEN).request(
       readItems("Topic", {
-        fields: [
-          "id",
-          "name",
-          {
-            subTopicID: ["id", "name"],
-          },
-        ],
+        fields: ["id", "name", { subTopicID: ["id", "name"] }],
       })
     );
     console.log(result);
@@ -49,7 +42,6 @@ export const getSubtopicsByTopicId = async (subtopicIds) => {
         fields: ["id", "name"],
       })
     );
-    console.log(subTopicData);
     if (!subTopicData) throw new Error("No Subtopics found");
     return {
       success: true,
@@ -84,7 +76,6 @@ export const getsubSubtopics = async (subtopicIds) => {
         ],
       })
     );
-    console.log(subSubTopicData);
     if (!subSubTopicData) throw new Error("No Subtopics found");
     return {
       success: true,
