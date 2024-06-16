@@ -38,7 +38,7 @@ const Navbar = () => {
             </div>
             {/* Desktop Menu Links */}
             <div className="hidden sm:block sm:ml-6 md:justify-self-end ">
-              <div className="flex mbMedium:space-x-1 lg:space-x-4">
+              <div className="flex mbMedium:space-x-2 lg:space-x-4">
                 {/* Links */}
                 <NavLink href="/" title="homepage-link">
                   About&nbsp;Us
