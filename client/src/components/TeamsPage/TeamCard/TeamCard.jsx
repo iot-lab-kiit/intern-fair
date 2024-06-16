@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { icons } from "@/data/TeamsPage/PeopleData";
 
 const TeamCard = ({ person }) => {
   const [hoveredIcon, setHoveredIcon] = useState(null);
@@ -12,21 +13,6 @@ const TeamCard = ({ person }) => {
   const handleMouseLeave = () => {
     setHoveredIcon(null);
   };
-
-  const icons = [
-    {
-      id: "github",
-      defaultSrc: "/icons/github_grey.png",
-      hoverSrc: "/icons/github.png",
-      url: person.githubUrl,
-    },
-    {
-      id: "linkedin",
-      defaultSrc: "/icons/linkedin_grey.png",
-      hoverSrc: "/icons/linkedin.png",
-      url: person.linkedinUrl,
-    },
-  ];
 
   return (
     <div className="border-[#DCDCE7] hover:border-[#1F3DD9] transition-all border-2 rounded-xl h-[18rem] w-[15rem] mbMedSmall:h-[18rem] mbMedSmall:w-[13rem] mbSmall:h-[20rem] mbSmall:w-[15rem] mbMedium:h-[23rem] mbMedium:w-[18rem] tbPortrait:h-[25rem] tbPortrait:w-[20rem] min-[1440px]:h-[28rem] min-[1440px]:w-[23rem] p-3.5 flex flex-col items-center justify-start gap-3 mbMedium:gap-4">
@@ -45,7 +31,7 @@ const TeamCard = ({ person }) => {
         {icons.map((icon) => (
           <a
             key={icon.id}
-            href={icon.url}
+            href={icon.id === "github" ? person.githubUrl : person.linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
             onMouseEnter={() => handleMouseEnter(icon.id)}
