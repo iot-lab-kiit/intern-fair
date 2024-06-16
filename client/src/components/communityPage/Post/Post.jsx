@@ -55,7 +55,7 @@ const Post = ({
           </div>
           <div className="flex-col flex gap-1 self-start mbSmall:self-center mbSmall:gap-0">
             <h1 className="text-[#09123E] text-[0.8rem] mbMedSmall:text-[0.9rem] mbSmall:text-base mbMedium:text-lg leading-5 mbMedium:leading-7 tbPortrait:text-xl tbLandscape:text-2xl font-semibold">
-              {user_created}
+              {user_created.first_name}
             </h1>
             <p className="text-[#7D8195] font-medium text-[0.7rem] mbMedSmall:text-[0.7rem] leading-3 mbSmall:text-base mbMedium:text-base tbPortrait:text-lg">
               {date_created}
