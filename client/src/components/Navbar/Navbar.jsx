@@ -53,6 +53,29 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
+{/* Desktop Menu Links */}
+            <div className="hidden sm:block sm:ml-6 md:justify-self-end ">
+              <div className="flex mbMedium:space-x-2 lg:space-x-4">
+                {/* Links */}
+                <NavLink href="/" title="homepage-link">
+                  About&nbsp;Us
+                </NavLink>
+                <NavLink href="/courses">Courses</NavLink>
+                <NavLink href="/community">People</NavLink>
+                <NavLink href="/contact">FAQ's</NavLink>
+                <NavLink href="/suggest">Suggestion&nbsp;Box</NavLink>
+                <NavLink href="/team">Team</NavLink>
+                <Link href="/courses" passHref>
+                  <button className="flex justify-center items-center px-3 py-1.5 border-1 rounded-md focus:outline-none text-indigo-700 bg-transparent cursor-pointer transition-transform duration-500 border-2 border-indigo-600 rounded-10 shadow-inset-0 mbSmall:max-md:h-8 mbSmall:max-md:mt-0.5">
+                    Courses
+                    <img src="icons/Vector.svg" className="px-2" alt="" />
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
             {/* Mobile Menu */}
             <MobileMenuTransition>
