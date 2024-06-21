@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
-
+  const isHomePage = pathname === '/';
   const hideNavbarRoutes = ["/login", "/signup"];
 
   const shouldHideNavbar = hideNavbarRoutes.includes(pathname);
@@ -47,8 +47,8 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink href="/courses">Courses</NavLink>
                 <NavLink href="/community">Community</NavLink>
-                <NavLink href="#faq">FAQ's</NavLink>
-                <NavLink href="#suggestion">Suggestion&nbsp;Box</NavLink>
+                <NavLink href={isHomePage ? '#faq' : '/#faq'}>FAQ's</NavLink>
+                <NavLink href={isHomePage ? '#suggestion' : '/#suggestion'}>Suggestion</NavLink>
                 <NavLink href="/team">Team</NavLink>
                 <Link href="/courses" passHref>
                   <button className="flex justify-center items-center px-3 py-1.5 border-1 rounded-md focus:outline-none text-indigo-700 bg-transparent cursor-pointer transition-transform duration-500 border-2 border-indigo-600 rounded-10 shadow-inset-0 mbSmall:max-md:h-8 mbSmall:max-md:mt-0.5">
@@ -69,8 +69,9 @@ const Navbar = () => {
             <MobileNavLink href="/">About Us</MobileNavLink>
             <MobileNavLink href="/courses">Courses</MobileNavLink>
             <MobileNavLink href="/community">Community</MobileNavLink>
-            <MobileNavLink href="/contact">FAQ's</MobileNavLink>
-            <MobileNavLink href="/suggest">Suggestion Box</MobileNavLink>
+            <MobileNavLink href={isHomePage ? '#faq' : '/#faq'}>FAQ's</MobileNavLink>
+            <MobileNavLink href={isHomePage ? '#suggestion' : '/#suggestion'}>Suggestion</MobileNavLink>
+            
           </div>
         </div>
       </MobileMenuTransition>
