@@ -2,3 +2,5 @@
   command = "next build && next config export"
   publish = "out"
 
+[[plugins]]
+package = "@netlify/plugin-nextjs"
