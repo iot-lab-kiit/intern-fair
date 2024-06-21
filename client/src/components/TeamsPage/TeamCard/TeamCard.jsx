@@ -21,7 +21,7 @@ const TeamCard = ({ person }) => {
           src={person.img}
           fill
           alt="img"
-          className="rounded-xl aspect-video"
+          className="rounded-xl aspect-video object-cover"
         />
       </div>
       <h1 className="text-[1.1rem] mbSmall:text-[1.2rem] tbPortrait:text-2xl tbLandscape:text-3xl font-bold text-[#081245]">
