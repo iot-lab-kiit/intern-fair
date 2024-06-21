@@ -16,6 +16,7 @@
     "@headlessui/react": "^1.7.18",
     "@mui/icons-material": "^5.15.12",
     "@mui/material": "^5.15.12",
+    "@netlify/plugin-nextjs": "^5.3.3",
     "@nextui-org/react": "^2.2.10",
     "all": "^0.0.0",
     "aws4": "^1.12.0",
