@@ -62,3 +62,7 @@
   background-color: #1F3DD9;
   color: white;
 }
+
+html {
+    scroll-behavior: smooth;
+  }

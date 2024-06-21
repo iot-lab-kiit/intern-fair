@@ -14,7 +14,7 @@ export default function Home() {
       <Hero />
       <About align1="flex-row" data={data} />
       <Mission />
-      <Courses />
+      <Courses  />
       <LearningResources />
       <BTS align1="flex-row-reverse" data={data} />
       <Faq />
