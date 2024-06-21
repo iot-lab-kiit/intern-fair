@@ -59,7 +59,18 @@ export const createPost = async (data, formData) => {
 export const getAllPost = async () => {
   try {
     const result = await clientToken(process.env.TOKEN).request(
-      readItems("Post")
+      readItems("Post", {
+        fields: [
+          "id",
+          "content",
+         "tag",
+          "image",
+          "date_created",
+          {
+            user_created: ["id", "first_name", "last_name", "email"],
+          },
+        ],
+      })
     );
     if (!result) throw new Error([{ message: "No post found" }]);
     return { success: true, message: "Found All Post", result: result };
