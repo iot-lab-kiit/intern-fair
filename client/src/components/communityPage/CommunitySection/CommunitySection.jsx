@@ -84,13 +84,38 @@ const CommunitySection = () => {
     };
 
     const handleSubmit = async () => {
-        const file = fileInputRef.current.files[0];
-        const formData = new FormData();
-        formData.append("file", file);
-        createPost({content: data.description, tag: data.tags}, formData)
-            .then((res) => console.log(res))
-            .catch((e) => console.log(e));
-    };
+          const file = fileInputRef.current.files[0];
+        
+        
+          const formData = new FormData();
+          if (file) {
+            formData.append("file", file);
+          }
+        
+          const postData = {
+            content: data.description,
+            tag: data.tags,
+          };
+        
+          try {
+            const response = await createPost(postData, formData);
+        
+            if (response.success) {
+              // Update the state to include the new post
+              setPostData([response.result, ...postData]);
+              setFilteredPosts([response.result, ...filteredPosts]);
+              setData({ description: "", tag: [] });
+              setIsEditing(false);
+              setError("");
+              toast.success("Post created successfully!");
+            } else {
+              setError("Failed to create post.");
+            }
+          } catch (e) {
+            console.error("Error uploading post:", e);
+            setError("Error uploading post.");
+          }
+        };
     // console.log(filteredPosts);
     // console.log(postData);
     return (
