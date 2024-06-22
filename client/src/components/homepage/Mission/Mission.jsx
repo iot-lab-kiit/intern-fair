@@ -61,16 +61,18 @@ const Mission = () => {
           />
         </div>
         <div
-          className="video-container relative  w-full grid place-items-center m-auto mb-[-5rem] sm:mb-[-8rem] md:mb-[-10rem] "
+          className="video-container relative w-full grid place-items-center m-auto mb-[-5rem] sm:mb-[-8rem] md:mb-[-10rem]"
           style={{ paddingTop: "56.25%" }}
         >
-          <iframe
+          <video
             className="video absolute top-0 w-full sm:w-4/6 h-full sm:h-4/6 2xl:w-[75rem]"
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+            controls
+            autoPlay
+            muted
+            loop
+          >
+            <source src="/Iot_Vision.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
     </div>

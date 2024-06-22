@@ -29,8 +29,8 @@ const MobileMenuTransition = ({ children }) => {
         enterFrom="h-0"
         enterTo="h-52"
         leave="transition-height duration-300"
-        leaveFrom="h-52"
-        leaveTo="h-0"
+        leaveFrom="h-52 "
+        leaveTo="h-0 "
         className="absolute top-0 left-0 w-full bg-white z-40"
         style={{ overflow: "hidden" }}
       >
