@@ -8,15 +8,17 @@ import BTS from "@/components/homepage/BTS/BTS";
 import data from "@/data/homepage/data.json";
 import Footer from "@/components/Footer/Footer";
 import LearningResources from "@/components/homepage/LearningResources/page";
+import Suggestion from "@/components/homepage/Suggestion/Suggestion";
 export default function Home() {
   return (
     <main className="flex flex-col gap-8 max-w-[100vw]">
       <Hero />
       <About align1="flex-row" data={data} />
       <Mission />
-      <Courses  />
+      <Courses />
       <LearningResources />
       <BTS align1="flex-row-reverse" data={data} />
+      <Suggestion />
       <Faq />
       <Footer />
     </main>
