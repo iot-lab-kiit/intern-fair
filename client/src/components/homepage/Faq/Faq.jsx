@@ -13,15 +13,17 @@ const Faq = () => {
           </button>
         </div>
         <h1 className="text-[#09123E] font-Gilroy-Bold tbLandscape:text-4xl mbSmall:text-2xl mbMini:text-xl laptop:text-3xl font-black">
-          Helpful Answers
+          Curious Corner
         </h1>
         <div className="w-[85%] mbMini:w-[85vw] mbMini:max-mbXSmall:w-[70vw] mbSmall:w-[65vw] mbMedium:w-[53vw] laptop:w-[60vw]">
           <p className="text-[#09123E] font-Gilroy-Medium font-medium  max-mbXSmall:text-sm text-center">
-            Where we address common queries about our college and its offerings.
-            Below, you'll find answers to the most frequently asked questions
-            about admissions, programs, financial aid, campus life, and more. If
-            you can't find the information you're looking for, feel free to
-            contact us for further assistance.
+            Our dedicated lab members have compiled this comprehensive FAQ to
+            help you delve into various technical domains. Here, you'll find
+            valuable insights and guidance from experts in their fields. Whether
+            you're a complete newcomer or looking to expand your knowledge,
+            these FAQs provide the information you need to navigate your chosen
+            domain. Explore common questions, gain practical advice, and embark
+            on a successful journey of learning and exploration!
           </p>
         </div>
         <div className="mt-4 ">

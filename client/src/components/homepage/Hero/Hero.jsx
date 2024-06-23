@@ -3,7 +3,10 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="mx-auto max-w-full px-4 sm:px-6 lg:px-8 pb-16 pt-20 text-center lg:pt-24 max-sm:pt-12" id="hero" >
+    <div
+      className="mx-auto max-w-full px-4 sm:px-6 lg:px-8 pb-16 pt-20 text-center lg:pt-24 max-sm:pt-12"
+      id="hero"
+    >
       <h3 className="text-[#09123E] bg-[#F4F5FA] rounded-3xl inline-block p-4">
         We are here for you 🤝🏽
       </h3>
@@ -11,7 +14,7 @@ const Hero = () => {
         Unlocking Solutions &amp; Empowering&nbsp;
         <span className="block lg:inline-block">
           <span className="relative whitespace-nowrap text-[#1F3DD9] sm:block sm:mt-2">
-            Engineers
+            Success
           </span>
         </span>
       </h1>
@@ -24,14 +27,6 @@ const Hero = () => {
             className="w-5 h-5"
           />
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-[#081245] text-lg mbMini:max-mbXSmall:hidden">Resources</span>
-          <img
-            src="icons/mdi_star-four-points.png"
-            alt="Icon 2"
-            className="w-5 h-5 mbMini:max-mbXSmall:hidden"
-          />
-        </div>
         <div className="flex items-center gap-3 mbMini:max-mbXSmall:mr-4">
           <span className="text-[#081245] text-lg">Mock Test</span>
           <img
@@ -41,7 +36,17 @@ const Hero = () => {
           />
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-[#081245] text-lg">Interviews Prep</span>
+          <span className="text-[#081245] text-lg mbMini:max-mbXSmall:hidden">
+            Interview Trends
+          </span>
+          <img
+            src="icons/mdi_star-four-points.png"
+            alt="Icon 2"
+            className="w-5 h-5 mbMini:max-mbXSmall:hidden"
+          />
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="text-[#081245] text-lg">Resources</span>
           <img
             src="icons/mdi_star-four-points.png"
             alt="Icon 2"
@@ -50,7 +55,7 @@ const Hero = () => {
         </div>
         <div className="flex items-center gap-3">
           <span className="text-[#081245] text-lg mbSmall:max-md:hidden">
-            Latest Trends
+            Roadmaps
           </span>
           <img
             src="icons/mdi_star-four-points.png"
@@ -60,7 +65,7 @@ const Hero = () => {
         </div>
         <div className="flex items-center gap-3">
           <span className="text-[#081245] text-lg mbSmall:max-md:hidden mbMedium:max-lg:hidden mbMini:max-mbXSmall:hidden">
-            Many More
+            About us
           </span>
         </div>
       </div>

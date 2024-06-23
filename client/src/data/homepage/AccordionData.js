@@ -1,32 +1,31 @@
 const data = [
   {
-    question: "What programs and courses do you offer?",
-    answer:
-      "Students have access to a range of support services, including academic advising for course selection and counseling services for personal and academic support. Additionally, counseling services are available to provide support for personal, emotional, and mental health concerns, offering individual counseling sessions, workshops, and resources to help students thrive both academically and personally.",
+    question: "Does access to the resources require a subscription?",
+    answer: "It is free for all.",
   },
   {
-    question:
-      "What campus facilities and resources are available for students?",
+    question: "What domains do we offer",
     answer:
-      "Students have access to a range of support services, including academic advising for course selection and counseling services for personal and academic support. Additionally, counseling services are available to provide support for personal, emotional, and mental health concerns, offering individual counseling sessions, workshops, and resources to help students thrive both academically and personally.",
+      "Web development , App development , Competitive programming , Internet of Things , Cybersecurity , Machine learning",
   },
   {
-    question:
-      "How can I get involved in extracurricular activities or student organizations?",
+    question: "What is our objective",
     answer:
-      "Students have access to a range of support services, including academic advising for course selection and counseling services for personal and academic support. Additionally, counseling services are available to provide support for personal, emotional, and mental health concerns, offering individual counseling sessions, workshops, and resources to help students thrive both academically and personally.",
+      "We provide study materials and leads to resources for multiple domains of Computer Science",
   },
   {
-    question:
-      "What support services are available for students, such as academic advising or counseling?",
-    answer:
-      "Students have access to a range of support services, including academic advising for course selection and counseling services for personal and academic support. Additionally, counseling services are available to provide support for personal, emotional, and mental health concerns, offering individual counseling sessions, workshops, and resources to help students thrive both academically and personally.",
+    question: "Where do we get these resources from?",
+    answer: "We source them from our faculties and experienced seniors.",
   },
   {
-    question:
-      "Are there opportunities for internships, research, or study abroad programs?",
+    question: " What if you have technical issues or questions?",
     answer:
-      "Students have access to a range of support services, including academic advising for course selection and counseling services for personal and academic support. Additionally, counseling services are available to provide support for personal, emotional, and mental health concerns, offering individual counseling sessions, workshops, and resources to help students thrive both academically and personally.",
+      "If you encounter any technical issues or have questions, you can reach out to our support team through the 'Contact Us' page. We’re here to help!",
+  },
+  {
+    question: "How can I provide feedback on a course?",
+    answer:
+      "Your feedback is important to us. You can leave a review on the course page with any suggestions or feedback.",
   },
 ];
 
