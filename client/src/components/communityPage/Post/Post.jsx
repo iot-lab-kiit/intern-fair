@@ -1,7 +1,8 @@
 "use client";
 import { updatePost } from "@/actions/post";
 import Image from "next/image";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { parseISO, format } from 'date-fns';
 const Post = ({
   id,
   description,
@@ -15,6 +16,8 @@ const Post = ({
   const [expanded, setexpanded] = useState(false);
   const [liked, setliked] = useState(false);
   const [saved, setsaved] = useState(false);
+  const [date, setDate] = useState(new Date(date_created));
+
   const text =
     "🌍 CSS stands for Cascading Style Sheets. It is a style sheet language used to describe the presentation and formatting of HTML CSS consists of selectors, properties, and values. Selectors are patterns that target HTML elements, allowing developers to apply styles selectively. Properties are the styling attributes, such as color, font-size.";
 
@@ -38,6 +41,11 @@ const Post = ({
   //     .then((res) => console.log(res))
   //     .catch((e) => console.log(e));
   // };
+
+  // const date = new Date();
+  const formattedDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+  const formatter = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const formattedTime = formatter.format(date);
   return (
     // w-[28rem] tbPortrait:w-[32rem] min-[1400px]:w-[36rem] tbLandscape:w-[40rem]
     <div className="p-2 mbSmall:p-4 border-[1.5px] border-[#DCDCE7] w-full  rounded-lg">
@@ -58,7 +66,9 @@ const Post = ({
               {user_created.first_name}
             </h1>
             <p className="text-[#7D8195] font-medium text-[0.7rem] mbMedSmall:text-[0.7rem] leading-3 mbSmall:text-base mbMedium:text-base tbPortrait:text-lg">
-              {date_created}
+              {/* {date_created} */}
+              {formattedDate} {formattedTime}
+               
             </p>
           </div>
         </div>
@@ -72,8 +82,9 @@ const Post = ({
             )}
           </p>
         </div>
-        <div className="flex items-center justify-center gap-1 mbMedSmall:gap-2 mbSmall:gap-3 ">
-          {tag.map((t, index) => (
+        {console.log(tag)}
+        <div className="flex items-center justify-center gap-1 mbMedSmall:gap-2 mbSmall:gap-3 " suppressHydrationWarning>
+          {tag && tag.length>0 && tag.map ((t, index) => (
             <button className="border-[1.5px] border-[#4C64E1] text-[#1F3DD9] text-[0.6rem] mbMedSmall:text-[0.65rem] mbSmall:text-[0.7rem] leading-4 mbMedium:text-sm laptop:text-sm tbPortrait:text-base p-[0.2rem] px-[0.6rem] mbMedSmall:p-[0.3rem] mbMedSmall:px-[0.7rem] mbSmall:p-[0.3rem] mbSmall:px-4  mbMedium:p-[0.25rem]   mbMedium:px-4 laptop:p-[0.35rem] laptop:px-6 rounded-full">
               {t}
             </button>

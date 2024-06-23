@@ -27,33 +27,42 @@ const validateData = (data) => {
 // Create POST
 export const createPost = async (data, formData) => {
   try {
-    // validateData(data);
     let result;
-    if (formData.file) {
-      result = await clientToken(process.env.TOKEN).request(
+    if (formData.get("file")) {
+      const fileUploadResponse = await clientToken(process.env.TOKEN).request(
         uploadFiles(formData)
       );
-      result = await clientToken(process.env.TOKEN).request(
-        updateFile(result.id, {
+
+
+      const updateResponse = await clientToken(process.env.TOKEN).request(
+        updateFile(fileUploadResponse.id, {
           location: "46e88712-846e-4e1d-af06-0a907aa5e04a",
         })
       );
+      result = fileUploadResponse.id;
     }
-    result = await clientToken(process.env.TOKEN).request(
+
+    const postResponse = await clientToken(process.env.TOKEN).request(
       createItem("Post", {
         content: data.content,
         tag: data.tag,
-        image: formData.file && result.id,
+        image: result || null,
       })
     );
 
-    if (!result) throw new Error([{ message: "Post Not created" }]);
-    return { success: true, message: "Post created successfully", result };
+    if (!postResponse) throw new Error("Post not created");
+
+    return {
+      success: true,
+      message: "Post created successfully",
+      result: postResponse,
+    };
   } catch (e) {
-    console.log(e);
-    throw new Error(e.errors[0].message || e.message);
+    console.error("Error in createPost:", e);
+    throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
+
 
 //Get All POST
 export const getAllPost = async () => {
