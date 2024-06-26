@@ -15,6 +15,8 @@ const Page = () => {
     const fetchTopics = async () => {
       try {
         const topicsData = await getTopics();
+     
+        
         setTopics(topicsData.result);
       } catch (error) {
         console.error("Error fetching topics:", error);
@@ -26,7 +28,7 @@ const Page = () => {
 
   return (
     <>
-      <Navigation />
+      {/* <Navigation /> */}
       <div className="w-screen max-w-full flex flex-col items-center justify-center gap-6 mbMedium:px-16 mbSmall:px-5 mbMini:px-0 my-16">
         <ExploreComponent
           buttonText="Courses for you 🤝"
