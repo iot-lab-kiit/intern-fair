@@ -6,10 +6,10 @@ const Mission = () => {
 
   return (
     <div
-      className="container bg-[#081245] min-h-fit text-white max-w-full px-8 flex flex-col justify-center items-center "
+      className="container bg-[#081245] min-h-fit text-white max-w-full px-6 mbXSmall:px-8 flex flex-col justify-center items-center "
       id="mission"
     >
-      <div className="mission flex flex-col leading-64 max-w-[120rem] gap-20 mx-[0.25rem] sm:mx-14 md:mx-16 lg:mx-20 my-24 py-10">
+      <div className="mission flex flex-col leading-64 max-w-[120rem] gap-[3.5rem] mbMedium:gap-16 mx-[0.25rem] sm:mx-14 md:mx-16 lg:mx-20 my-24 py-10">
         <div className="top flex mt-[-5rem] sm:mt-[-3rem] md:mt-[-1rem]">
           <div className="head flex bg-[#4E5680] items-center justify-center w-25 sm:w-40 rounded-3xl relative">
             <div className="our-vision gap-1 sm:gap-2 text-xs sm:text-base flex flex-row m-1 p-2 items-center justify-center">
@@ -26,7 +26,7 @@ const Mission = () => {
           </div>
         </div>
         <div
-          className="content  font-sans text-2xl sm:text-2xl md:text-2xl lg:text-3xl xl:text-4xl"
+          className="content  font-sans text-base mbXSmall:text-lg sm:text-xl md:text-xl laptop:text-2xl tbPortrait:text-3xl tbLandscape:text-4xl"
           style={{ marginTop: "-2rem", marginBottom: "-1rem" }}
         >
           <span className="font-medium leading-normal">
@@ -35,7 +35,7 @@ const Mission = () => {
           </span>
 
           <Image
-            className="inline-block mx-1.5 sm:mx-3.5 w-8 sm:w-[3rem] md:w-[4rem] lg:w-[5rem]"
+            className="inline-block mx-1.5 sm:mx-3.5 w-8 mbSmall:w-[3rem] md:w-[3rem] lg:w-[4rem] tbPortrait:w-[5rem]"
             src="/images/image 32.png"
             alt="Image 32"
             width={80}
@@ -53,7 +53,7 @@ const Mission = () => {
             the evolution for a smarter and more meaningful world.
           </span>
           <Image
-            className="inline-block mx-1 sm:mx-3 w-8 sm:w-[3rem] md:w-[4rem] lg:w-[5rem]"
+            className="inline-block mx-1 sm:mx-3 w-8 mbSmall:w-[3rem] md:w-[3rem]  lg:w-[4rem] tbPortrait:w-[5rem]"
             src="/images/image 34.png"
             alt="Image 34"
             width={80}
@@ -66,7 +66,6 @@ const Mission = () => {
         >
           <video
             className="video absolute top-0 w-full sm:w-4/6 h-full sm:h-4/6 2xl:w-[75rem]"
-            controls
             autoPlay
             muted
             loop

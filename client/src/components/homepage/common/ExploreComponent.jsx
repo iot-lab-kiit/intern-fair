@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import Link from "next/link";
 const ExploreComponent = (buttonText, headingText, contentText) => {
   return (
     <div className=" w-screen max-w-full mbSmall:flex items-center justify-center gap-4 p-4">
@@ -23,18 +23,20 @@ const ExploreComponent = (buttonText, headingText, contentText) => {
         </div>
       </div>
       <div className="w-[30%] mbMini:w-full mbMini:mt-4 h-full flex items-center  mbMini:justify-start mbSmall:justify-end justify-end">
-        <button className=" flex items-center justify-center gap-2 font-Gilroy-Medium rounded-xl mbMini:px-3 mbMini:p-[0.25rem] mbXSmall:p-2 mbXSmall:px-3 mbMedium:p-2 mbMedium:px-4 mbMedium:text-base mbSmall:p-2 mbSmall:px-4 tbLandscape:p-3 tbLandscape:px-7 border-[1.5px] border-black mbSmall:text-xs mbMini:text-[0.7rem]">
-          Explore all
-          <span>
-            <Image
-              className="tbPortrait:w-[1vw] mbSmall:w-[1.4vw] mbMini:w-[2vw]"
-              src="/icons/Vector_black.png"
-              alt="Description of your image"
-              width={15}
-              height={20}
-            />
-          </span>
-        </button>
+        <Link href="/courses">
+          <button className=" flex items-center justify-center gap-2 font-Gilroy-Medium rounded-xl mbMini:px-3 mbMini:p-[0.25rem] mbXSmall:p-2 mbXSmall:px-3 mbMedium:p-2 mbMedium:px-4 mbMedium:text-base mbSmall:p-2 mbSmall:px-4 tbLandscape:p-3 tbLandscape:px-7 border-[1.5px] border-black mbSmall:text-xs mbMini:text-[0.7rem]">
+            Explore all
+            <span>
+              <Image
+                className="tbPortrait:w-[1vw] mbSmall:w-[1.4vw] mbMini:w-[2vw]"
+                src="/icons/Vector_black.png"
+                alt="Description of your image"
+                width={15}
+                height={20}
+              />
+            </span>
+          </button>
+        </Link>
       </div>
     </div>
   );
