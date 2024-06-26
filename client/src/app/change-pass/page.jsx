@@ -8,9 +8,13 @@ import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function Login() {
+export default function page() {
   const router = useRouter();
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    cnfpassword: "",
+  });
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
@@ -18,11 +22,10 @@ export default function Login() {
   }, [formData]);
 
   const validateForm = () => {
-    const isEmailValid = /\S+@\S+\.\S+/.test(formData.email);
     const isPasswordValid =
       formData.password.length >= 6 && formData.password.length <= 20;
-
-    setIsFormValid(isEmailValid && isPasswordValid);
+    const doPasswordsMatch = formData.password === formData.cnfpassword;
+    setIsFormValid(doPasswordsMatch && isPasswordValid);
   };
 
   const handleSubmit = (e) => {
@@ -31,13 +34,6 @@ export default function Login() {
     validateForm();
 
     if (!isFormValid) {
-      if (!formData.email) {
-        toast.error("Email is required");
-        return;
-      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-        toast.error("Invalid email");
-        return;
-      }
       if (!formData.password) {
         toast.error("Password is required");
         return;
@@ -47,8 +43,10 @@ export default function Login() {
       } else if (formData.password.length > 20) {
         toast.error("Password cannot be more than 20 characters");
         return;
+      } else if (formData.password !== formData.cnfpassword) {
+        toast.error("Passwords do not match");
+        return;
       }
-      return;
     }
 
     toast.promise(getUserr(formData), {
@@ -67,6 +65,7 @@ export default function Login() {
     });
   };
   const [showPassword, setShowPassword] = useState(false);
+  const [showCnfPassword, setShowCnfPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -78,26 +77,26 @@ export default function Login() {
 
   return (
     <>
-      <div className="content h-screen flex justify-center items-center w-screen max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
-        <div className="flex flex-col justify-center  mx-auto gap-4 place-self-center max-h-screen">
+      <div className="content h-screen flex justify-center  items-center w-screen max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
+        <div className="flex flex-col justify-center  mx-auto gap-4 overflow-hidden">
           {/* <div
-            className="back-button text-base absolute top-2 cursor-pointer left-5 flex  w-full sm:w-[100%] h-10 "
+            className="back-button text-base  flex  w-full sm:w-[100%] h-16 "
             onClick={handleBackButtonClick}
           >
             <div className="back-button flex gap-3 items-center justify-center">
-              <div className=" h-4 w-4 mbSmall:h-5 :mbSmall:w-5">
+              <div className="h-5 w-5">
                 <Image src="/images/back.png" height={20} width={20} />
               </div>
-              <div className=" text-sm mbSmall:text-base">Back</div>
+              <div>Back</div>
             </div>
           </div> */}
           <div className="form-container  flex flex-col items-center justify-center gap-[0.5rem] h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
             <div className="header flex flex-col gap-2 w-full sm:w-[100%] text-start">
-              <div className="font-extrabold text-2xl mbSmall:text-3xl tbLandscape:text-4xl ">
-                Login
+              <div className="font-extrabold text-2xl mbXSmall:text-3xl mbSmall:text-4xl tbLandscape:text-5xl ">
+                New Password
               </div>
-              <div className=" text-sm mbXSmall:text-base tbLandscape:text-lg">
-                Enter your email and password to sign in!
+              <div className="text-sm mbSmall:text-lg tbLandscape:text-xl">
+                Enter your new password to sign in!
               </div>
             </div>
 
@@ -113,27 +112,12 @@ export default function Login() {
             </div> */}
 
             <form
-              className="flex  flex-col gap-2 w-full "
+              className="flex  flex-col gap-3 w-full "
               onSubmit={(e) => handleSubmit(e)}
             >
               <label
-                htmlFor="email"
-                className="text-[#182467] text-sm mbXSmall:text-base tbLandscape:text-lg "
-              >
-                Email*
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="w-full h-10 border-2 rounded-lg px-4 focus:border-blue-500 outline-none "
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-              />
-              <label
                 htmlFor="password"
-                className="text-[#182467] text-sm mbXSmall:text-base tbLandscape:text-lg"
+                className="text-[#182467] text-sm mbSmall:text-lg tbLandscape:text-xl"
               >
                 Password*
               </label>
@@ -167,51 +151,53 @@ export default function Login() {
                   )}
                 </button>
               </div>
-              <div className="flex     mbXSmall:items-center mbMini:flex-col mbMini:gap-1 mbXSmall:flex-row  justify-end ">
-                <Link
-                  href="/forgot-pass"
-                  className=" cursor-pointer text-[#1F3DD9] text-sm mbXSmall:text-base tbLandscape:text-lg font-sans text-nowrap mbMini:ml-5"
+              <label
+                htmlFor="password"
+                className="text-[#182467] text-sm mbSmall:text-lg tbLandscape:text-xl"
+              >
+                Confirm Password*
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showCnfPassword ? "text" : "password"}
+                  className="w-full h-10 border-2 rounded-lg px-4 focus:border-[#1F3DD9] outline-none "
+                  value={formData.cnfpassword}
+                  onChange={(e) =>
+                    setFormData({ ...formData, cnfpassword: e.target.value })
+                  }
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-6 top-[50%] -translate-y-1/2"
+                  onClick={() => setShowCnfPassword(!showCnfPassword)}
                 >
-                  Forgot Password?
-                </Link>
-              </div>
-
-              <div className="flex flex-col items-center justify-center gap-4">
-                <button className="bg-[#1F3DD9]  text-white text-base mbXSmall:text-lg tbLandscape:text-xl h-10 w-full rounded-lg">
-                  Sign In
-                </button>
-                <div className="flex flex-row gap-2 w-[100%] sm:w-[100%] h-[1.75rem] sm:h-[100%] items-center">
-                  <div className="separator w-[100%] h-[2px] bg-[#E0E5F2] my-4"></div>
-                  <div className="text-gray-500 text-xs tbLandscape:text-sm">
-                    or
-                  </div>
-                  <div className="separator w-[100%] h-[2px] bg-[#E0E5F2] my-4"></div>
-                </div>
-                <div className="google-signup cursor-pointer flex items-center justify-center bg-[#F4F5FA] w-[98%] sm:w-[100%] h-10 rounded-lg">
-                  <div className="mr-2">
-                    <Image
-                      src="/images/Group.png"
+                  {showCnfPassword ? (
+                    <FaRegEye
                       height={20}
                       width={20}
-                      alt="google"
+                      style={{ color: "#A3AED0", width: "20px" }}
                     />
-                  </div>
-                  <div className="text-sm mbXSmall:text-base tbLandscape:text-lg">
-                    Sign in with Google
-                  </div>
-                </div>
-                <div className=" w-full sm:w-[100%] text-[0.78rem] mbXSmall:text-base tbLandscape:text-lg">
-                  Not registered yet?{" "}
-                  <a href="/signup" className="text-[#1F3DD9]">
-                    Create an Account
-                  </a>
-                </div>
+                  ) : (
+                    <FaRegEyeSlash
+                      height={20}
+                      width={20}
+                      style={{ color: "#A3AED0", width: "20px" }}
+                    />
+                  )}
+                </button>
+              </div>
+
+              <div className="flex flex-col items-center justify-center gap-4 mt-3">
+                <button className="bg-[#1F3DD9]  text-white text-base mbXSmall:text-lg tbLandscape:text-xl h-10 w-full rounded-lg">
+                  Reset Password
+                </button>
               </div>
             </form>
           </div>
         </div>
 
-        <div className="image-container w-[45%] tbLandscape:w-[50%] h-full  hidden lg:block">
+        {/* <div className="image-container w-[45%] tbLandscape:w-[50%] h-full  hidden lg:block">
           <Image
             src="/images/signup.png"
             alt="signup-image"
@@ -220,7 +206,7 @@ export default function Login() {
             style={{ width: "100%", height: "100%" }}
             className="max-h-screen"
           />
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -25,7 +25,13 @@ const Carousel = ({ data }) => {
       {data.map((item, index) => (
         <SwiperSlide key={index}>
           <div className="flex flex-col items-center justify-center w-[15rem] mbMini:w-[18rem] h-[20rem] mbXSmall:w-[22rem] sm:w-[40rem]  rounded-xl md:w-[46rem]   tbPortait:w-[55rem] xl:w-[60rem] lg:h-[65rem]  lg:max-h-[40rem] ">
-            <Image fill src={item.url} alt="image" className="rounded-xl  " />
+            <Image
+              fill
+              src={item.url}
+              alt="image"
+              className="rounded-xl"
+              objectPosition="center"
+            />
           </div>
         </SwiperSlide>
       ))}
