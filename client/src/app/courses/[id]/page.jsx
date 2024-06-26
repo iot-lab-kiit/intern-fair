@@ -38,19 +38,19 @@ const page = ({params}) => {
                 subSubTopicID.map((subTopic) => (
                     <div key={subTopic.id} className="w-full flex flex-col items-start justify-center gap-5">
                         <h2 className="text-[#081245] text-sm mbXSmall:text-sm mbMedSmall:text-base mbMedium:text-lg tbPortrait:text-xl tbLandscape:text-2xl font-semibold">{subTopic.subTitle}</h2>
-                        <p className="text-[#0a0b0e] font-medium text-xs mbMedSmall:text-sm mbMedium:text-base tbPortrait:text-lg tbLandscape:text-xl">{subTopic.content}</p>
+                        <p className="text-[#0a0b0e] font-medium mbMedSmall:text-sm mbMedium:text-base tbPortrait:text-lg tbLandscape:text-xl">{subTopic.content}</p>
                         {subTopic.code_snippet && <CodeSnippet language={subTopic.code_language} code={subTopic.code_snippet} />}
                         {subTopic.images.length > 0 && (
-                            <div>
+                            <div className="flex gap-4">
                                 {subTopic.images.map((image, index) => (
-                                    <img key={index} src={image} alt={`Image ${index + 1}`} />
+                                    <img className="w-1/2 min-h-40" key={index} src={image} alt={`Image ${index + 1}`} />
                                 ))}
                             </div>
                         )}
                         {subTopic.videos && subTopic.videos.length > 0 && (
                             <div>
                                 {subTopic.videos.map((video, index) => (
-                                    <video key={index} controls>
+                                    <video className="w-1/2 min-h-40" key={index} controls>
                                         <source src={video} type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
