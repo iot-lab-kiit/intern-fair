@@ -1,6 +1,6 @@
 "use server";
 import { client } from "@/db/directus";
-import { createUser } from "@directus/sdk";
+import { createUser,rest, passwordRequest,passwordReset } from "@directus/sdk";
 
 // Create an account
 export const createUserr = async (data) => {
@@ -34,3 +34,27 @@ export const getUserr = async (formData) => {
     throw new Error(e.errors[0].message);
   }
 };
+
+
+// request password reset
+export const resetPasswordRequest = async(email)=>{
+  try {
+    const result = await client.request(passwordRequest({email}));
+    console.log(result.message);
+    return { success: true, message: "link sent succesfully", result };
+  } catch (e) {
+    throw new Error(e.errors[0].message);
+  }
+}
+
+
+
+// password reset
+export const resetPassword = async(formdata)=>{
+  try {
+    const result = await client.request(passwordReset('reset_token', 'new_password'));
+    return { success: true, message: "password reset", result };
+  } catch (e) {
+    throw new Error(e.errors[0].message);
+  }
+}

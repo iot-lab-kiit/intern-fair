@@ -33,7 +33,6 @@ export const createPost = async (data, formData) => {
         uploadFiles(formData)
       );
 
-
       const updateResponse = await clientToken(process.env.TOKEN).request(
         updateFile(fileUploadResponse.id, {
           location: "46e88712-846e-4e1d-af06-0a907aa5e04a",
@@ -63,7 +62,6 @@ export const createPost = async (data, formData) => {
   }
 };
 
-
 //Get All POST
 export const getAllPost = async () => {
   try {
@@ -72,13 +70,14 @@ export const getAllPost = async () => {
         fields: [
           "id",
           "content",
-         "tag",
+          "tag",
           "image",
           "date_created",
           {
             user_created: ["id", "first_name", "last_name", "email"],
           },
         ],
+       
       })
     );
     if (!result) throw new Error([{ message: "No post found" }]);
