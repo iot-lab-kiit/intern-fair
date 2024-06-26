@@ -9,7 +9,12 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-  const hideNavbarRoutes = ["/login", "/signup"];
+  const hideNavbarRoutes = [
+    "/login",
+    "/signup",
+    "/forgot-pass",
+    "/change-pass",
+  ];
 
   const shouldHideNavbar = hideNavbarRoutes.includes(pathname);
 
@@ -29,7 +34,7 @@ const Navbar = () => {
             <div className="flex-shrink-0 flex items-center sm:self-start py-2.5">
               <Link href="/" title="homepage-link" rel="noopener noreferrer">
                 <Image
-                  className="w-14 h-14"
+                  className="w-auto h-10"
                   src="/icons/iot_lab.png"
                   alt="Workflow"
                   width={380}
