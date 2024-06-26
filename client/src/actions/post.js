@@ -33,7 +33,6 @@ export const createPost = async (data, formData) => {
         uploadFiles(formData)
       );
 
-
       const updateResponse = await clientToken(process.env.TOKEN).request(
         updateFile(fileUploadResponse.id, {
           location: "46e88712-846e-4e1d-af06-0a907aa5e04a",
@@ -63,7 +62,6 @@ export const createPost = async (data, formData) => {
   }
 };
 
-
 //Get All POST
 export const getAllPost = async () => {
   try {
@@ -72,7 +70,7 @@ export const getAllPost = async () => {
         fields: [
           "id",
           "content",
-         "tag",
+          "tag",
           "image",
           "date_created",
           {
@@ -85,7 +83,7 @@ export const getAllPost = async () => {
     return { success: true, message: "Found All Post", result: result };
   } catch (e) {
     console.log(e);
-    throw new Error(e.errors[0].message);
+    throw new Error(e.errors[0].message || e.message);
   }
 };
 // Get POST By Id
@@ -97,7 +95,7 @@ export const getPostById = async (data) => {
     if (!result) throw new Error([{ message: "No post found with that id" }]);
     return { success: true, message: "Post with the Id", result };
   } catch (e) {
-    throw new Error(e.errors[0].message);
+    throw new Error(e.errors[0].message || e.message);
   }
 };
 // Update POst
@@ -116,7 +114,7 @@ export const updatePost = async (data) => {
     return { success: true, message: "Post Updated successfully", result };
   } catch (e) {
     console.log(e);
-    // throw new Error(e.errors[0].message);
+    // throw new Error(e.errors[0].message || e.message);
   }
 };
 //Delete POST
@@ -130,6 +128,6 @@ export const deletePost = async (data) => {
     if (!result) throw new Error([{ message: "Post Not Deleted" }]);
     return { success: true, message: "Post Deleted successfully", result };
   } catch (e) {
-    throw new Error(e.errors[0].message);
+    throw new Error(e.errors[0].message || e.message);
   }
 };
