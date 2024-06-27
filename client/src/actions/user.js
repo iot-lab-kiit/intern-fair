@@ -1,10 +1,16 @@
 "use server";
 import { client } from "@/db/directus";
-import { createUser,rest, passwordRequest,passwordReset } from "@directus/sdk";
+import {
+  createUser,
+  rest,
+  passwordRequest,
+  passwordReset,
+} from "@directus/sdk";
 
 // Create an account
 export const createUserr = async (data) => {
   try {
+    // use token
     await client.login(process.env.USER, process.env.PASS);
     const [fName, lName] = data.name.split(" ");
     const result = await client.request(
@@ -13,7 +19,7 @@ export const createUserr = async (data) => {
         last_name: lName,
         email: data.email,
         password: data.password,
-        role: "79858458-13aa-4215-9987-c457e6b322ca",
+        role: "3a56d810-4e75-40ee-a21c-884e4b92ea23", // use env
       })
     );
     if (!result) throw new Error("User not created");
@@ -35,26 +41,32 @@ export const getUserr = async (formData) => {
   }
 };
 
-
-// request password reset
-export const resetPasswordRequest = async(email)=>{
+// // request password reset
+export const resetPasswordRequest = async (formData) => {
   try {
-    const result = await client.request(passwordRequest({email}));
-    console.log(result.message);
-    return { success: true, message: "link sent succesfully", result };
-  } catch (e) {
+    await client.login(process.env.USER, process.env.PASS);
+    // Use token
+    await client.request(passwordRequest(JSON.parse(formData).email,'http://localhost:3000/change-pass'));
+    return {
+      success: true,
+      message: "Reset password mail sent. If user exists.",
+    }
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to send reset link");
+  }
+};
+
+// // password reset
+export const resetPassword = async (formData,token) => {
+  try {
+    // console.log(formData,token)
+    const result = await client.request(
+      passwordReset(token,formData.cnfpassword)
+    );
+    return { success: true, message: "Password reset successfully" };
+  } catch (error) {
+    console.error(error);
     throw new Error(e.errors[0].message);
   }
-}
-
-
-
-// password reset
-export const resetPassword = async(formdata)=>{
-  try {
-    const result = await client.request(passwordReset('reset_token', 'new_password'));
-    return { success: true, message: "password reset", result };
-  } catch (e) {
-    throw new Error(e.errors[0].message);
-  }
-}
+};

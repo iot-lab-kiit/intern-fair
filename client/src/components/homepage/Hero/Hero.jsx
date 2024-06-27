@@ -72,9 +72,7 @@ const Hero = () => {
 
       <div className="mt-10 flex justify-center gap-x-6">
         <Link
-          href="/Courses"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/courses"
           className="flex justify-center items-center px-3 py-1.5 border-1 rounded-xl focus:outline-none cursor-pointer transition-transform duration-500 border-2 border-[#1F3DD9] bg-[#1F3DD9] text-white rounded-10 shadow-inset-0 hover:shadow-inset-0 w-44 h-12"
         >
           Explore
@@ -88,8 +86,6 @@ const Hero = () => {
         </Link>
         <Link
           href="/login"
-          target="_blank"
-          rel="noopener noreferrer"
           className="flex justify-center items-center px-3 py-1.5 border-1 rounded-xl focus:outline-none cursor-pointer transition-transform duration-500 border-2 border-[#BFC2CE] rounded-10 shadow-inset-0 hover:shadow-inset-0 w-44 h-12"
         >
           Login
