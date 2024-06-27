@@ -14,9 +14,7 @@ const Page = () => {
   useEffect(() => {
     const fetchTopics = async () => {
       try {
-        const topicsData = await getTopics();
-     
-        
+        const topicsData = await getTopics();        
         setTopics(topicsData.result);
       } catch (error) {
         console.error("Error fetching topics:", error);

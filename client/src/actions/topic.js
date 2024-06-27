@@ -8,10 +8,10 @@ export const getTopics = async () => {
   try {
     const result = await clientToken(process.env.TOKEN).request(
       readItems("Topic", {
-        fields: ["id", "name", { subTopicID: ["id", "name","order"] }],
+        fields: ["id", "name","description", { subTopicID: ["id", "name","order"] }],
       })
     );
-    console.log(result);
+
     if (!result) throw new Error("No topics found");
     return { success: true, message: "Found all topics", result };
   } catch (e) {
