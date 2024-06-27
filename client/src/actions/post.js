@@ -86,7 +86,7 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
     return { success: true, message: "Found All Post", result: result };
   } catch (e) {
     console.log(e);
-    throw new Error(e.errors[0].message);
+    throw new Error(e.errors[0].message || e.message);
   }
 };
 // Get POST By Id
@@ -98,7 +98,7 @@ export const getPostById = async (data) => {
     if (!result) throw new Error([{ message: "No post found with that id" }]);
     return { success: true, message: "Post with the Id", result };
   } catch (e) {
-    throw new Error(e.errors[0].message);
+    throw new Error(e.errors[0].message || e.message);
   }
 };
 // Update POst
@@ -117,7 +117,7 @@ export const updatePost = async (data) => {
     return { success: true, message: "Post Updated successfully", result };
   } catch (e) {
     console.log(e);
-    // throw new Error(e.errors[0].message);
+    // throw new Error(e.errors[0].message || e.message);
   }
 };
 //Delete POST
@@ -131,6 +131,6 @@ export const deletePost = async (data) => {
     if (!result) throw new Error([{ message: "Post Not Deleted" }]);
     return { success: true, message: "Post Deleted successfully", result };
   } catch (e) {
-    throw new Error(e.errors[0].message);
+    throw new Error(e.errors[0].message || e.message);
   }
 };

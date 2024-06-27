@@ -1,8 +1,12 @@
 "use client";
+import { createSuggestion } from "@/actions/suggestion";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const Suggestion = () => {
+
+  const [isFormValid,setIsFormValid]=useState(false)
   const [formDetails, setFormDetails] = useState({
     name: "",
     email: "",
@@ -17,8 +21,45 @@ const Suggestion = () => {
     });
   };
 
+  useEffect(() => {
+    validateForm();
+  }, [formDetails]);
+
+  const validateForm = () => {
+    const isNameValid = formDetails.name.trim() !== "";
+    const isEmailValid = /\S+@\S+\.\S+/.test(formDetails.email);
+    const isSuggestionValid = formDetails.suggestion.trim() !== "";
+    setIsFormValid(isNameValid && isEmailValid && isSuggestionValid);
+  };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    validateForm();
+    if (!isFormValid) {
+      if (!formDetails.name) {
+        toast.error("Name is required");
+        return;
+      }
+      if (!formDetails.email) {
+        toast.error("Email is required");
+        return;
+      } else if (!/\S+@\S+\.\S+/.test(formDetails.email)) {
+        toast.error("Invalid email");
+        return;
+      }
+      if (!formDetails.suggestion) {
+        toast.error("Suggestion is required");
+        return;
+      }
+    }
+    toast.promise(createSuggestion(formDetails), {
+      loading: "Creating Suggestion...",
+      success: (res) => {
+        return <b>{res.message}</b>;
+      },
+      error: (err) => <b>{err.message}</b>,
+    });
     // Handle form submission logic here
     console.log(formDetails);
     // Optionally, reset form after submission
@@ -49,7 +90,7 @@ const Suggestion = () => {
         </div>
       </div>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e) => handleSubmit(e)}
         className="mbXSmall:w-full mbSmall:w-full mbMini:h-[70%] mbMedium:h-full flex flex-col items-start justify-start gap-5 mbXSmall:px-6 p-6"
       >
         <input

@@ -1,35 +1,27 @@
 "use server";
-import { client } from "@/db/directus";
-import {
-  createUser,
-  rest,
-  passwordRequest,
-  passwordReset,
-} from "@directus/sdk";
+import { createUser } from "@directus/sdk";
+import { client, clientToken } from "@/db/directus";
 
-// Create an account
 export const createUserr = async (data) => {
   try {
-    // use token
-    await client.login(process.env.USER, process.env.PASS);
     const [fName, lName] = data.name.split(" ");
-    const result = await client.request(
+    const result = await clientToken(process.env.TOKEN).request(
       createUser({
         first_name: fName,
         last_name: lName,
         email: data.email,
         password: data.password,
-        role: "3a56d810-4e75-40ee-a21c-884e4b92ea23", // use env
+        role: process.env.USER_ROLE,
       })
     );
+
     if (!result) throw new Error("User not created");
     return { success: true, message: "User created successfully", result };
   } catch (e) {
-    throw new Error(e.errors[0].message);
+    throw new Error(e.errors[0].message || e.message);
   }
 };
 
-// Login a user
 export const getUserr = async (formData) => {
   try {
     const result = await client.login(formData.email, formData.password, {
@@ -37,7 +29,7 @@ export const getUserr = async (formData) => {
     });
     return { success: true, message: "User logged in successfully", result };
   } catch (e) {
-    throw new Error(e.errors[0].message);
+    throw new Error(e.errors[0].message || e.message);
   }
 };
 
