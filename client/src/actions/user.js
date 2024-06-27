@@ -1,5 +1,5 @@
 "use server";
-import { createUser } from "@directus/sdk";
+import { createUser ,passwordRequest,passwordReset} from "@directus/sdk";
 import { client, clientToken } from "@/db/directus";
 
 export const createUserr = async (data) => {
