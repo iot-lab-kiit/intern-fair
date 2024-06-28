@@ -28,12 +28,8 @@
     "framer-motion": "^11.0.20",
     "fuse.js": "^7.0.0",
     "highlight.js": "^11.9.0",
-<<<<<<< HEAD
-    "lucide-react": "^0.397.0",
-=======
     "lucide-react": "^0.396.0",
     "markdown-it": "^14.1.0",
->>>>>>> 32d01c18e2f5c391cc1ce4d4dc8e388237368f44
     "mongoose": "^8.2.1",
     "next": "14.1.0",
     "react": "^18",
