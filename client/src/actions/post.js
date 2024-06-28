@@ -63,10 +63,11 @@ export const createPost = async (data, formData) => {
 };
 
 //Get All POST
-export const getAllPost = async () => {
+export const getAllPost = async (offset, POSTS_PER_PAGE) => {
   try {
     const result = await clientToken(process.env.TOKEN).request(
       readItems("Post", {
+      
         fields: [
           "id",
           "content",
@@ -77,6 +78,8 @@ export const getAllPost = async () => {
             user_created: ["id", "first_name", "last_name", "email"],
           },
         ],
+      offset:parseInt(offset),
+        limit:parseInt(POSTS_PER_PAGE), // Limit for pagination
       })
     );
     if (!result) throw new Error([{ message: "No post found" }]);
