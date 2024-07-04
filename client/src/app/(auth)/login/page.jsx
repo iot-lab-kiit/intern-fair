@@ -80,9 +80,9 @@ export default function Login() {
   return (
     <>
       <div className="content h-screen flex justify-center items-center w-screen  max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
-        <div className="flex flex-col justify-center  mx-auto gap-4 place-self-center max-h-screen">
+        <div className="flex flex-col justify-center mx-auto gap-4">
           <div
-            className="back-button text-base absolute top-2 cursor-pointer left-5 flex  w-full sm:w-[100%] h-10 "
+            className="back-button text-base absolute top-2 cursor-pointer left-5 flex"
             onClick={handleBackButtonClick}
           >
             <div className="back-button flex gap-3 items-center justify-center">
