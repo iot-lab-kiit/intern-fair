@@ -80,17 +80,17 @@ export default function Login() {
     <>
       <div className="content h-screen flex justify-center items-center w-screen max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
         <div className="flex flex-col justify-center  mx-auto gap-4 place-self-center max-h-screen">
-          {/* <div
+          <div
             className="back-button text-base absolute top-2 cursor-pointer left-5 flex  w-full sm:w-[100%] h-10 "
             onClick={handleBackButtonClick}
           >
             <div className="back-button flex gap-3 items-center justify-center">
-              <div className=" h-4 w-4 mbSmall:h-5 :mbSmall:w-5">
+              <div className=" h-3.5 w-3.5 mbXSmall:h-4 mbXSmall:w-4 mbSmall:h-5 :mbSmall:w-5">
                 <Image src="/images/back.png" height={20} width={20} />
               </div>
               <div className=" text-sm mbSmall:text-base">Back</div>
             </div>
-          </div> */}
+          </div>
           <div className="form-container  flex flex-col items-center justify-center gap-[0.5rem] h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
             <div className="header flex flex-col gap-2 w-full sm:w-[100%] text-start">
               <div className="font-extrabold text-2xl mbSmall:text-3xl tbLandscape:text-4xl ">

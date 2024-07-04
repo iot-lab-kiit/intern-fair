@@ -87,20 +87,25 @@ export default function Signup() {
 
   return (
     <>
-      <div className="content  h-screen flex justify-center items-center  max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
+      <div className="content  h-screen flex justify-center items-center w-screen  max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
         <div className="flex flex-col justify-center items-center mx-auto  place-self-center max-h-screen">
-          {/* <div
-            className="back-button text-base absolute top-2 cursor-pointer left-5 flex  w-full sm:w-[100%] h-10 "
+          <div
+            className="back-button text-base absolute top-2 cursor-pointer left-5 flex"
             onClick={handleBackButtonClick}
           >
-            <div className="back-button flex gap-3 items-center justify-center">
-              <div className=" h-4 w-4 mbSmall:h-5 :mbSmall:w-5">
-                <Image src="/images/back.png" height={20} width={20} />
-              </div>
-              <div className=" text-sm mbSmall:text-base">Back</div>
+            {/* <div className=" h-4 w-4 mbSmall:h-5 :mbSmall:w-5"> */}
+            <div className="back-button flex gap-2 mbSmall:gap-3 items-center justify-center">
+              <Image
+                src="/images/back.png"
+                height={20}
+                width={20}
+                className="h-3 w-3 mbSmall:h-4 mbSmall:w-4"
+              />
+
+              <div className=" text-xs mbSmall:text-base">Back</div>
             </div>
-          </div> */}
-          <div className="form-container flex flex-col items-center justify-center gap-[0.5rem] h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
+          </div>
+          <div className="form-container  flex flex-col items-center justify-center gap-[0.3rem] mbSmall:gap-[0.5rem] h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
             <div className="header flex flex-col gap-2 w-full  text-start">
               <div className="font-extrabold text-xl sm:text-3xl">
                 Create an Account
@@ -195,11 +200,11 @@ export default function Signup() {
                   </a>
                 </label>
               </div>
-              <div className="flex flex-col items-center justify-center gap-2 mbSmall:gap-3">
+              <div className="flex flex-col items-center justify-center gap-1 mbSmall:gap-3">
                 <button className="bg-[#1F3DD9] text-white h-8 mbXSmall:h-10 w-full rounded-lg">
                   Sign Up
                 </button>
-                <div className="flex flex-row gap-2 w-[100%] sm:w-[100%] h-[1.75rem] sm:h-[100%] items-center">
+                <div className="flex flex-row gap-1.5 mbSmall:gap-2 w-[100%] sm:w-[100%] h-[1.75rem] sm:h-[100%] items-center">
                   <div className="separator w-[100%] h-[2px] bg-[#E0E5F2] my-4"></div>
                   <div className="text-gray-500 text-xs">or</div>
                   <div className="separator w-[100%] h-[2px] bg-[#E0E5F2] my-4"></div>
@@ -217,7 +222,7 @@ export default function Signup() {
                     Sign in with Google
                   </div>
                 </div>
-                <div className=" w-full text-center text-sm mbXSmall:text-base">
+                <div className=" w-full text-center text-xs mbXSmall:text-sm mbSmall:text-base">
                   Already have an account?{" "}
                   <a href="/login" className="text-[#1F3DD9] font-xs">
                     Login

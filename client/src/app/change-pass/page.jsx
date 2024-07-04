@@ -79,23 +79,23 @@ export default function page() {
     <>
       <div className="content h-screen flex justify-center  items-center w-screen max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
         <div className="flex flex-col justify-center  mx-auto gap-4 overflow-hidden">
-          {/* <div
-            className="back-button text-base  flex  w-full sm:w-[100%] h-16 "
+          <div
+            className="back-button text-base absolute top-2 cursor-pointer left-5 flex  w-full sm:w-[100%] h-10 "
             onClick={handleBackButtonClick}
           >
             <div className="back-button flex gap-3 items-center justify-center">
-              <div className="h-5 w-5">
+              <div className=" h-3.5 w-3.5 mbXSmall:h-4 mbXSmall:w-4 mbSmall:h-5 :mbSmall:w-5">
                 <Image src="/images/back.png" height={20} width={20} />
               </div>
-              <div>Back</div>
+              <div className=" text-sm mbSmall:text-base">Back</div>
             </div>
-          </div> */}
+          </div>
           <div className="form-container  flex flex-col items-center justify-center gap-[0.5rem] h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
             <div className="header flex flex-col gap-2 w-full sm:w-[100%] text-start">
-              <div className="font-extrabold text-2xl mbXSmall:text-3xl mbSmall:text-4xl tbLandscape:text-5xl ">
+              <div className="font-extrabold text-2xl mbSmall:text-3xl tbLandscape:text-4xl ">
                 New Password
               </div>
-              <div className="text-sm mbSmall:text-lg tbLandscape:text-xl">
+              <div className="text-sm mbXSmall:text-base tbLandscape:text-lg">
                 Enter your new password to sign in!
               </div>
             </div>
@@ -117,7 +117,7 @@ export default function page() {
             >
               <label
                 htmlFor="password"
-                className="text-[#182467] text-sm mbSmall:text-lg tbLandscape:text-xl"
+                className="text-[#182467] text-sm mbXSmall:text-base tbLandscape:text-lg"
               >
                 Password*
               </label>
@@ -153,7 +153,7 @@ export default function page() {
               </div>
               <label
                 htmlFor="password"
-                className="text-[#182467] text-sm mbSmall:text-lg tbLandscape:text-xl"
+                className="text-[#182467] text-sm mbXSmall:text-base tbLandscape:text-lg"
               >
                 Confirm Password*
               </label>
@@ -197,7 +197,7 @@ export default function page() {
           </div>
         </div>
 
-        {/* <div className="image-container w-[45%] tbLandscape:w-[50%] h-full  hidden lg:block">
+        <div className="image-container w-[45%] tbLandscape:w-[50%] h-full  hidden lg:block">
           <Image
             src="/images/signup.png"
             alt="signup-image"
@@ -206,7 +206,7 @@ export default function page() {
             style={{ width: "100%", height: "100%" }}
             className="max-h-screen"
           />
-        </div> */}
+        </div>
       </div>
     </>
   );
