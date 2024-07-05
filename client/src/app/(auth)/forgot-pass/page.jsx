@@ -48,11 +48,14 @@ export default function page() {
     });
   };
 
+  const handleBackButtonClick = () => {
+    router.back();
+  };
+
   return (
     <>
       <div className="content h-screen flex justify-center items-center w-screen max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
         <div className="flex flex-col justify-center  mx-auto gap-4 place-self-center max-h-screen">
-
           <div
             className="back-button text-base absolute top-2 cursor-pointer left-5 flex "
             onClick={handleBackButtonClick}
@@ -103,7 +106,6 @@ export default function page() {
           </div>
         </div>
 
-
         <div className="image-container w-[45%] tbLandscape:w-[50%] h-full  hidden lg:block">
           <Image
             src="/images/signup.png"
@@ -114,8 +116,6 @@ export default function page() {
             className="max-h-screen"
           />
         </div>
-
-
       </div>
     </>
   );
