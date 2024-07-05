@@ -19,6 +19,7 @@ const CommunitySection = () => {
   const [searchQuery, setsearchQuery] = useState("");
   const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
   const [data, setData] = useState({ description: "", tags: "" });
   const router = useRouter();
@@ -28,7 +29,8 @@ const CommunitySection = () => {
     document.getElementById("fileInput").click();
   };
   useEffect(() => {
-    getAllPost(0, 10).then((res) => setPostData(res.result));
+    setIsLoading(true);
+    getAllPost(0, 10).then((res) => setPostData(res.result)).finally(() => setIsLoading(false));
   }, []);
 
   const fuse = new Fuse(postData, {
@@ -96,6 +98,7 @@ const CommunitySection = () => {
     };
   
     try {
+      setIsLoading(true);
       const response = await createPost(postData, formData);
 
       if (response.success) {
@@ -112,6 +115,8 @@ const CommunitySection = () => {
     } catch (e) {
       console.error("Error uploading post:", e);
       setError("Error uploading post.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -193,6 +198,10 @@ const CommunitySection = () => {
                 className="pl-10 min-w-[30rem] md:w-[30vw] border-[1.5px] border-[#DCDCE7] rounded-full py-2.5"
               />
             </div>
+         {isLoading ? ( // Show loader while loading
+              <Loader />
+            ) : (
+              <>
             {error && <p className="my-10 text-5xl">{error}</p>}
             {searchQuery !== "" || selectedTag
               ? filteredPosts.map((item) => (
@@ -219,6 +228,8 @@ const CommunitySection = () => {
                     likes={item.likes}
                   />
                 ))}
+           </>
+            )}
            <div className="...">
         {(hasMoreData && <div ref={scrollTrigger}>Loading...</div>) || (
           <p className="...">No more posts to load</p>
