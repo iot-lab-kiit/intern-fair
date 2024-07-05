@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
 import Image from "next/image";
-import { getUserr } from "@/actions/user";
+import { resetPassword } from "@/actions/user";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 export default function page() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    email: "",
+    // email: "",
     password: "",
     cnfpassword: "",
   });
@@ -49,16 +49,22 @@ export default function page() {
       }
     }
 
-    toast.promise(getUserr(formData), {
-      loading: "Loggin in...",
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+    const token = getQueryParam('token');
+
+    toast.promise(resetPassword (formData,token), {
+      loading: "resetting password..",
       success: (res) => {
-        setTimeout(() => {
-          router.push("/");
-        }, 2000);
-        if (res.result.access_token)
-          document.cookie =
-            "user_session" + "=" + (res.result.access_token || "");
-        ("; path=/");
+        // setTimeout(() => {
+        //   router.push("/");
+        // }, 2000);
+        // if (res.result.access_token)
+        //   document.cookie =
+        //     "user_session" + "=" + (res.result.access_token || "");
+        // ("; path=/");
         return <b>{res.message}</b>;
       },
       error: (err) => <b>{err.message}</b>,
@@ -79,6 +85,7 @@ export default function page() {
     <>
       <div className="content h-screen flex justify-center  items-center w-screen max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
         <div className="flex flex-col justify-center  mx-auto gap-4 overflow-hidden">
+
           <div
             className="back-button text-base absolute top-2 cursor-pointer left-5 flex "
             onClick={handleBackButtonClick}
@@ -90,6 +97,9 @@ export default function page() {
               <div className=" text-sm mbSmall:text-base">Back</div>
             </div>
           </div>
+
+         
+
           <div className="form-container  flex flex-col items-center justify-center gap-[0.5rem] h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
             <div className="header flex flex-col gap-2 w-full sm:w-[100%] text-start">
               <div className="font-extrabold text-2xl mbSmall:text-3xl tbLandscape:text-4xl ">
@@ -100,16 +110,7 @@ export default function page() {
               </div>
             </div>
 
-            {/* Or with lines */}
-            {/* <div className="flex flex-col w-[100%] sm:w-[60%] h-[1.75rem] sm:h-[100%] items-center">
-              <Image
-                src="/images/Separator.png"
-                height={10000}
-                width={800}
-                alt="separator"
-                className="w-[100%] h-[100%]"
-              />
-            </div> */}
+      
 
             <form
               className="flex  flex-col gap-3 w-full "
@@ -197,6 +198,7 @@ export default function page() {
           </div>
         </div>
 
+
         <div className="image-container w-[45%] tbLandscape:w-[50%] h-full max-h-screen  hidden lg:block">
           <Image
             src="/images/signup.png"
@@ -207,6 +209,7 @@ export default function page() {
             className="max-h-screen"
           />
         </div>
+
       </div>
     </>
   );

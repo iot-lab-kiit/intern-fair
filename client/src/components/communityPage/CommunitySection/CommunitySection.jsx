@@ -11,7 +11,7 @@ import Fuse from "fuse.js";
 import Sidebar from "./Sidebar";
 import { Menu } from "lucide-react";
 import toast from "react-hot-toast";
-import Loader from "@/components/ui/Loader/Loader";
+import { useInView } from 'react-intersection-observer';
 
 const CommunitySection = () => {
   const [postData, setPostData] = useState(postdata);
@@ -30,9 +30,7 @@ const CommunitySection = () => {
   };
   useEffect(() => {
     setIsLoading(true);
-    getAllPost()
-      .then((res) => setPostData(res.result))
-      .finally(() => setIsLoading(false));
+    getAllPost(0, 10).then((res) => setPostData(res.result)).finally(() => setIsLoading(false));
   }, []);
 
   const fuse = new Fuse(postData, {
@@ -98,7 +96,7 @@ const CommunitySection = () => {
       content: data.description,
       tag: data.tags,
     };
-
+  
     try {
       setIsLoading(true);
       const response = await createPost(postData, formData);
@@ -127,8 +125,33 @@ const CommunitySection = () => {
     const imageName = imgInput.files[0] ? imgInput.files[0].name : "";
     setIsPostImg(imageName);
   };
-  // console.log(filteredPosts);
-  // console.log(postData);
+
+  const POSTS_PER_PAGE = 10;
+
+  const [offset, setOffset] = useState(POSTS_PER_PAGE);
+
+  const [hasMoreData, setHasMoreData] = useState(true);
+  const [scrollTrigger, isInView] = useInView();
+
+  const loadMorePosts = async () => {
+    if (hasMoreData) {
+      const apiPosts = (await getAllPost(offset, POSTS_PER_PAGE)).result;
+
+      console.log(offset, POSTS_PER_PAGE);
+      if (apiPosts.length === 0) {
+        setHasMoreData(false);
+      }
+
+      setPostData((prevPosts) => [...prevPosts, ...apiPosts]);
+      setOffset((prevOffset) => prevOffset + POSTS_PER_PAGE);
+    }
+  };
+  useEffect(() => {
+    if (isInView && hasMoreData) {
+      loadMorePosts();
+    }
+  }, [isInView, hasMoreData]);
+
   return (
     <div className="flex">
       <Sidebar
@@ -175,38 +198,43 @@ const CommunitySection = () => {
                 className="pl-10 min-w-[30rem] md:w-[30vw] border-[1.5px] border-[#DCDCE7] rounded-full py-2.5"
               />
             </div>
-            {isLoading ? ( // Show loader while loading
+         {isLoading ? ( // Show loader while loading
               <Loader />
             ) : (
               <>
-                {error && <p className="my-10 text-5xl">{error}</p>}
-                {searchQuery !== "" || selectedTag
-                  ? filteredPosts.map((item) => (
-                      <Post
-                        key={item.id}
-                        id={item.id}
-                        date_created={item.date_created}
-                        description={item.content}
-                        tag={item.tag}
-                        image={item.image}
-                        user_created={item.user_created}
-                        likes={item.likes}
-                      />
-                    ))
-                  : postData.map((item) => (
-                      <Post
-                        key={item.id}
-                        id={item.id}
-                        date_created={item.date_created}
-                        description={item.content}
-                        tag={item.tag}
-                        image={item.image}
-                        user_created={item.user_created}
-                        likes={item.likes}
-                      />
-                    ))}
-              </>
+            {error && <p className="my-10 text-5xl">{error}</p>}
+            {searchQuery !== "" || selectedTag
+              ? filteredPosts.map((item) => (
+                  <Post
+                    key={item.id}
+                    id={item.id}
+                    date_created={item.date_created}
+                    description={item.content}
+                    tag={item.tag}
+                    image={item.image}
+                    user_created={item.user_created}
+                    likes={item.likes}
+                  />
+                ))
+              : postData.map((item) => (
+                  <Post
+                    key={item.id}
+                    id={item.id}
+                    date_created={item.date_created}
+                    description={item.content}
+                    tag={item.tag}
+                    image={item.image}
+                    user_created={item.user_created}
+                    likes={item.likes}
+                  />
+                ))}
+           </>
             )}
+           <div className="...">
+        {(hasMoreData && <div ref={scrollTrigger}>Loading...</div>) || (
+          <p className="...">No more posts to load</p>
+        )}
+      </div>
           </div>
 
           <div className="order-1 laptop:order-2 lg:ml-40 md:ml-0 flex items-center justify-center gap-3 w-full mbXSmall:w-[90%] mbSmall:w-[80%] mbMedium:w-[70%] laptop:w-[33%] tbPortrait:w-[30%]">
