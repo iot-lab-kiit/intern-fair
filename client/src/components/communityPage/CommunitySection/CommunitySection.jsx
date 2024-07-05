@@ -12,7 +12,7 @@ import Sidebar from "./Sidebar";
 import { Menu } from "lucide-react";
 import toast from "react-hot-toast";
 import { useInView } from 'react-intersection-observer';
-
+import Loader from "@/components/ui/Loader/Loader";
 const CommunitySection = () => {
   const [postData, setPostData] = useState(postdata);
   const [filteredPosts, setFilteredPosts] = useState(postdata);
@@ -302,7 +302,7 @@ const CommunitySection = () => {
 
                 {/* TODO: Improve the button */}
                 <button
-                  className="border rounded-xl text-lg p-2 text-white w-full bg-[#1F3DD9]"
+                  className="border rounded-xl text-lg p-2 text-white w-full bg-indigo-700 "
                   onClick={() => handleSubmit()}
                 >
                   Submit

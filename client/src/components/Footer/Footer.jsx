@@ -16,7 +16,7 @@ const Footer = () => {
         scrollTo = document.getElementById("mission");
         break;
       case 3:
-        scrollTo = document.getElementById("courses");
+        window.location.href = "/courses";
         break;
       case 4:
         scrollTo = document.getElementById("bts");
@@ -24,6 +24,12 @@ const Footer = () => {
       case 5:
         scrollTo = document.getElementById("hero");
         break;
+        case 6:
+          scrollTo = document.getElementById("suggestion");
+          break;
+          case 7:
+            scrollTo = document.getElementById("faq");
+            break;
       default:
         console.log("Invalid choice");
     }
@@ -39,7 +45,7 @@ const Footer = () => {
     });
   };
   return (
-    <div className="bg-[#081245] w-full flex justify-center items-center ">
+    <div className="bg-[#081245] w-full flex justify-center items-center  ">
       <div className=" flex flex-col carousel:flex-row text-white carousel:h-[20rem] items-center w-full max-w-[120rem] gap-10 carousel:gap-0 text-center carousel:text-left p-10 carousel:p-0 h-fit ">
         <div className="carousel:text-4xl text-3xl carousel:w-[50%] flex justify-center items-center w-full font-extrabold ">
           Coded with ❤️ and ☕ <br /> by IoT Web Team
@@ -53,11 +59,10 @@ const Footer = () => {
 
           <div onClick={() => handleClick(4)}>BTS</div>
         </div>
-        <div className="flex carousel:flex-col gap-6 carousel:w-[15%] flex-wrap justify-center">
-          <div>Discover more</div>
+        <div className="flex carousel:flex-col gap-6 carousel:w-[15%] flex-wrap justify-center cursor-pointer">
           <div>Community</div>
-          <div>Suggestion Box</div>
-          <div>FQA's</div>
+          <div onClick={() => handleClick(6)} >Suggestion Box</div>
+          <div onClick={() => handleClick(7)}>FQA's</div>
         </div>
         <div className=" carousel:h-[50%] flex flex-col justify-between ">
           <div>

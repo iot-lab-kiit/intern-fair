@@ -2,9 +2,10 @@ import TeamCard from "@/components/TeamsPage/TeamCard/TeamCard";
 import { people } from "@/data/TeamsPage/PeopleData";
 import { contentTeam } from "@/data/TeamsPage/ContentTeamData";
 import ContentTeamCard from "@/components/TeamsPage/ContentTeamCard/ContentTeamCard";
-
+import Footer from "@/components/Footer/Footer";
 const page = () => {
   return (
+    <>
     <div className="w-screen max-w-full flex flex-col items-center justify-center gap-10 p-3 mbXSmall:p-5 mbSmall:p-8">
       {/* Developers Section */}
       <div className="flex flex-col items-center justify-center gap-3 mbXSmall:gap-4 w-full mbMedium:w-[85%] laptop:w-[70%]">
@@ -49,7 +50,10 @@ const page = () => {
           <ContentTeamCard key={index} person={person} />
         ))}
       </div>
+     
     </div>
+    <Footer/>
+    </>
   );
 };
 
