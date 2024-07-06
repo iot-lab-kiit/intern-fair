@@ -105,7 +105,7 @@ const Post = ({
           <div className="w-full">
             <span className="w-full h-[8rem] mbXSmall:h-[10rem] mbMedSmall:h-[12rem] mbSmall:h-[14rem] mbMedium:h-[16rem] laptop:h-[18rem] tbPortrait:h-[20rem]  inline-block relative">
               <Image
-                src={`http://43.204.145.188/assets/${image}`}
+                src={`https://directus.iotkiit.in/assets/${image}`}
                 fill
                 alt="about"
                 className="object-cover"
