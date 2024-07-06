@@ -2,9 +2,9 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const Dropdown = ({ name, subTopicID,description }) => {
+const Dropdown = ({ name, subTopicID = [], description }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const filteredsubTopicID= subTopicID.sort((a, b) => a.order - b.order)
+  const filteredsubTopicID = subTopicID.sort((a, b) => a.order - b.order);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -22,9 +22,14 @@ const Dropdown = ({ name, subTopicID,description }) => {
           {name}
         </div>
         {description && (
-          <div className={`text-sm  text-gray-500 ${isOpen ? "text-[#1F3DD9]" : ""}`}>
-          {description}
-        </div>)}
+          <div
+            className={`text-sm  text-gray-500 ${
+              isOpen ? "text-[#1F3DD9]" : ""
+            }`}
+          >
+            {description}
+          </div>
+        )}
       </button>
       {/* Dropdown styling */}{" "}
       {isOpen && (
@@ -33,16 +38,15 @@ const Dropdown = ({ name, subTopicID,description }) => {
         >
           {filteredsubTopicID &&
             filteredsubTopicID.length > 0 &&
-            filteredsubTopicID.map((subTopic) => (
+            filteredsubTopicID.map((SubTopic) => (
               <Link
-                href={"/courses/" + subTopic.id}
+                href={"/courses/" + SubTopic.id}
                 className="border-b border-[#081245] w-full h-16 flex items-center justify-between"
-                key={subTopic.id}
+                key={SubTopic.id}
               >
                 <div className="w-full h-16 ">
                   <div className="flex flex-row justify-between text-lg font-bold text-[#081245] hover:text-[#1F3DD9]">
-                    <div className="px-14">{subTopic.name}</div>
-                 
+                    <div className="px-14">{SubTopic.name}</div>
                   </div>
                 </div>
               </Link>
@@ -53,13 +57,15 @@ const Dropdown = ({ name, subTopicID,description }) => {
   );
 };
 export const ClientOnlyDropdown = ({ DropDownData }) => {
-
   return (
-   
     <>
       {DropDownData.map((data) => (
-       
-        <Dropdown key={data.id} name={data.name} description={data.description} subTopicID={data.subTopicID} />
+        <Dropdown
+          key={data.id}
+          name={data.name}
+          description={data.description}
+          subTopicID={data.SubTopicID}
+        />
       ))}
     </>
   );

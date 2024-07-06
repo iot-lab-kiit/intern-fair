@@ -8,11 +8,12 @@ export const getTopics = async () => {
   try {
     const result = await clientToken(process.env.TOKEN).request(
       readItems("Topic", {
-        fields: ["id", "name","description", { subTopicID: ["id", "name","order"] }],
+        fields: ["id", "name","description", {SubTopicID: ["id", "name","order"] }],
       })
     );
 
     if (!result) throw new Error("No topics found");
+    console.log("results",result)
     return { success: true, message: "Found all topics", result };
   } catch (e) {
     console.log(e);
@@ -39,10 +40,11 @@ export const getTopicById = async (id) => {
 export const getSubtopicsByTopicId = async (subtopicIds) => {
   try {
     const subTopicData = await clientToken(process.env.TOKEN).request(
-      readItem("SubTopic", subtopicIds, {
+      readItem("SubTopic",  {
         fields: ["id", "name"],
       })
     );
+    console.log("subtopicData",subTopicData);
     if (!subTopicData) throw new Error("No Subtopics found");
     return {
       success: true,
@@ -63,7 +65,7 @@ export const getDummySubSubtopics = async (subtopicIds) => {
   };
 };
 
-// Get subtopics by their IDs
+// // Get subtopics by their IDs
 export const getsubTopicContent = async (subtopicIds) => {
   try {
     const subSubTopicData = await clientToken(process.env.TOKEN).request(

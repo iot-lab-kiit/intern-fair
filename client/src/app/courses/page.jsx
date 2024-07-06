@@ -17,6 +17,7 @@ const Page = () => {
     const fetchTopics = async () => {
       try {
         const topicsData = await getTopics();
+        
         setTopics(topicsData.result);
       } catch (error) {
         console.error("Error fetching topics:", error);
