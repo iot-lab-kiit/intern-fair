@@ -70,7 +70,7 @@ p , li,ul
 }
 
 
-a{
+li a, p a{
+  color: #007bff;
 
-  text-decoration: underline;
 }
