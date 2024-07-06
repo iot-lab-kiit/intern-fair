@@ -2,8 +2,8 @@
 
 import {useEffect, useRef, useState} from "react";
 import hljs from "highlight.js";
-import "highlight.js/styles/github.css"; // Changed to a light theme
-import {FaCopy} from "react-icons/fa"; // Importing the copy icon
+import "highlight.js/styles/github.css"; 
+import {FaCopy} from "react-icons/fa"; 
 import Image from "next/image";
 
 const CodeSnippet = ({language, code}) => {
