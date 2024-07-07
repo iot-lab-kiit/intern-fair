@@ -115,7 +115,7 @@ const CommunitySection = () => {
         setError("Failed to create post.");
       }
     } catch (e) {
-      console.error("Error uploading post:", e);
+      toast.error("Error uploading post");
       setError("Error uploading post.");
     } finally {
       setIsLoading(false);
@@ -204,7 +204,6 @@ const CommunitySection = () => {
               <Loader />
             ) : (
               <>
-                {error && <p className="my-10 text-5xl">{error}</p>}
                 {searchQuery !== "" || selectedTag
                   ? filteredPosts.map((item) => (
                       <Post
@@ -233,9 +232,7 @@ const CommunitySection = () => {
               </>
             )}
             <div className="...">
-              {(hasMoreData && <div ref={scrollTrigger}>Loading...</div>) || (
-                <p className="...">No more posts to load</p>
-              )}
+              {hasMoreData && <div ref={scrollTrigger}>Loading...</div>}
             </div>
           </div>
 
