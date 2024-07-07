@@ -67,19 +67,19 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
   try {
     const result = await clientToken(process.env.TOKEN).request(
       readItems("Post", {
-      
         fields: [
           "id",
           "content",
           "tag",
           "image",
           "date_created",
+          "likes",
           {
             user_created: ["id", "first_name", "last_name", "email"],
           },
         ],
-      offset:parseInt(offset),
-        limit:parseInt(POSTS_PER_PAGE), // Limit for pagination
+        offset: parseInt(offset),
+        limit: parseInt(POSTS_PER_PAGE), // Limit for pagination
       })
     );
     if (!result) throw new Error([{ message: "No post found" }]);
@@ -105,6 +105,7 @@ export const getPostById = async (data) => {
 export const updatePost = async (data) => {
   try {
     data = JSON.parse(data);
+    console.log(data);
     const result = await clientToken(process.env.TOKEN).request(
       updateItem("Post", data.id, {
         content: data.content,

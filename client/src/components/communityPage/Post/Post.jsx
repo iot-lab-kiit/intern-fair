@@ -3,6 +3,8 @@ import { updatePost } from "@/actions/post";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { parseISO, format } from "date-fns";
+import { FcLike } from "react-icons/fc";
+import { GoHeart } from "react-icons/go";
 
 const Post = ({
   id,
@@ -33,10 +35,13 @@ const Post = ({
   };
 
   const handleLikes = (id, like) => {
-    updatePost(JSON.stringify({ id, likes: like + 1 }))
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
+    if (!liked) {
+      setliked(true);
+      const updatedLikes = updatePost(JSON.stringify({ id, likes: like + 1 }));
+      console.log(updatedLikes);
+    }
   };
+
   // const handleShare = (id, share) => {
   //   updatePost(JSON.stringify({ id, share: share + 1 }))
   //     .then((res) => console.log(res))
@@ -120,9 +125,8 @@ const Post = ({
             className="flex items-center justify-center gap-2"
             onClick={() => handleLikes(id, likes)}
           >
-            {/* <GoHeart size={32} color="#FF0000" /> */}
-            {/* <FcLike size={32} color="#00FF00" /> */}
-            <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
+            {liked ? <FcLike size={32} /> : <GoHeart size={32} />}
+            <p className="text-[#0f0f0f] text-sm mbSmall:text-base mbMedium:text-lg">
               {likes}
             </p>
           </div>
