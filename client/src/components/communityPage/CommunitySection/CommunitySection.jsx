@@ -11,7 +11,7 @@ import Fuse from "fuse.js";
 import Sidebar from "./Sidebar";
 import { Menu } from "lucide-react";
 import toast from "react-hot-toast";
-import { useInView } from 'react-intersection-observer';
+import { useInView } from "react-intersection-observer";
 import Loader from "@/components/ui/Loader/Loader";
 const CommunitySection = () => {
   const [postData, setPostData] = useState(postdata);
@@ -30,7 +30,9 @@ const CommunitySection = () => {
   };
   useEffect(() => {
     setIsLoading(true);
-    getAllPost(0, 10).then((res) => setPostData(res.result)).finally(() => setIsLoading(false));
+    getAllPost(0, 10)
+      .then((res) => setPostData(res.result))
+      .finally(() => setIsLoading(false));
   }, []);
 
   const fuse = new Fuse(postData, {
@@ -96,7 +98,7 @@ const CommunitySection = () => {
       content: data.description,
       tag: data.tags,
     };
-  
+
     try {
       setIsLoading(true);
       const response = await createPost(postData, formData);
@@ -180,7 +182,7 @@ const CommunitySection = () => {
         <div className="flex flex-col laptop:flex-row items-center laptop:items-start justify-start ml-12 gap-10 laptop:gap-8 max-w-full mt-10">
           <div className="order-2 laptop:order-2 flex flex-col gap-6 items-center justify-center w-full mbXSmall:w-[90%] mbSmall:w-[80%] mbMedium:w-[70%] laptop:w-[37%] tbPortrait:w-[40%] tbLandscape:w-[43%]">
             {/* Search bar */}
-            <div className="relative laptop:mr-1 tbPortrait:mr-3 min-[1250px]:mr-4">
+            <div className="relative ml-10 mbXSmall:ml-0 tbPortrait:ml-5">
               <div className="absolute inset-y-0 left-0 pl-4 pt-1 flex items-center">
                 <span className=" w-4 h-4 mbXSmall:w-5 mbXSmall:h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 laptop:w-4 laptop:h-4 inline-block rounded-full relative cursor-pointer">
                   <Image
@@ -195,46 +197,46 @@ const CommunitySection = () => {
                 type="text"
                 placeholder="Search"
                 onChange={handleSearchQuery}
-                className="pl-10 min-w-[30rem] md:w-[30vw] border-[1.5px] border-[#DCDCE7] rounded-full py-2.5"
+                className="pl-10  min-w-[23rem] mb:w-[30vw] border-[1.5px] border-[#DCDCE7] rounded-full py-2.5"
               />
             </div>
-         {isLoading ? ( // Show loader while loading
+            {isLoading ? ( // Show loader while loading
               <Loader />
             ) : (
               <>
-            {error && <p className="my-10 text-5xl">{error}</p>}
-            {searchQuery !== "" || selectedTag
-              ? filteredPosts.map((item) => (
-                  <Post
-                    key={item.id}
-                    id={item.id}
-                    date_created={item.date_created}
-                    description={item.content}
-                    tag={item.tag}
-                    image={item.image}
-                    user_created={item.user_created}
-                    likes={item.likes}
-                  />
-                ))
-              : postData.map((item) => (
-                  <Post
-                    key={item.id}
-                    id={item.id}
-                    date_created={item.date_created}
-                    description={item.content}
-                    tag={item.tag}
-                    image={item.image}
-                    user_created={item.user_created}
-                    likes={item.likes}
-                  />
-                ))}
-           </>
+                {error && <p className="my-10 text-5xl">{error}</p>}
+                {searchQuery !== "" || selectedTag
+                  ? filteredPosts.map((item) => (
+                      <Post
+                        key={item.id}
+                        id={item.id}
+                        date_created={item.date_created}
+                        description={item.content}
+                        tag={item.tag}
+                        image={item.image}
+                        user_created={item.user_created}
+                        likes={item.likes}
+                      />
+                    ))
+                  : postData.map((item) => (
+                      <Post
+                        key={item.id}
+                        id={item.id}
+                        date_created={item.date_created}
+                        description={item.content}
+                        tag={item.tag}
+                        image={item.image}
+                        user_created={item.user_created}
+                        likes={item.likes}
+                      />
+                    ))}
+              </>
             )}
-           <div className="...">
-        {(hasMoreData && <div ref={scrollTrigger}>Loading...</div>) || (
-          <p className="...">No more posts to load</p>
-        )}
-      </div>
+            <div className="...">
+              {(hasMoreData && <div ref={scrollTrigger}>Loading...</div>) || (
+                <p className="...">No more posts to load</p>
+              )}
+            </div>
           </div>
 
           <div className="order-1 laptop:order-2 lg:ml-40 md:ml-0 flex items-center justify-center gap-3 w-full mbXSmall:w-[90%] mbSmall:w-[80%] mbMedium:w-[70%] laptop:w-[33%] tbPortrait:w-[30%]">

@@ -55,16 +55,18 @@ export default function page() {
   return (
     <>
       <div className="content h-screen flex justify-center items-center w-screen max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
-        <div className="flex flex-col justify-center  mx-auto gap-4 place-self-center max-h-screen">
+        <div className="flex flex-col justify-center  mx-auto gap-4 place-self-center lg:place-self-start pb-[14rem] lg:pt-24 pr-4 max-h-screen">
           <div
-            className="back-button text-base absolute top-2 cursor-pointer left-5 flex "
+            className="back-button text-base absolute top-2  items-center justify-center h-10 cursor-pointer left-5 flex "
             onClick={handleBackButtonClick}
           >
-            <div className="back-button flex gap-3 items-center justify-center">
-              <div className=" h-3.5 w-3.5 mbXSmall:h-4 mbXSmall:w-4 mbSmall:h-5 :mbSmall:w-5">
+            <div className="back-button flex gap-3 items-center h-10 justify-center">
+              <div className=" h-3.5 w-3.5 self-bottom mbXSmall:h-4 mbXSmall:w-4 mbSmall:h-5 :mbSmall:w-5">
                 <Image src="/images/back.png" height={20} width={20} />
               </div>
-              <div className=" text-sm mbSmall:text-base">Back</div>
+              <div className=" text-sm mbSmall:text-base self-center absolute bottom-2.5 left-6">
+                Back
+              </div>
             </div>
           </div>
 

@@ -82,14 +82,16 @@ export default function Login() {
       <div className="content h-screen flex justify-center items-center w-screen  max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
         <div className="flex flex-col justify-center mx-auto gap-4">
           <div
-            className="back-button text-base absolute top-2 cursor-pointer left-5 flex"
+            className="back-button text-base absolute top-2  items-center justify-center h-10 cursor-pointer left-5 flex "
             onClick={handleBackButtonClick}
           >
-            <div className="back-button flex gap-3 items-center justify-center">
-              <div className=" h-3.5 w-3.5 mbXSmall:h-4 mbXSmall:w-4 mbSmall:h-5 :mbSmall:w-5">
+            <div className="back-button flex gap-3 items-center h-10 justify-center">
+              <div className=" h-3.5 w-3.5 self-bottom mbXSmall:h-4 mbXSmall:w-4 mbSmall:h-5 :mbSmall:w-5">
                 <Image src="/images/back.png" height={20} width={20} />
               </div>
-              <div className=" text-sm mbSmall:text-base">Back</div>
+              <div className=" text-sm mbSmall:text-base self-center absolute bottom-2.5 left-6">
+                Back
+              </div>
             </div>
           </div>
           <div className="form-container  flex flex-col items-center justify-center gap-[0.5rem] h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
@@ -97,7 +99,7 @@ export default function Login() {
               <div className="font-extrabold text-2xl mbSmall:text-3xl tbLandscape:text-4xl ">
                 Login
               </div>
-              <div className=" text-sm mbXSmall:text-base tbLandscape:text-lg">
+              <div className=" text-[0.73rem] mbXSmall:text-base tbLandscape:text-lg">
                 Enter your email and password to sign in!
               </div>
             </div>
@@ -171,7 +173,7 @@ export default function Login() {
               <div className="flex     mbXSmall:items-center mbMini:flex-col mbMini:gap-1 mbXSmall:flex-row  justify-end ">
                 <Link
                   href="/forgot-pass"
-                  className=" cursor-pointer text-[#1F3DD9] text-sm mbXSmall:text-base tbLandscape:text-lg font-sans text-nowrap mbMini:ml-5"
+                  className=" cursor-pointer self-end text-[#1F3DD9] text-sm mbXSmall:text-base tbLandscape:text-lg font-sans text-nowrap "
                 >
                   Forgot Password?
                 </Link>
