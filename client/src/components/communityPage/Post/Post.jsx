@@ -55,7 +55,7 @@ const Post = ({
   const formattedTime = formatter.format(date);
   return (
     // w-[28rem] tbPortrait:w-[32rem] min-[1400px]:w-[36rem] tbLandscape:w-[40rem]
-    <div className="p-2 mbSmall:p-4 border-[1.5px] border-[#DCDCE7] min-w-[400px] rounded-lg ml-0 lg:ml-12 sm:w-4/5">
+    <div className="p-2 mbSmall:p-4 border-[1.5px] min-h-[25rem] max-h-[33rem] border-[#DCDCE7] min-w-[400px] rounded-lg ml-10 mbXSmall:ml-0 lg:ml-12 sm:w-4/5">
       <div className=" flex flex-col items-start justify-center gap-3 mbMedSmall:gap-4 border-[#E7E8EC] border-b-2 p-4">
         <div className="flex justify-start items-center gap-2 mbSmall:gap-3 mbMedium:gap-4 w-full font-Gilroy-Medium">
           <div className="">

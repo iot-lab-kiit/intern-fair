@@ -53,9 +53,9 @@ export default function page() {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(param);
     }
-    const token = getQueryParam('token');
+    const token = getQueryParam("token");
 
-    toast.promise(resetPassword (formData,token), {
+    toast.promise(resetPassword(formData, token), {
       loading: "resetting password..",
       success: (res) => {
         // setTimeout(() => {
@@ -84,21 +84,20 @@ export default function page() {
   return (
     <>
       <div className="content h-screen flex justify-center  items-center w-screen max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
-        <div className="flex flex-col justify-center  mx-auto gap-4 overflow-hidden">
-
+        <div className="flex flex-col justify-center  mx-auto gap-4 overflow-hidden pr-10 pb-[9rem]">
           <div
-            className="back-button text-base absolute top-2 cursor-pointer left-5 flex "
+            className="back-button text-base absolute top-2  items-center justify-center h-10 cursor-pointer left-5 flex "
             onClick={handleBackButtonClick}
           >
-            <div className="back-button flex gap-3 items-center justify-center">
-              <div className=" h-3.5 w-3.5 mbXSmall:h-4 mbXSmall:w-4 mbSmall:h-5 :mbSmall:w-5">
+            <div className="back-button flex gap-3 items-center h-10 justify-center">
+              <div className=" h-3.5 w-3.5 self-bottom mbXSmall:h-4 mbXSmall:w-4 mbSmall:h-5 :mbSmall:w-5">
                 <Image src="/images/back.png" height={20} width={20} />
               </div>
-              <div className=" text-sm mbSmall:text-base">Back</div>
+              <div className=" text-sm mbSmall:text-base self-center absolute bottom-2.5 left-6">
+                Back
+              </div>
             </div>
           </div>
-
-         
 
           <div className="form-container  flex flex-col items-center justify-center gap-[0.5rem] h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
             <div className="header flex flex-col gap-2 w-full sm:w-[100%] text-start">
@@ -109,8 +108,6 @@ export default function page() {
                 Enter your new password to sign in!
               </div>
             </div>
-
-      
 
             <form
               className="flex  flex-col gap-3 w-full "
@@ -198,7 +195,6 @@ export default function page() {
           </div>
         </div>
 
-
         <div className="image-container w-[45%] tbLandscape:w-[50%] h-full max-h-screen  hidden lg:block">
           <Image
             src="/images/signup.png"
@@ -209,7 +205,6 @@ export default function page() {
             className="max-h-screen"
           />
         </div>
-
       </div>
     </>
   );

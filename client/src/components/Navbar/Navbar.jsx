@@ -47,7 +47,10 @@ const Navbar = () => {
             <div className="hidden sm:block sm:ml-6 md:justify-self-end ">
               <div className="flex mbMedium:space-x-2 lg:space-x-4">
                 {/* Links */}
-                <NavLink href={isHomePage ? "#about" : "/#about"} title="homepage-link">
+                <NavLink
+                  href={isHomePage ? "#about" : "/#about"}
+                  title="homepage-link"
+                >
                   About&nbsp;Us
                 </NavLink>
                 {/* <NavLink href="/courses">Courses</NavLink> */}
@@ -73,7 +76,9 @@ const Navbar = () => {
       <MobileMenuTransition>
         <div className="sm:hidden">
           <div className="px-2 pt-2">
-            <MobileNavLink href={isHomePage ? "#about" : "/#about"}>About Us</MobileNavLink>
+            <MobileNavLink href={isHomePage ? "#about" : "/#about"}>
+              About Us
+            </MobileNavLink>
             <MobileNavLink href="/courses">Courses</MobileNavLink>
             <MobileNavLink href="/community">Community</MobileNavLink>
             <MobileNavLink href={isHomePage ? "#faq" : "/#faq"}>
@@ -82,6 +87,7 @@ const Navbar = () => {
             <MobileNavLink href={isHomePage ? "#suggestion" : "/#suggestion"}>
               Suggestion
             </MobileNavLink>
+            <MobileNavLink href="/team">Team</MobileNavLink>
           </div>
         </div>
       </MobileMenuTransition>
