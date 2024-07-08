@@ -55,7 +55,7 @@ const Post = ({
   const formattedTime = formatter.format(date);
   return (
     // w-[28rem] tbPortrait:w-[32rem] min-[1400px]:w-[36rem] tbLandscape:w-[40rem]
-    <div className="p-2 mbSmall:p-4 border-[1.5px] min-h-[25rem] max-h-[33rem] border-[#DCDCE7] min-w-[400px] rounded-lg ml-10 mbXSmall:ml-0 lg:ml-12 sm:w-4/5">
+    <div className="p-2 mbSmall:p-4 border-[1.5px] max-h-[30rem] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0  mbSmall:w-[95%]">
       <div className=" flex flex-col items-start justify-center gap-3 mbMedSmall:gap-4 border-[#E7E8EC] border-b-2 p-4">
         <div className="flex justify-start items-center gap-2 mbSmall:gap-3 mbMedium:gap-4 w-full font-Gilroy-Medium">
           <div className="">
@@ -96,21 +96,19 @@ const Post = ({
           {tag &&
             tag.length > 0 &&
             tag.map((t, index) => (
-              <button className="border-[1.5px] border-[#4C64E1] text-[#1F3DD9] text-[0.6rem] mbMedSmall:text-[0.65rem] mbSmall:text-[0.7rem] leading-4 mbMedium:text-sm laptop:text-sm tbPortrait:text-base p-[0.2rem] px-[0.6rem] mbMedSmall:p-[0.3rem] mbMedSmall:px-[0.7rem] mbSmall:p-[0.3rem] mbSmall:px-4  mbMedium:p-[0.25rem]   mbMedium:px-4 laptop:p-[0.35rem] laptop:px-6 rounded-full">
+              <button className="border-[1.5px] border-[#4C64E1] text-[#1F3DD9] text-[0.6rem] mbMedSmall:text-[0.65rem] mbSmall:text-[0.7rem] leading-4 mbMedium:text-sm laptop:text-sm tbPortrait:text-base p-[0.2rem] px-[0.6rem] mbMedSmall:p-[0.3rem] mbMedSmall:px-[0.7rem] mbSmall:p-[0.3rem] mbSmall:px-4  mbMedium:p-[0.25rem]   mbMedium:px-4 laptop:p-[0.35rem] laptop:px-4 rounded-full">
                 {t}
               </button>
             ))}
         </div>
         {image && (
-          <div className="w-full">
-            <span className="w-full h-[8rem] mbXSmall:h-[10rem] mbMedSmall:h-[12rem] mbSmall:h-[14rem] mbMedium:h-[16rem] laptop:h-[18rem] tbPortrait:h-[20rem]  inline-block relative">
-              <Image
-                src={`https://directus.iotkiit.in/assets/${image}`}
-                fill
-                alt="about"
-                className="object-cover"
-              />
-            </span>
+          <div className="w-full relative overflow-hidden aspect-video">
+            <Image
+              src={`https://directus.iotkiit.in/assets/${image}`}
+              fill
+              alt="about"
+              className="object-cover"
+            />
           </div>
         )}
       </div>

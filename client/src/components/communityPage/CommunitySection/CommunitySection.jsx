@@ -14,11 +14,11 @@ import toast from "react-hot-toast";
 import { useInView } from "react-intersection-observer";
 import Loader from "@/components/ui/Loader/Loader";
 const CommunitySection = () => {
-  const [postData, setPostData] = useState(postdata);
+  const [postData, setPostData] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState(postdata);
   const [searchQuery, setsearchQuery] = useState("");
   const [error, setError] = useState("");
-  const [isEditing, setIsEditing] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
   const [data, setData] = useState({ description: "", tags: "" });
@@ -89,6 +89,11 @@ const CommunitySection = () => {
   const handleSubmit = async () => {
     const file = fileInputRef.current.files[0];
 
+    if (!data.description || !data.tags) {
+      toast.error("Description and tags are mandatory!");
+      return;
+    }
+
     const formData = new FormData();
     if (file) {
       formData.append("file", file);
@@ -102,14 +107,13 @@ const CommunitySection = () => {
     try {
       setIsLoading(true);
       const response = await createPost(postData, formData);
-
       if (response.success) {
-        // Update the state to include the new post
-        setPostData([response.result, ...postData]);
+        setPostData((prevData) => [response.result, ...prevData]);
         setFilteredPosts([response.result, ...filteredPosts]);
         setData({ description: "", tag: [] });
         setIsEditing(false);
         setError("");
+
         toast.success("Post created successfully!");
       } else {
         setError("Failed to create post.");
@@ -163,7 +167,7 @@ const CommunitySection = () => {
         setSelectedTag={setSelectedTag}
       />
 
-      <div className="flex flex-col md:ml-[25vw] w-full">
+      <div className="flex flex-col md:ml-[25vw] tbPortrait:ml-[25vw] mt-16 w-full">
         {/* px-7 mbXSmall:px-10 mbMedSmall:px-14 mbMedium:px-16 pr-2 ml-10 */}
         <div className="flex items-center justify-between p-6">
           <div className="h-4 w-4 ml-4 flex items-center justify-center gap-2.5">
@@ -179,10 +183,10 @@ const CommunitySection = () => {
           </div>
         </div>
 
-        <div className="flex flex-col laptop:flex-row items-center laptop:items-start justify-start ml-12 gap-10 laptop:gap-8 max-w-full mt-10">
-          <div className="order-2 laptop:order-2 flex flex-col gap-6 items-center justify-center w-full mbXSmall:w-[90%] mbSmall:w-[80%] mbMedium:w-[70%] laptop:w-[37%] tbPortrait:w-[40%] tbLandscape:w-[43%]">
+        <div className="flex flex-col laptop:flex-row items-center laptop:items-start justify-start gap-10 laptop:gap-8 max-w-full mt-10">
+          <div className="order-2 laptop:order-2 flex flex-col gap-6 items-center justify-center w-[90%] mbXSmall:w-[90%] mbSmall:w-[85%] mbMedium:w-[85%] laptop:w-[55%] tbPortrait:w-[55%]">
             {/* Search bar */}
-            <div className="relative ml-10 mbXSmall:ml-0 tbPortrait:ml-5">
+            <div className="relative ml-10 mbXSmall:ml-0">
               <div className="absolute inset-y-0 left-0 pl-4 pt-1 flex items-center">
                 <span className=" w-4 h-4 mbXSmall:w-5 mbXSmall:h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 laptop:w-4 laptop:h-4 inline-block rounded-full relative cursor-pointer">
                   <Image
@@ -197,7 +201,7 @@ const CommunitySection = () => {
                 type="text"
                 placeholder="Search"
                 onChange={handleSearchQuery}
-                className="pl-10  min-w-[23rem] mb:w-[30vw] border-[1.5px] border-[#DCDCE7] rounded-full py-2.5"
+                className="pl-10  min-w-[15rem] w-[60vw] mbMedium:w-[45vw] laptop:w-[30vw] tbLandscape:w-[30rem] border-[1.5px] border-[#DCDCE7] rounded-full py-2.5"
               />
             </div>
             {isLoading ? ( // Show loader while loading
@@ -236,7 +240,7 @@ const CommunitySection = () => {
             </div>
           </div>
 
-          <div className="order-1 laptop:order-2 lg:ml-40 md:ml-0 flex items-center justify-center gap-3 w-full mbXSmall:w-[90%] mbSmall:w-[80%] mbMedium:w-[70%] laptop:w-[33%] tbPortrait:w-[30%]">
+          <div className="order-1 mbXSmall:mr-5 mbSmall:mr-10 mbMedium:mr-0 laptop:order-2 laptop:fixed laptop:right-5 md:ml-0 lg:ml-40  flex items-center justify-center gap-3 w-[90%] mbXSmall:w-[80%]  mbSmall:w-[60%] mbMedium:w-[70%] laptop:w-[28%] tbPortrait:w-[30%]">
             <div className="self-start ">
               <span className="w-10 h-10 inline-block rounded-full relative cursor-pointer">
                 <Image

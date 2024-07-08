@@ -3,7 +3,7 @@ import React from "react";
 
 const Sidebar = ({ tagOptions, handleTagClick, selectedTag }) => {
   return (
-    <div className="fixed left-0 h-screen w-[20%] flex-col justify-between border-e bg-[#081245] md:block hidden">
+    <div className="fixed left-0 top-16 h-screen w-[20%] flex-col justify-between border-e bg-[#081245] md:block hidden">
       <div className="px-4 py-6">
         <ul className="mt-6 space-y-6">
           {tagOptions.map((tag) => (
