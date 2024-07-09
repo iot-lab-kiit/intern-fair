@@ -23,7 +23,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="border-b border-[#ECECEC] max-sm:border-opacity-0 ">
+    <nav className="border-b fixed w-full top-0  bg-white z-50 border-[#ECECEC] max-sm:border-opacity-0 ">
       <div className="max-w-8xl mx-auto sm:px-6 lg:px-8">
         <div className="relative  flex items-center justify-between h-16">
           {/* Mobile Menu Button */}
