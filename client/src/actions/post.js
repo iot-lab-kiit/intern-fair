@@ -28,25 +28,33 @@ const validateData = (data) => {
 export const createPost = async (data, formData) => {
   try {
     let result;
+
     if (formData.get("file")) {
       const fileUploadResponse = await clientToken(process.env.TOKEN).request(
         uploadFiles(formData)
       );
+
+      if (!fileUploadResponse.id) {
+        throw new Error("File upload failed");
+      }
 
       const updateResponse = await clientToken(process.env.TOKEN).request(
         updateFile(fileUploadResponse.id, {
           location: "46e88712-846e-4e1d-af06-0a907aa5e04a",
         })
       );
+
       result = fileUploadResponse.id;
     }
 
+    const postPayload = {
+      content: data.content,
+      tag: data.tag,
+      image: result || null,
+    };
+
     const postResponse = await clientToken(process.env.TOKEN).request(
-      createItem("Post", {
-        content: data.content,
-        tag: data.tag,
-        image: result || null,
-      })
+      createItem("Post", postPayload)
     );
 
     if (!postResponse) throw new Error("Post not created");
@@ -67,7 +75,6 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
   try {
     const result = await clientToken(process.env.TOKEN).request(
       readItems("Post", {
-      
         fields: [
           "id",
           "content",
@@ -78,8 +85,8 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
             user_created: ["id", "first_name", "last_name", "email"],
           },
         ],
-      offset:parseInt(offset),
-        limit:parseInt(POSTS_PER_PAGE), // Limit for pagination
+        offset: parseInt(offset),
+        limit: parseInt(POSTS_PER_PAGE), // Limit for pagination
       })
     );
     if (!result) throw new Error([{ message: "No post found" }]);
