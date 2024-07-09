@@ -1,9 +1,11 @@
 "use client";
-import { updatePost } from "@/actions/post";
+import { updatePost, getPostById ,updateLikes} from "@/actions/post";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { parseISO, format } from "date-fns";
-
+import { FcLike } from "react-icons/fc";
+import { GoHeart } from "react-icons/go";
+import Cookies from 'js-cookie';
 const Post = ({
   id,
   description,
@@ -11,11 +13,13 @@ const Post = ({
   image,
   date_created,
   user_created,
-  likes,
+  likes:initialLikes,
+  likeUserCollection=[]
   // share,
 }) => {
   const [expanded, setexpanded] = useState(false);
-  const [liked, setliked] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState(initialLikes);
   const [saved, setsaved] = useState(false);
   const [date, setDate] = useState(new Date(date_created));
 
@@ -29,14 +33,58 @@ const Post = ({
     setsaved(!saved);
   };
   const toggleLike = () => {
-    setliked((prev) => !prev);
+    setLiked((prev) => !prev);
+    handleLikes(id, user_created.id);
   };
 
-  const handleLikes = (id, like) => {
-    updatePost(JSON.stringify({ id, likes: like + 1 }))
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
+  // const handleLikes = (id, likes, userID) => {
+  //   const result = getPostById({ id });
+  //   console.log("This is initial data", result);
+  //   console.log(likes);
+  //   let likedBy = result.likeUserCollection || [];
+
+  //   if (!liked) {
+  //     setliked(true);
+
+  //     if (!likedBy.includes(userID)) {
+  //       likedBy.push(userID);
+
+  //       const updatedLikes = updatePost(
+  //         JSON.stringify({ id, likes: likes + 1, likedBy })
+  //       );
+  //       console.log("This is like", updatedLikes);
+  //     }
+  //   } else {
+  //     likedBy = likedBy.filter((user) => user !== userID);
+
+  //     const updatedLikes = updatePost(
+  //       JSON.stringify({ id, likes: likes - 1 < 0 ? 0 : likes - 1, likedBy })
+  //     );
+  //     console.log("This is dislike", updatedLikes);
+  //     setliked(false);
+  //   }
+  // };
+  const userId = Cookies.get('userId');
+  console.log("user id",userId);
+  useEffect(() => {
+   
+    if (likeUserCollection.includes(userId)) {
+      setLiked(true);
+    }
+  }, [likeUserCollection, userId]);
+  
+  const handleLikes = (id, userID) => {
+    if (!liked) {
+      setLiked(true);
+      setLikes((prevLikes) => prevLikes + 1);
+      updateLikes(JSON.stringify({ id, userID }));
+    } else {
+      setLiked(false);
+      setLikes((prevLikes) => prevLikes - 1);
+      updateLikes(JSON.stringify({ id, userID }));
+    }
   };
+
   // const handleShare = (id, share) => {
   //   updatePost(JSON.stringify({ id, share: share + 1 }))
   //     .then((res) => console.log(res))
@@ -102,13 +150,15 @@ const Post = ({
             ))}
         </div>
         {image && (
-          <div className="w-full relative overflow-hidden aspect-video">
-            <Image
-              src={`https://directus.iotkiit.in/assets/${image}`}
-              fill
-              alt="about"
-              className="object-cover"
-            />
+          <div className="w-full">
+            <span className="w-full h-[8rem] mbXSmall:h-[10rem] mbMedSmall:h-[12rem] mbSmall:h-[14rem] mbMedium:h-[16rem] laptop:h-[18rem] tbPortrait:h-[20rem]  inline-block relative">
+              {/* <Image
+                src={`https://directus.iotkiit.in/assets/${image}`}
+                fill
+                alt="about"
+                className="object-cover"
+              /> */}
+            </span>
           </div>
         )}
       </div>
@@ -116,11 +166,10 @@ const Post = ({
         <div className="flex items-start justify-center gap-6">
           <div
             className="flex items-center justify-center gap-2"
-            onClick={() => handleLikes(id, likes)}
+            onClick={() => handleLikes(id, user_created.id)}
           >
-            {/* <GoHeart size={32} color="#FF0000" /> */}
-            {/* <FcLike size={32} color="#00FF00" /> */}
-            <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
+            {liked ? <FcLike size={32} /> : <GoHeart size={32} />}
+            <p className="text-[#0f0f0f] text-sm mbSmall:text-base mbMedium:text-lg">
               {likes}
             </p>
           </div>

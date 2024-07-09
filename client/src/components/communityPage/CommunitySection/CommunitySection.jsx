@@ -208,32 +208,36 @@ const CommunitySection = () => {
               <Loader />
             ) : (
               <>
-                {searchQuery !== "" || selectedTag
-                  ? filteredPosts.map((item) => (
-                      <Post
-                        key={item.id}
-                        id={item.id}
-                        date_created={item.date_created}
-                        description={item.content}
-                        tag={item.tag}
-                        image={item.image}
-                        user_created={item.user_created}
-                        likes={item.likes}
-                      />
-                    ))
-                  : postData.map((item) => (
-                      <Post
-                        key={item.id}
-                        id={item.id}
-                        date_created={item.date_created}
-                        description={item.content}
-                        tag={item.tag}
-                        image={item.image}
-                        user_created={item.user_created}
-                        likes={item.likes}
-                      />
-                    ))}
-              </>
+            {error && <p className="my-10 text-5xl">{error}</p>}
+            {searchQuery !== "" || selectedTag
+              ? filteredPosts.map((item) => (
+                  <Post
+                    key={item.id}
+                    id={item.id}
+                    date_created={item.date_created}
+                    description={item.content}
+                    tag={item.tag}
+                    image={item.image}
+                    user_created={item.user_created}
+                    likes={item.likes}
+                    likeUserCollection={item.likeUserCollection}
+
+                  />
+                ))
+              : postData.map((item) => (
+                  <Post
+                    key={item.id}
+                    id={item.id}
+                    date_created={item.date_created}
+                    description={item.content}
+                    tag={item.tag}
+                    image={item.image}
+                    user_created={item.user_created}
+                    likes={item.likes}
+                    likeUserCollection={item.likeUserCollection}
+                  />
+                ))}
+           </>
             )}
             <div className="...">
               {hasMoreData && <div ref={scrollTrigger}>Loading...</div>}
