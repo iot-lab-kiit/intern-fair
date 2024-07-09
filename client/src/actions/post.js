@@ -10,6 +10,8 @@ import {
   updateFile,
 } from "@directus/sdk";
 
+import { cookies } from "next/headers";
+
 const validateData = (data) => {
   if (!data.content || !data.tag)
     throw new Error([{ message: "Missing Required Fields: Content, Tags" }]);
@@ -27,13 +29,15 @@ const validateData = (data) => {
 // Create POST
 export const createPost = async (data, formData) => {
   try {
+    const cookieStore = cookies();
+    const user_token = cookieStore.get("user_token");
     let result;
     if (formData.get("file")) {
-      const fileUploadResponse = await clientToken(process.env.TOKEN).request(
+      const fileUploadResponse = await clientToken(user_token).request(
         uploadFiles(formData)
       );
 
-      const updateResponse = await clientToken(process.env.TOKEN).request(
+      const updateResponse = await clientToken(user_token).request(
         updateFile(fileUploadResponse.id, {
           location: "46e88712-846e-4e1d-af06-0a907aa5e04a",
         })
@@ -41,7 +45,7 @@ export const createPost = async (data, formData) => {
       result = fileUploadResponse.id;
     }
 
-    const postResponse = await clientToken(process.env.TOKEN).request(
+    const postResponse = await clientToken(user_token).request(
       createItem("Post", {
         content: data.content,
         tag: data.tag,
@@ -62,10 +66,12 @@ export const createPost = async (data, formData) => {
   }
 };
 
-//Get All POST
+// Get All POST
 export const getAllPost = async (offset, POSTS_PER_PAGE) => {
   try {
-    const result = await clientToken(process.env.TOKEN).request(
+    const cookieStore = cookies();
+    const user_token = cookieStore.get("user_token");
+    const result = await clientToken(user_token).request(
       readItems("Post", {
         fields: [
           "id",
@@ -74,6 +80,7 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
           "image",
           "date_created",
           "likes",
+          "likeUserCollection",
           {
             user_created: ["id", "first_name", "last_name", "email"],
           },
@@ -84,16 +91,22 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
     );
     if (!result) throw new Error([{ message: "No post found" }]);
     return { success: true, message: "Found All Post", result: result };
-  } catch (e) {
-    console.log(e);
-    throw new Error(e.errors[0].message || e.message);
+  } catch (error) {
+    console.log(error);
+    // throw new Error(e.errors[0].message || e.message);
   }
 };
+
 // Get POST By Id
 export const getPostById = async (data) => {
   try {
-    const result = await clientToken(process.env.TOKEN).request(
-      readItem("Post", data.id)
+    const cookieStore = cookies();
+    const user_token = cookieStore.get("user_token");
+    console.log("data:", data);
+    const result = await clientToken(user_token).request(
+      readItem("Post", data.id, {
+        likeUserCollection: data.likedBy,
+      })
     );
     if (!result) throw new Error([{ message: "No post found with that id" }]);
     return { success: true, message: "Post with the Id", result };
@@ -101,17 +114,21 @@ export const getPostById = async (data) => {
     throw new Error(e.errors[0].message || e.message);
   }
 };
+
 // Update POst
 export const updatePost = async (data) => {
   try {
+    const cookieStore = cookies();
+    const user_token = cookieStore.get("user_token");
     data = JSON.parse(data);
     console.log(data);
-    const result = await clientToken(process.env.TOKEN).request(
+    const result = await clientToken(user_token).request(
       updateItem("Post", data.id, {
         content: data.content,
         tag: data.tag,
         likes: data.likes,
         share: data.share,
+        likeUserCollection: data.likedBy,
       })
     );
     if (!result) throw new Error([{ message: "Post Not updated" }]);
@@ -121,17 +138,51 @@ export const updatePost = async (data) => {
     // throw new Error(e.errors[0].message || e.message);
   }
 };
-//Delete POST
-export const deletePost = async (data) => {
-  try {
-    if (!data.id) throw new Error([{ message: "Please provide the id" }]);
 
-    const result = await clientToken(process.env.TOKEN).request(
-      deleteItem("Post", data.id)
+export const updateLikes = async (data) => {
+  try {
+    const cookieStore = cookies();
+    const user_token = cookieStore.get("user_token");
+    data = JSON.parse(data);
+    console.log(data)
+    const post = await clientToken(user_token).request(
+      readItem("Post", data.id)
     );
-    if (!result) throw new Error([{ message: "Post Not Deleted" }]);
-    return { success: true, message: "Post Deleted successfully", result };
-  } catch (e) {
-    throw new Error(e.errors[0].message || e.message);
+    let likedBy = post.likeUserCollection || [];
+    let likes = post.likes || 0;
+
+    if (!likedBy.includes(data.userID)) {
+      likedBy.push(data.userID);
+      likes += 1;
+    } else {
+      likedBy = likedBy.filter((user) => user !== data.userID);
+      likes -= 1;
+    }
+    const result = await clientToken(user_token).request(
+      updateItem("Post", data.id, {
+        likeUserCollection: likedBy,
+        likes: likes,
+      })
+    );
+    console.log(result);
+    if (!result) throw new Error([{ message: "liked" }]);
+    return { success: true, message: "Post liked successfully", result };
+  } catch (error) {
+    console.log(error);
   }
 };
+
+// Delete POST
+// export const deletePost = async (data) => {
+//   try {
+//     if (!data.id) throw new Error([{ message: "Please provide the id" }]);
+
+//     const result = await clientToken(process.env.TOKEN).request(
+//       deleteItem("Post", data.id)
+//     );
+//     if (!result) throw new Error([{ message: "Post Not Deleted" }]);
+//     return { success: true, message: "Post Deleted successfully", result };
+//   } catch (e) {
+//     throw new Error(e.errors[0].message || e.message);
+//   }
+// };

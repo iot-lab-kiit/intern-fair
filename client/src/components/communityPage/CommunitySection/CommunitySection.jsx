@@ -214,6 +214,8 @@ const CommunitySection = () => {
                     image={item.image}
                     user_created={item.user_created}
                     likes={item.likes}
+                    likeUserCollection={item.likeUserCollection}
+
                   />
                 ))
               : postData.map((item) => (
@@ -226,6 +228,7 @@ const CommunitySection = () => {
                     image={item.image}
                     user_created={item.user_created}
                     likes={item.likes}
+                    likeUserCollection={item.likeUserCollection}
                   />
                 ))}
            </>
