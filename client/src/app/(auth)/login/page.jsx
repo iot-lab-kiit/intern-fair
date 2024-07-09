@@ -9,7 +9,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { GoogleAuthProvider,getAuth,signInWithPopup } from "firebase/auth";
 import firebase from '../../utils/firebase.js'
-import bcrypt from "bcryptjs";
 const provider = new GoogleAuthProvider();
 const auth=getAuth(firebase)
 export default function Login() {
