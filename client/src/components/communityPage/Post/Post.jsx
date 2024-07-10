@@ -1,5 +1,5 @@
 "use client";
-import { updatePost, getPostById ,updateLikes} from "@/actions/post";
+import { updatePost, getPostById, updateLikes } from "@/actions/post";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { parseISO, format } from "date-fns";
@@ -13,8 +13,8 @@ const Post = ({
   image,
   date_created,
   user_created,
-  likes:initialLikes,
-  likeUserCollection=[]
+  likes: initialLikes,
+  likesUserCollection = [],
   // share,
 }) => {
   const [expanded, setexpanded] = useState(false);
@@ -22,8 +22,8 @@ const Post = ({
   const [likes, setLikes] = useState(initialLikes);
   const [saved, setsaved] = useState(false);
   const [date, setDate] = useState(new Date(date_created));
-  const token = document.cookie
-  const decode=jwtDecode(token);
+  const token = document.cookie;
+  const decode = jwtDecode(token);
   const text =
     "🌍 CSS stands for Cascading Style Sheets. It is a style sheet language used to describe the presentation and formatting of HTML CSS consists of selectors, properties, and values. Selectors are patterns that target HTML elements, allowing developers to apply styles selectively. Properties are the styling attributes, such as color, font-size.";
 
@@ -42,7 +42,7 @@ const Post = ({
   //   const result = getPostById({ id });
   //   console.log("This is initial data", result);
   //   console.log(likes);
-  //   let likedBy = result.likeUserCollection || [];
+  //   let likedBy = result.likesUserCollection || [];
 
   //   if (!liked) {
   //     setliked(true);
@@ -66,11 +66,12 @@ const Post = ({
   //   }
   // };
   useEffect(() => {
-    if (likeUserCollection.includes(decode.id)) {
-      setLiked(true);
-    }
-  }, []);
-  
+    const likedd = likesUserCollection.some(
+      (user) => user.directus_users_id.id === decode.id
+    );
+    if (likedd) setLiked(true);
+  }, [likesUserCollection]);
+
   const handleLikes = (id, userID) => {
     if (!liked) {
       setLiked(true);

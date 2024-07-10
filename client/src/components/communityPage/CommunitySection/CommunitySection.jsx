@@ -13,6 +13,8 @@ import { Menu } from "lucide-react";
 import toast from "react-hot-toast";
 import { useInView } from "react-intersection-observer";
 import Loader from "@/components/ui/Loader/Loader";
+import Link from "next/link";
+
 const CommunitySection = () => {
   const [postData, setPostData] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState(postdata);
@@ -28,6 +30,7 @@ const CommunitySection = () => {
   const handleFileInputChange = () => {
     document.getElementById("fileInput").click();
   };
+
   useEffect(() => {
     setIsLoading(true);
     getAllPost(0, 10)
@@ -133,9 +136,7 @@ const CommunitySection = () => {
   };
 
   const POSTS_PER_PAGE = 10;
-
   const [offset, setOffset] = useState(POSTS_PER_PAGE);
-
   const [hasMoreData, setHasMoreData] = useState(true);
   const [scrollTrigger, isInView] = useInView();
 
@@ -144,9 +145,7 @@ const CommunitySection = () => {
       const apiPosts = (await getAllPost(offset, POSTS_PER_PAGE)).result;
 
       console.log(offset, POSTS_PER_PAGE);
-      if (apiPosts.length === 0) {
-        setHasMoreData(false);
-      }
+      if (apiPosts.length === 0) setHasMoreData(false);
 
       setPostData((prevPosts) => [...prevPosts, ...apiPosts]);
       setOffset((prevOffset) => prevOffset + POSTS_PER_PAGE);
@@ -157,7 +156,6 @@ const CommunitySection = () => {
       loadMorePosts();
     }
   }, [isInView, hasMoreData]);
-
   return (
     <div className="flex">
       <Sidebar
@@ -172,14 +170,7 @@ const CommunitySection = () => {
         <div className="flex items-center justify-between p-6">
           <div className="h-4 w-4 ml-4 flex items-center justify-center gap-2.5">
             <Image src="/images/back.png" width={20} height={20} />
-            <button
-              className=""
-              onClick={() => {
-                router.push("/");
-              }}
-            >
-              Back
-            </button>
+            <Link href="/">Back</Link>
           </div>
         </div>
 
@@ -204,40 +195,39 @@ const CommunitySection = () => {
                 className="pl-10  min-w-[15rem] w-[60vw] mbMedium:w-[45vw] laptop:w-[30vw] tbLandscape:w-[30rem] border-[1.5px] border-[#DCDCE7] rounded-full py-2.5"
               />
             </div>
-            {isLoading ? ( // Show loader while loading
+            {isLoading ? (
               <Loader />
             ) : (
               <>
-            {error && <p className="my-10 text-5xl">{error}</p>}
-            {searchQuery !== "" || selectedTag
-              ? filteredPosts.map((item) => (
-                  <Post
-                    key={item.id}
-                    id={item.id}
-                    date_created={item.date_created}
-                    description={item.content}
-                    tag={item.tag}
-                    image={item.image}
-                    user_created={item.user_created}
-                    likes={item.likes}
-                    likeUserCollection={item.likeUserCollection}
-
-                  />
-                ))
-              : postData.map((item) => (
-                  <Post
-                    key={item.id}
-                    id={item.id}
-                    date_created={item.date_created}
-                    description={item.content}
-                    tag={item.tag}
-                    image={item.image}
-                    user_created={item.user_created}
-                    likes={item.likes}
-                    likeUserCollection={item.likeUserCollection}
-                  />
-                ))}
-           </>
+                {error && <p className="my-10 text-5xl">{error}</p>}
+                {searchQuery !== "" || selectedTag
+                  ? filteredPosts.map((item) => (
+                      <Post
+                        key={item.id}
+                        id={item.id}
+                        date_created={item.date_created}
+                        description={item.content}
+                        tag={item.tag}
+                        image={item.image}
+                        user_created={item.user_created}
+                        likes={item.likes}
+                        likesUserCollection={item.likesUserCollection}
+                      />
+                    ))
+                  : postData.map((item) => (
+                      <Post
+                        key={item.id}
+                        id={item.id}
+                        date_created={item.date_created}
+                        description={item.content}
+                        tag={item.tag}
+                        image={item.image}
+                        user_created={item.user_created}
+                        likes={item.likes}
+                        likesUserCollection={item.likesUserCollection}
+                      />
+                    ))}
+              </>
             )}
             <div className="...">
               {hasMoreData && <div ref={scrollTrigger}>Loading...</div>}

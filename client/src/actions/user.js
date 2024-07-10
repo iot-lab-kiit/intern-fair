@@ -1,13 +1,11 @@
 "use server";
-import { createUser, passwordRequest, passwordReset } from "@directus/sdk";
-import { client, clientToken } from "@/db/directus";
 import { cookies } from "next/headers";
+import { client, clientToken } from "@/db/directus";
+import { createUser, passwordRequest, passwordReset } from "@directus/sdk";
 
 export const createUserr = async (data) => {
   try {
-    const cookieStore = cookies();
-    console.log("All cookies:", cookieStore.getAll());
-    const user_token = cookieStore.get("user_token");
+    const user_token = cookies().get("user_token").value;
     const [fName, lName] = data.name.split(" ");
     const result = await clientToken(user_token).request(
       createUser({
@@ -31,7 +29,6 @@ export const getUserr = async (formData) => {
     const result = await client.login(formData.email, formData.password, {
       mode: "cookie",
     });
-    // console.log("All cookies:", cookieStore.getAll());
     return { success: true, message: "User logged in successfully", result };
   } catch (e) {
     throw new Error(e.errors[0].message || e.message);
@@ -46,7 +43,12 @@ export const resetPasswordRequest = async (formData) => {
     const user_password = cookieStore.get("password");
     await client.login(user_email, user_password);
     // Use token
-    await client.request(passwordRequest(JSON.parse(formData).email, 'http://localhost:3000/change-pass'));
+    await client.request(
+      passwordRequest(
+        JSON.parse(formData).email,
+        "http://localhost:3000/change-pass"
+      )
+    );
     return {
       success: true,
       message: "Reset password mail sent. If user exists.",

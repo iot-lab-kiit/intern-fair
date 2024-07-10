@@ -29,10 +29,8 @@ const validateData = (data) => {
 // Create POST
 export const createPost = async (data, formData) => {
   try {
-    const cookieStore = cookies();
-    const user_token = cookieStore.get("user_token");
+    const user_token = cookies().get("user_session").value;
     let result;
-
     if (formData.get("file")) {
       const fileUploadResponse = await clientToken(user_token).request(
         uploadFiles(formData)
@@ -75,9 +73,8 @@ export const createPost = async (data, formData) => {
 // Get All POST
 export const getAllPost = async (offset, POSTS_PER_PAGE) => {
   try {
-    const cookieStore = cookies();
-    const user_token = cookieStore.get("user_session");
-    const result = await clientToken(user_token.value).request(
+    const user_token = cookies().get("user_session").value;
+    const result = await clientToken(user_token).request(
       readItems("Post", {
         fields: [
           "id",
@@ -85,16 +82,21 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
           "tag",
           "image",
           "date_created",
-          "likes",
-          "likeUserCollection",
           {
             user_created: ["id", "first_name", "last_name", "email"],
+          },
+          "likes",
+          {
+            likesUserCollection: [
+              { directus_users_id: ["id", "first_name", "last_name", "email"] },
+            ],
           },
         ],
         offset: parseInt(offset),
         limit: parseInt(POSTS_PER_PAGE), // Limit for pagination
       })
     );
+
     if (!result) throw new Error([{ message: "No post found" }]);
     return { success: true, message: "Found All Post", result: result };
   } catch (error) {
@@ -106,12 +108,11 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
 // Get POST By Id
 export const getPostById = async (data) => {
   try {
-    const cookieStore = cookies();
-    const user_token = cookieStore.get("user_token");
+    const user_token = cookies().get("user_session").value;
     console.log("data:", data);
     const result = await clientToken(user_token).request(
       readItem("Post", data.id, {
-        likeUserCollection: data.likedBy,
+        likesUserCollection: data.likedBy,
       })
     );
     if (!result) throw new Error([{ message: "No post found with that id" }]);
@@ -124,8 +125,7 @@ export const getPostById = async (data) => {
 // Update POst
 export const updatePost = async (data) => {
   try {
-    const cookieStore = cookies();
-    const user_token = cookieStore.get("user_token");
+    const user_token = cookies().get("user_session").value;
     data = JSON.parse(data);
     console.log(data);
     const result = await clientToken(user_token).request(
@@ -134,7 +134,7 @@ export const updatePost = async (data) => {
         tag: data.tag,
         likes: data.likes,
         share: data.share,
-        likeUserCollection: data.likedBy,
+        likesUserCollection: data.likedBy,
       })
     );
     if (!result) throw new Error([{ message: "Post Not updated" }]);
@@ -147,27 +147,22 @@ export const updatePost = async (data) => {
 
 export const updateLikes = async (data) => {
   try {
-    const cookieStore = cookies();
-    const user_token = cookieStore.get("user_token");
+    const user_token = cookies().get("user_session").value;
     data = JSON.parse(data);
-    console.log(data)
-    const post = await clientToken(process.env.TOKEN).request(
+    console.log(data);
+    const post = await clientToken(user_token).request(
       readItem("Post", data.id)
     );
-    let likedBy = post.likeUserCollection || [];
-    let likes = post.likes || 0;
 
-    if (!likedBy.includes(data.userID)) {
-      likedBy.push(data.userID);
-      likes += 1;
-    } else {
-      likedBy = likedBy.filter((user) => user !== data.userID);
-      likes -= 1;
-    }
-    const result = await clientToken(process.env.TOKEN).request(
+    console.log(post);
+    let likedBy = post.likesUserCollection;
+    if (!likedBy.includes(data.userID)) likedBy.push(data.userID);
+    else likedBy = likedBy.filter((user) => user !== data.userID);
+
+    const result = await clientToken(user_token).request(
       updateItem("Post", data.id, {
-        likeUserCollection: likedBy,
-        likes: likes,
+        likesUserCollection: likedBy,
+        likes: likedBy.length,
       })
     );
     console.log(result);
@@ -183,7 +178,7 @@ export const updateLikes = async (data) => {
 //   try {
 //     if (!data.id) throw new Error([{ message: "Please provide the id" }]);
 
-//     const result = await clientToken(process.env.TOKEN).request(
+//     const result = await clientToken(user_token).request(
 //       deleteItem("Post", data.id)
 //     );
 //     if (!result) throw new Error([{ message: "Post Not Deleted" }]);
