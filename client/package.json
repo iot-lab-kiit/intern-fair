@@ -29,6 +29,7 @@
     "fuse.js": "^7.0.0",
     "highlight.js": "^11.9.0",
     "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.396.0",
     "markdown-it": "^14.1.0",
     "mongoose": "^8.2.1",

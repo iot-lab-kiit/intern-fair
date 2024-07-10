@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { parseISO, format } from "date-fns";
 import { FcLike } from "react-icons/fc";
 import { GoHeart } from "react-icons/go";
-import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 const Post = ({
   id,
   description,
@@ -22,7 +22,8 @@ const Post = ({
   const [likes, setLikes] = useState(initialLikes);
   const [saved, setsaved] = useState(false);
   const [date, setDate] = useState(new Date(date_created));
-
+  const token = document.cookie
+  const decode=jwtDecode(token);
   const text =
     "🌍 CSS stands for Cascading Style Sheets. It is a style sheet language used to describe the presentation and formatting of HTML CSS consists of selectors, properties, and values. Selectors are patterns that target HTML elements, allowing developers to apply styles selectively. Properties are the styling attributes, such as color, font-size.";
 
@@ -34,7 +35,7 @@ const Post = ({
   };
   const toggleLike = () => {
     setLiked((prev) => !prev);
-    handleLikes(id, user_created.id);
+    handleLikes(id, decode.id);
   };
 
   // const handleLikes = (id, likes, userID) => {
@@ -64,14 +65,11 @@ const Post = ({
   //     setliked(false);
   //   }
   // };
-  const userId = Cookies.get('userId');
-  console.log("user id",userId);
   useEffect(() => {
-   
-    if (likeUserCollection.includes(userId)) {
+    if (likeUserCollection.includes(decode.id)) {
       setLiked(true);
     }
-  }, [likeUserCollection, userId]);
+  }, []);
   
   const handleLikes = (id, userID) => {
     if (!liked) {
@@ -166,7 +164,7 @@ const Post = ({
         <div className="flex items-start justify-center gap-6">
           <div
             className="flex items-center justify-center gap-2"
-            onClick={() => handleLikes(id, user_created.id)}
+            onClick={() => handleLikes(id, decode.id)}
           >
             {liked ? <FcLike size={32} /> : <GoHeart size={32} />}
             <p className="text-[#0f0f0f] text-sm mbSmall:text-base mbMedium:text-lg">

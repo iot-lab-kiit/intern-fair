@@ -76,8 +76,8 @@ export const createPost = async (data, formData) => {
 export const getAllPost = async (offset, POSTS_PER_PAGE) => {
   try {
     const cookieStore = cookies();
-    const user_token = cookieStore.get("user_token");
-    const result = await clientToken(user_token).request(
+    const user_token = cookieStore.get("user_session");
+    const result = await clientToken(user_token.value).request(
       readItems("Post", {
         fields: [
           "id",
@@ -151,7 +151,7 @@ export const updateLikes = async (data) => {
     const user_token = cookieStore.get("user_token");
     data = JSON.parse(data);
     console.log(data)
-    const post = await clientToken(user_token).request(
+    const post = await clientToken(process.env.TOKEN).request(
       readItem("Post", data.id)
     );
     let likedBy = post.likeUserCollection || [];
@@ -164,7 +164,7 @@ export const updateLikes = async (data) => {
       likedBy = likedBy.filter((user) => user !== data.userID);
       likes -= 1;
     }
-    const result = await clientToken(user_token).request(
+    const result = await clientToken(process.env.TOKEN).request(
       updateItem("Post", data.id, {
         likeUserCollection: likedBy,
         likes: likes,
