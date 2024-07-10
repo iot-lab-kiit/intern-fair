@@ -7,8 +7,8 @@ const nextConfig = {
         hostname: "images.unsplash.com",
       },
       {
-        protocol: "http",
-        hostname: "43.204.145.188",
+        protocol: "https",
+        hostname: "directus.iotkiit.in",
       },
     ],
   },
