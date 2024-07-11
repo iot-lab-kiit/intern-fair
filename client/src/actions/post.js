@@ -74,7 +74,7 @@ export const createPost = async (data, formData) => {
 export const getAllPost = async (offset, POSTS_PER_PAGE) => {
   try {
     const user_token = cookies().get("user_session").value;
-    const result = await clientToken(user_token).request(
+    const result = await clientToken(process.env.TOKEN).request(
       readItems("Post", {
         fields: [
           "id",
@@ -88,6 +88,12 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
           "likes",
           {
             likesUserCollection: [
+              { directus_users_id: ["id", "first_name", "last_name", "email"] },
+            ],
+          },
+          "share",
+          {
+            shareUserCollection: [
               { directus_users_id: ["id", "first_name", "last_name", "email"] },
             ],
           },
@@ -110,7 +116,7 @@ export const getPostById = async (data) => {
   try {
     const user_token = cookies().get("user_session").value;
     console.log("data:", data);
-    const result = await clientToken(user_token).request(
+    const result = await clientToken(process.env.TOKEN).request(
       readItem("Post", data.id, {
         likesUserCollection: data.likedBy,
       })
@@ -128,7 +134,7 @@ export const updatePost = async (data) => {
     const user_token = cookies().get("user_session").value;
     data = JSON.parse(data);
     console.log(data);
-    const result = await clientToken(user_token).request(
+    const result = await clientToken(process.env.TOKEN).request(
       updateItem("Post", data.id, {
         content: data.content,
         tag: data.tag,
@@ -150,7 +156,7 @@ export const updateLikes = async (data) => {
     const user_token = cookies().get("user_session").value;
     data = JSON.parse(data);
     console.log(data);
-    const post = await clientToken(user_token).request(
+    const post = await clientToken(process.env.TOKEN).request(
       readItem("Post", data.id)
     );
 
@@ -159,7 +165,7 @@ export const updateLikes = async (data) => {
     if (!likedBy.includes(data.userID)) likedBy.push(data.userID);
     else likedBy = likedBy.filter((user) => user !== data.userID);
 
-    const result = await clientToken(user_token).request(
+    const result = await clientToken(process.env.TOKEN).request(
       updateItem("Post", data.id, {
         likesUserCollection: likedBy,
         likes: likedBy.length,
@@ -170,6 +176,29 @@ export const updateLikes = async (data) => {
     return { success: true, message: "Post liked successfully", result };
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const updateShare = async (data) => {
+  try {
+    data = JSON.parse(data);
+    console.log("data: ",data);
+    const post = await clientToken(process.env.TOKEN).request(
+      readItem("Post", data.id)
+    );
+    console.log("post",post);
+let sharedBy=post.shareUserCollection;
+sharedBy.push(data.userID);
+console.log("this is sharedBy",sharedBy);
+    const result = await clientToken(process.env.TOKEN).request(
+      updateItem("Post", data.id, {
+        share: sharedBy.length,
+        shareUserCollection: sharedBy
+      })
+    );
+    console.log("result",result)
+  } catch (e) {
+    console.log("this is error",e.message);
   }
 };
 

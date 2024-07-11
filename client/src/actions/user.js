@@ -7,7 +7,7 @@ export const createUserr = async (data) => {
   try {
     const user_token = cookies().get("user_token").value;
     const [fName, lName] = data.name.split(" ");
-    const result = await clientToken(user_token).request(
+    const result = await clientToken(process.env.TOKEN).request(
       createUser({
         first_name: fName,
         last_name: lName,

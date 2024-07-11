@@ -1,11 +1,12 @@
 "use client";
-import { updatePost, getPostById, updateLikes } from "@/actions/post";
+import { updatePost, getPostById, updateLikes,updateShare } from "@/actions/post";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { parseISO, format } from "date-fns";
 import { FcLike } from "react-icons/fc";
 import { GoHeart } from "react-icons/go";
 import { jwtDecode } from "jwt-decode";
+import { RWebShare } from "react-web-share";
 const Post = ({
   id,
   description,
@@ -15,13 +16,15 @@ const Post = ({
   user_created,
   likes: initialLikes,
   likesUserCollection = [],
-  // share,
+  shareUserCollection,
+  share,
 }) => {
   const [expanded, setexpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(initialLikes);
   const [saved, setsaved] = useState(false);
   const [date, setDate] = useState(new Date(date_created));
+  const [shareCount, setShareCount] = useState(0);
   const token = document.cookie;
   const decode = jwtDecode(token);
   const text =
@@ -84,13 +87,14 @@ const Post = ({
     }
   };
 
-  // const handleShare = (id, share) => {
-  //   updatePost(JSON.stringify({ id, share: share + 1 }))
-  //     .then((res) => console.log(res))
-  //     .catch((e) => console.log(e));
-  // };
+  const handleShare = (id, userID) => {
+   
+  const updateShares=updateShare( JSON.stringify({ id, userID }))
+  console.log(updateShares)
+  };
 
-  // const date = new Date();
+  
+
   const formattedDate = `${date.getDate()}-${
     date.getMonth() + 1
   }-${date.getFullYear()}`;
@@ -173,22 +177,28 @@ const Post = ({
             </p>
           </div>
           {/* currently share is removed */}
-          {/* <div
+          <div
             className="flex items-center justify-center gap-2"
-            onClick={() => handleShare(id, share)}
+            onClick={() => handleShare(id, decode.id)}
           >
             <span className="w-5 h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-6 laptop:h-6 tbPortrait:w-8 tbPortrait:h-8  inline-block rounded-full relative cursor-pointer">
-              <Image
-                src="/images/SharePost.png"
-                fill
-                alt="about"
-                className="object-contain"
-              />
+              <RWebShare
+                data={{
+                  text: description,
+                }}
+              >
+                <Image
+                  src="/images/SharePost.png"
+                  fill
+                  alt="about"
+                  className="object-contain"
+                />
+              </RWebShare>
             </span>
             <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
               {share}
             </p>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
