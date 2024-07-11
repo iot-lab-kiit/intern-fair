@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
 import Image from "next/image";
-import { getUserr } from "@/actions/user";
+import { getUserr, googleCreateUserr, googleGetUserr } from "@/actions/user";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -38,7 +38,7 @@ export default function Login() {
 
       formData.email=user.email;
       formData.password=btoa(user.uid)
-      toast.promise(getUserr(formData), {
+      toast.promise(googleGetUserr(formData), {
         loading: "Loggin in...",
         success: (res) => {
           setTimeout(() => {

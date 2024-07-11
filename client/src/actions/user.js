@@ -80,16 +80,20 @@ export const googleCreateUserr = async (data) => {
     if (!result) throw new Error("User not created");
     return { success: true, message: "User created successfully", result };
   } catch (e) {
-    throw new Error(e.errors[0].message || e.message);
+    console.log(e)
+    throw new Error("error Occured");
   }
 };
 export const googleGetUserr = async (formData) => {
   try {
+    console.log(formData)
     const result = await client.login(formData.email, formData.password,{
+      provider: 'google',
       mode: "cookie",
     });
     return { success: true, message: "User logged in successfully", result };
   } catch (e) {
+    console.log(e)
     throw new Error(e.errors[0].message || e.message);
   }
 };
