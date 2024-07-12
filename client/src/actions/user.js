@@ -7,7 +7,7 @@ export const createUserr = async (data) => {
   try {
     const user_token = cookies().get("user_token").value;
     const [fName, lName] = data.name.split(" ");
-    const result = await clientToken(user_token).request(
+    const result = await clientToken(process.env.TOKEN).request(
       createUser({
         first_name: fName,
         last_name: lName,
@@ -41,12 +41,13 @@ export const resetPasswordRequest = async (formData) => {
     const cookieStore = cookies();
     const user_email = cookieStore.get("email");
     const user_password = cookieStore.get("password");
-    await client.login(user_email, user_password);
+    await client.login(process.env.USER, process.env.PASS);
     // Use token
+   
     await client.request(
       passwordRequest(
-        JSON.parse(formData).email,
-        "http://localhost:3000/change-pass"
+        JSON.parse(formData).email
+        
       )
     );
     return {
