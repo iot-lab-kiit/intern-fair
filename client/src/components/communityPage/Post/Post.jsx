@@ -86,14 +86,19 @@ const Post = ({
       updateLikes(JSON.stringify({ id, userID }));
     }
   };
-
+  function getQueryParam() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return window.location.href;
+  }
+const url=getQueryParam();
   const handleShare = (id, userID) => {
-   
+    // console.log("this is url",url);
   const updateShares=updateShare( JSON.stringify({ id, userID }))
   console.log(updateShares)
   };
 
-  
+
+
 
   const formattedDate = `${date.getDate()}-${
     date.getMonth() + 1

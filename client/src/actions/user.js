@@ -41,12 +41,13 @@ export const resetPasswordRequest = async (formData) => {
     const cookieStore = cookies();
     const user_email = cookieStore.get("email");
     const user_password = cookieStore.get("password");
-    await client.login(user_email, user_password);
+    await client.login(process.env.USER, process.env.PASS);
     // Use token
+   
     await client.request(
       passwordRequest(
-        JSON.parse(formData).email,
-        "http://localhost:3000/change-pass"
+        JSON.parse(formData).email
+        
       )
     );
     return {

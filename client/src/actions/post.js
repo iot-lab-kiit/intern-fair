@@ -97,6 +97,7 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
               { directus_users_id: ["id", "first_name", "last_name", "email"] },
             ],
           },
+         
         ],
         offset: parseInt(offset),
         limit: parseInt(POSTS_PER_PAGE), // Limit for pagination
@@ -198,7 +199,7 @@ console.log("this is sharedBy",sharedBy);
     );
     console.log("result",result)
   } catch (e) {
-    console.log("this is error",e.message);
+    console.log("this is error",e.errors.map(err=>err.message));
   }
 };
 
