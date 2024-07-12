@@ -8,6 +8,7 @@ import {
   readItems,
   uploadFiles,
   updateFile,
+  readUser,
 } from "@directus/sdk";
 
 import { cookies } from "next/headers";
@@ -97,7 +98,6 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
               { directus_users_id: ["id", "first_name", "last_name", "email"] },
             ],
           },
-         
         ],
         offset: parseInt(offset),
         limit: parseInt(POSTS_PER_PAGE), // Limit for pagination
@@ -183,23 +183,39 @@ export const updateLikes = async (data) => {
 export const updateShare = async (data) => {
   try {
     data = JSON.parse(data);
-    console.log("data: ",data);
-    const post = await clientToken(process.env.TOKEN).request(
-      readItem("Post", data.id)
-    );
-    console.log("post",post);
-let sharedBy=post.shareUserCollection;
-sharedBy.push(data.userID);
-console.log("this is sharedBy",sharedBy);
-    const result = await clientToken(process.env.TOKEN).request(
-      updateItem("Post", data.id, {
-        share: sharedBy.length,
-        shareUserCollection: sharedBy
+    console.log("data: ", data);
+    const user = await clientToken(process.env.TOKEN).request(
+      readUser(data.userID, {
+        fields: ["id", "first_name", "last_name", "email"],
       })
     );
-    console.log("result",result)
+    console.log(user);
+    const post = await clientToken(process.env.TOKEN).request(
+      readItem("Post", data.id, {
+        fields: [
+          {
+            shareUserCollection: [
+              { directus_users_id: ["id", "first_name", "last_name", "email"] },
+            ],
+          },
+        ],
+      })
+    );
+    const result = await clientToken(process.env.TOKEN).request(
+      updateItem("Post", data.id, {
+        share: newData.length,
+        shareUserCollection: [
+          {
+            directus_users_id: { id: data.userID },
+            Post_id: { id: data.id },
+          },
+        ],
+      })
+    );
+    console.log("result", result);
   } catch (e) {
-    console.log("this is error",e.errors.map(err=>err.message));
+    console.log(e);
+    console.error(e.errors[0].message);
   }
 };
 
