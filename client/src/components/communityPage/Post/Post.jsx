@@ -16,15 +16,16 @@ const Post = ({
   user_created,
   likes: initialLikes,
   likesUserCollection = [],
-  shareUserCollection,
-  share,
+  shareUserCollection = [],
+  share: initialShare,
 }) => {
   const [expanded, setexpanded] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(initialLikes);
+  const [likes, setLikes] = useState(initialLikes||0);
   const [saved, setsaved] = useState(false);
+  
   const [date, setDate] = useState(new Date(date_created));
-  const [shareCount, setShareCount] = useState(0);
+  const [shareCount, setShareCount] = useState(initialShare||0);
   const token = document.cookie;
   const decode = jwtDecode(token);
   const text =
@@ -41,39 +42,16 @@ const Post = ({
     handleLikes(id, decode.id);
   };
 
-  // const handleLikes = (id, likes, userID) => {
-  //   const result = getPostById({ id });
-  //   console.log("This is initial data", result);
-  //   console.log(likes);
-  //   let likedBy = result.likesUserCollection || [];
-
-  //   if (!liked) {
-  //     setliked(true);
-
-  //     if (!likedBy.includes(userID)) {
-  //       likedBy.push(userID);
-
-  //       const updatedLikes = updatePost(
-  //         JSON.stringify({ id, likes: likes + 1, likedBy })
-  //       );
-  //       console.log("This is like", updatedLikes);
-  //     }
-  //   } else {
-  //     likedBy = likedBy.filter((user) => user !== userID);
-
-  //     const updatedLikes = updatePost(
-  //       JSON.stringify({ id, likes: likes - 1 < 0 ? 0 : likes - 1, likedBy })
-  //     );
-  //     console.log("This is dislike", updatedLikes);
-  //     setliked(false);
-  //   }
-  // };
   useEffect(() => {
     const likedd = likesUserCollection.some(
       (user) => user.directus_users_id.id === decode.id
     );
     if (likedd) setLiked(true);
   }, [likesUserCollection]);
+
+  // useEffect(() => {
+  //   setShareCount(initialShare);
+  // }, []);
 
   const handleLikes = (id, userID) => {
     if (!liked) {
@@ -86,16 +64,15 @@ const Post = ({
       updateLikes(JSON.stringify({ id, userID }));
     }
   };
-  function getQueryParam() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return window.location.href;
-  }
-const url=getQueryParam();
-  const handleShare = (id, userID) => {
-    // console.log("this is url",url);
-  const updateShares=updateShare( JSON.stringify({ id, userID }))
-  console.log(updateShares)
-  };
+  // function getQueryParam() {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   return window.location.href;
+  // }
+// const url=getQueryParam();
+const handleShare = async (id, userID) => {
+  await updateShare(JSON.stringify({ id, userID }));
+  setShareCount((prevShareCount) => prevShareCount + 1);
+};
 
 
 
@@ -201,7 +178,7 @@ const url=getQueryParam();
               </RWebShare>
             </span>
             <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
-              {share}
+            {shareCount}
             </p>
           </div>
         </div>
