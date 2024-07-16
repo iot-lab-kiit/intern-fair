@@ -3,6 +3,7 @@ import { clientToken } from "@/db/directus";
 import {
   createItem,
   updateItem,
+  updateItems,
   deleteItem,
   readItem,
   readItems,
@@ -157,21 +158,41 @@ export const updateLikes = async (data) => {
     const user_token = cookies().get("user_session").value;
     data = JSON.parse(data);
     console.log(data);
+
     const post = await clientToken(process.env.TOKEN).request(
-      readItem("Post", data.id)
+      readItem("Post", data.id, {
+        fields: [
+          {
+            likesUserCollection: [
+              { directus_users_id: ["id", "first_name", "last_name", "email"] },
+            ],
+          },
+        ],
+      })
     );
 
     console.log(post);
-    let likedBy = post.likesUserCollection;
-    if (!likedBy.includes(data.userID)) likedBy.push(data.userID);
-    else likedBy = likedBy.filter((user) => user !== data.userID);
+
+    let likedBy = post.likesUserCollection.map(
+      (like) => like.directus_users_id.id
+    );
+
+    if (!likedBy.includes(data.userID)) {
+      likedBy.push(data.userID);
+    } else {
+      likedBy = likedBy.filter((user) => user !== data.userID);
+    }
 
     const result = await clientToken(process.env.TOKEN).request(
       updateItem("Post", data.id, {
-        likesUserCollection: likedBy,
+        likesUserCollection: likedBy.map((userId) => ({
+          directus_users_id: { id: userId },
+          Post_id: { id: data.id },
+        })),
         likes: likedBy.length,
       })
     );
+
     console.log(result);
     if (!result) throw new Error([{ message: "liked" }]);
     return { success: true, message: "Post liked successfully", result };
@@ -183,13 +204,13 @@ export const updateLikes = async (data) => {
 export const updateShare = async (data) => {
   try {
     data = JSON.parse(data);
-    console.log("data: ", data);
+    // console.log("data: ", data);
     const user = await clientToken(process.env.TOKEN).request(
       readUser(data.userID, {
         fields: ["id", "first_name", "last_name", "email"],
       })
     );
-    console.log(user);
+    console.log("user", user);
     const post = await clientToken(process.env.TOKEN).request(
       readItem("Post", data.id, {
         fields: [
@@ -201,21 +222,28 @@ export const updateShare = async (data) => {
         ],
       })
     );
+
+    const existingShareUsers = post.shareUserCollection.map(
+      (share) => share.directus_users_id
+    );
+
+    if (!existingShareUsers.some((user) => user.id === data.userID)) {
+      existingShareUsers.push({ id: data.userID });
+    }
+
     const result = await clientToken(process.env.TOKEN).request(
       updateItem("Post", data.id, {
-        share: newData.length,
-        shareUserCollection: [
-          {
-            directus_users_id: { id: data.userID },
-            Post_id: { id: data.id },
-          },
-        ],
+        share: existingShareUsers.length,
+        shareUserCollection: existingShareUsers.map((user) => ({
+          directus_users_id: { id: user.id },
+          Post_id: { id: data.id },
+        })),
       })
     );
     console.log("result", result);
   } catch (e) {
     console.log(e);
-    console.error(e.errors[0].message);
+    // console.error(e.errors[0].message);
   }
 };
 
