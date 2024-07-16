@@ -72,7 +72,6 @@ export const googleCreateUserr = async (data) => {
         last_name: lName,
         email: data.email,
         password: data.password,
-        provider:"google",
         role: process.env.USER_ROLE,
       })
     );
@@ -86,9 +85,7 @@ export const googleCreateUserr = async (data) => {
 };
 export const googleGetUserr = async (formData) => {
   try {
-    console.log(formData)
     const result = await client.login(formData.email, formData.password,{
-      provider: 'google',
       mode: "cookie",
     });
     return { success: true, message: "User logged in successfully", result };
