@@ -21,7 +21,7 @@ const MobileMenuTransition = ({ children }) => {
   }, [open]);
 
   return (
-    <div className="relative">
+    <div className="relative bottom-3">
       <MobileMenuButton onClick={() => setOpen((prevOpen) => !prevOpen)} />
       <Transition
         show={open}
