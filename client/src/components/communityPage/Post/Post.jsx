@@ -25,7 +25,8 @@ const Post = ({
   const [saved, setsaved] = useState(false);
   
   const [date, setDate] = useState(new Date(date_created));
-  const [shareCount, setShareCount] = useState(initialShare||0);
+  const [shared,setShared]=useState(false);
+  const [shareCount, setShareCount] = useState(parseInt(initialShare) || 0);
   const token = document.cookie;
   const decode = jwtDecode(token);
   const text =
@@ -50,8 +51,12 @@ const Post = ({
   }, [likesUserCollection]);
 
   // useEffect(() => {
-  //   setShareCount(initialShare);
-  // }, []);
+  //   const hasShared = shareUserCollection.some(
+  //     (user) => user.directus_users_id.id === decode.id
+  //   );
+  //   setShared(true);
+  //   // setShareCount(parseInt(initialShare) || 0);
+  // }, [shareUserCollection]);
 
   const handleLikes = (id, userID) => {
     if (!liked) {
@@ -70,8 +75,14 @@ const Post = ({
   // }
 // const url=getQueryParam();
 const handleShare = async (id, userID) => {
-  await updateShare(JSON.stringify({ id, userID }));
-  setShareCount((prevShareCount) => prevShareCount + 1);
+  const hasShared = shareUserCollection.some(
+    (user) => user.directus_users_id.id === userID
+  );
+
+  if (!hasShared) {
+    await updateShare(JSON.stringify({ id, userID }));
+    setShareCount((prevShareCount) => prevShareCount + 1);
+  }
 };
 
 

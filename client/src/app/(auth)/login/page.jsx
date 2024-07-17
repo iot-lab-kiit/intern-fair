@@ -214,16 +214,17 @@ export default function Login() {
           </div>
         </div>
 
-        <div className="image-container w-[45%] tbLandscape:w-[50%] h-full  hidden lg:block">
-          <Image
-            src="/images/signup.png"
-            alt="signup-image"
-            height={500}
-            width={500}
-            style={{ width: "100%", height: "100%" }}
-            className="max-h-screen"
-          />
-        </div>
+        <div className="image-container w-[45%] tbLandscape:w-[50%] h-full hidden lg:block">
+  <Image
+    src="/images/signup.png"
+    alt="signup-image"
+    height={500}
+    width={500}
+    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
+    className="max-h-screen"
+  />
+</div>
+
       </div>
     </>
   );
