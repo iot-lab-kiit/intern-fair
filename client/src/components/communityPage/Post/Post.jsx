@@ -1,9 +1,12 @@
 "use client";
-import { updatePost } from "@/actions/post";
+import { updatePost, getPostById, updateLikes,updateShare } from "@/actions/post";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { parseISO, format } from "date-fns";
-
+import { FcLike } from "react-icons/fc";
+import { GoHeart } from "react-icons/go";
+import { jwtDecode } from "jwt-decode";
+import { RWebShare } from "react-web-share";
 const Post = ({
   id,
   description,
@@ -11,14 +14,21 @@ const Post = ({
   image,
   date_created,
   user_created,
-  likes,
-  // share,
+  likes: initialLikes,
+  likesUserCollection = [],
+  shareUserCollection = [],
+  share: initialShare,
 }) => {
   const [expanded, setexpanded] = useState(false);
-  const [liked, setliked] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState(initialLikes||0);
   const [saved, setsaved] = useState(false);
+  
   const [date, setDate] = useState(new Date(date_created));
-
+  const [shared,setShared]=useState(false);
+  const [shareCount, setShareCount] = useState(parseInt(initialShare) || 0);
+  const token = document.cookie;
+  const decode = jwtDecode(token);
   const text =
     "🌍 CSS stands for Cascading Style Sheets. It is a style sheet language used to describe the presentation and formatting of HTML CSS consists of selectors, properties, and values. Selectors are patterns that target HTML elements, allowing developers to apply styles selectively. Properties are the styling attributes, such as color, font-size.";
 
@@ -29,21 +39,55 @@ const Post = ({
     setsaved(!saved);
   };
   const toggleLike = () => {
-    setliked((prev) => !prev);
+    setLiked((prev) => !prev);
+    handleLikes(id, decode.id);
   };
 
-  const handleLikes = (id, like) => {
-    updatePost(JSON.stringify({ id, likes: like + 1 }))
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
-  };
-  // const handleShare = (id, share) => {
-  //   updatePost(JSON.stringify({ id, share: share + 1 }))
-  //     .then((res) => console.log(res))
-  //     .catch((e) => console.log(e));
-  // };
+  useEffect(() => {
+    const likedd = likesUserCollection.some(
+      (user) => user.directus_users_id.id === decode.id
+    );
+    if (likedd) setLiked(true);
+  }, [likesUserCollection]);
 
-  // const date = new Date();
+  // useEffect(() => {
+  //   const hasShared = shareUserCollection.some(
+  //     (user) => user.directus_users_id.id === decode.id
+  //   );
+  //   setShared(true);
+  //   // setShareCount(parseInt(initialShare) || 0);
+  // }, [shareUserCollection]);
+
+  const handleLikes = (id, userID) => {
+    if (!liked) {
+      setLiked(true);
+      setLikes((prevLikes) => prevLikes + 1);
+      updateLikes(JSON.stringify({ id, userID }));
+    } else {
+      setLiked(false);
+      setLikes((prevLikes) => prevLikes - 1);
+      updateLikes(JSON.stringify({ id, userID }));
+    }
+  };
+  // function getQueryParam() {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   return window.location.href;
+  // }
+// const url=getQueryParam();
+const handleShare = async (id, userID) => {
+  const hasShared = shareUserCollection.some(
+    (user) => user.directus_users_id.id === userID
+  );
+
+  if (!hasShared) {
+    await updateShare(JSON.stringify({ id, userID }));
+    setShareCount((prevShareCount) => prevShareCount + 1);
+  }
+};
+
+
+
+
   const formattedDate = `${date.getDate()}-${
     date.getMonth() + 1
   }-${date.getFullYear()}`;
@@ -102,13 +146,15 @@ const Post = ({
             ))}
         </div>
         {image && (
-          <div className="w-full relative overflow-hidden aspect-video ">
-            <Image
-              src={`https://directus.iotkiit.in/assets/${image}`}
-              fill
-              alt="about"
-              className="object-cover"
-            />
+          <div className="w-full">
+            <span className="w-full h-[8rem] mbXSmall:h-[10rem] mbMedSmall:h-[12rem] mbSmall:h-[14rem] mbMedium:h-[16rem] laptop:h-[18rem] tbPortrait:h-[20rem]  inline-block relative">
+              {/* <Image
+                src={`https://directus.iotkiit.in/assets/${image}`}
+                fill
+                alt="about"
+                className="object-cover"
+              /> */}
+            </span>
           </div>
         )}
       </div>
@@ -116,31 +162,36 @@ const Post = ({
         <div className="flex items-start justify-center gap-6">
           <div
             className="flex items-center justify-center gap-2"
-            onClick={() => handleLikes(id, likes)}
+            onClick={() => handleLikes(id, decode.id)}
           >
-            {/* <GoHeart size={32} color="#FF0000" /> */}
-            {/* <FcLike size={32} color="#00FF00" /> */}
-            <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
+            {liked ? <FcLike size={32} /> : <GoHeart size={32} />}
+            <p className="text-[#0f0f0f] text-sm mbSmall:text-base mbMedium:text-lg">
               {likes}
             </p>
           </div>
           {/* currently share is removed */}
-          {/* <div
+          <div
             className="flex items-center justify-center gap-2"
-            onClick={() => handleShare(id, share)}
+            onClick={() => handleShare(id, decode.id)}
           >
             <span className="w-5 h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-6 laptop:h-6 tbPortrait:w-8 tbPortrait:h-8  inline-block rounded-full relative cursor-pointer">
-              <Image
-                src="/images/SharePost.png"
-                fill
-                alt="about"
-                className="object-contain"
-              />
+              <RWebShare
+                data={{
+                  text: description,
+                }}
+              >
+                <Image
+                  src="/images/SharePost.png"
+                  fill
+                  alt="about"
+                  className="object-contain"
+                />
+              </RWebShare>
             </span>
             <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
-              {share}
+            {shareCount}
             </p>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
