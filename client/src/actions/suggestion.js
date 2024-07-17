@@ -20,7 +20,7 @@ export const createSuggestion=async (data)=>{
     try {
         validateData(data);
         const suggestionResponse = await clientToken(process.env.TOKEN).request(
-            createItem("Suggestions", {
+            createItem("Suggestion", {
                 name: data.name,
                 email: data.email,
                 suggestion: data.suggestion,

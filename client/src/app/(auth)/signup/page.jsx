@@ -3,11 +3,15 @@ import React, { useState, useEffect } from "react";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
 import Image from "next/image";
-import { createUserr } from "@/actions/user";
+import { createUserr, googleCreateUserr } from "@/actions/user";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { GoogleAuthProvider,getAuth,signInWithPopup } from "firebase/auth";
+import firebase from '../../utils/firebase.js'
 
+const provider = new GoogleAuthProvider();
+const auth=getAuth(firebase)
 export default function Signup() {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -84,7 +88,38 @@ export default function Signup() {
       error: (err) => <b>{err.message}</b>,
     });
   };
+  const googleLogin=async()=>{
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
 
+      formData.name=user.displayName
+      formData.email=user.email
+      formData.password=btoa(user.uid)
+      toast.promise(googleCreateUserr(formData), {
+        loading: "Creating Account...",
+        success: (res) => {
+          setTimeout(() => {
+            router.push("/login");
+          }, 2000);
+          return <b>{res.message}</b>;
+        },
+        error: (err) => <b>{err.message}</b>,
+      });
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });  
+
+  }
   return (
     <>
       <div className="content  h-screen flex justify-center items-center w-screen  max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
@@ -208,7 +243,7 @@ export default function Signup() {
                   <div className="text-gray-500 text-xs">or</div>
                   <div className="separator w-[100%] h-[2px] bg-[#E0E5F2] my-4"></div>
                 </div>
-                <div className="google-signup flex items-center justify-center bg-[#F4F5FA] w-[98%] sm:w-[100%] h-10 rounded-lg">
+                <div className="google-signup cursor-pointer flex items-center justify-center bg-[#F4F5FA] w-[98%] sm:w-[100%] h-10 rounded-lg" onClick={googleLogin}>
                   <div className="mr-2">
                     <Image
                       src="/images/Group.png"
