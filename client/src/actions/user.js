@@ -1,9 +1,11 @@
 "use server";
-import { createUser ,passwordRequest,passwordReset} from "@directus/sdk";
+import { cookies } from "next/headers";
 import { client, clientToken } from "@/db/directus";
+import { createUser, passwordRequest, passwordReset } from "@directus/sdk";
 
 export const createUserr = async (data) => {
   try {
+    const user_token = cookies().get("user_token").value;
     const [fName, lName] = data.name.split(" ");
     const result = await clientToken(process.env.TOKEN).request(
       createUser({
@@ -33,28 +35,36 @@ export const getUserr = async (formData) => {
   }
 };
 
-// // request password reset
+// request password reset
 export const resetPasswordRequest = async (formData) => {
   try {
+    const cookieStore = cookies();
+    const user_email = cookieStore.get("email");
+    const user_password = cookieStore.get("password");
     await client.login(process.env.USER, process.env.PASS);
     // Use token
-    await client.request(passwordRequest(JSON.parse(formData).email,'http://localhost:3000/change-pass'));
+   
+    await client.request(
+      passwordRequest(
+        JSON.parse(formData).email
+        
+      )
+    );
     return {
       success: true,
       message: "Reset password mail sent. If user exists.",
-    }
+    };
   } catch (error) {
     console.log(error);
     throw new Error("Failed to send reset link");
   }
 };
 
-// // password reset
-export const resetPassword = async (formData,token) => {
+// password reset
+export const resetPassword = async (formData, token) => {
   try {
-    // console.log(formData,token)
     const result = await client.request(
-      passwordReset(token,formData.cnfpassword)
+      passwordReset(token, formData.cnfpassword)
     );
     return { success: true, message: "Password reset successfully" };
   } catch (error) {
