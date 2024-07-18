@@ -157,6 +157,10 @@ const CommunitySection = () => {
     }
   }, [isInView, hasMoreData]);
 
+  const handlePostClick = (id) => {
+    router.push(`/community/${id}`);
+  };
+
   return (
     <div className="flex">
       <Sidebar
@@ -212,6 +216,7 @@ const CommunitySection = () => {
                         image={item.image}
                         user_created={item.user_created}
                         likes={item.likes}
+                        handlePostClick={handlePostClick}
                       />
                     ))
                   : postData.map((item) => (
@@ -224,6 +229,7 @@ const CommunitySection = () => {
                         image={item.image}
                         user_created={item.user_created}
                         likes={item.likes}
+                        handlePostClick={handlePostClick}
                       />
                     ))}
               </>

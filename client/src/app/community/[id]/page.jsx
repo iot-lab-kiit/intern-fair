@@ -52,7 +52,8 @@ const SinglePostPage = ({ params }) => {
     return <p>No post found.</p>;
   }
 
-  const { id, content, tag, image, date_created, user_created } = postData; // Destructure data
+  const { id, content, tag, image, date_created, user_created, likes } =
+    postData; // Destructure data
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen pt-16">
@@ -66,6 +67,7 @@ const SinglePostPage = ({ params }) => {
             image={image}
             date_created={date_created}
             user_created={user_created}
+            likes={likes}
           />
         </div>
       </div>

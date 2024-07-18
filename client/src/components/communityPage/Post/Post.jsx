@@ -20,6 +20,7 @@ const Post = ({
   date_created,
   user_created,
   likes,
+  handlePostClick,
   // share,
 }) => {
   const [expanded, setexpanded] = useState(false);
@@ -64,7 +65,10 @@ const Post = ({
 
   return (
     // w-[28rem] tbPortrait:w-[32rem] min-[1400px]:w-[36rem] tbLandscape:w-[40rem]
-    <div className="p-2 mbSmall:p-4 border-[1.5px] max-h-[30rem] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0  mbSmall:w-[95%]">
+    <div
+      className="p-2 mbSmall:p-4 border-[1.5px] max-h-[30rem] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0  mbSmall:w-[95%] cursor-pointer"
+      onClick={() => handlePostClick(id)}
+    >
       <div className=" flex flex-col items-start justify-center gap-3 mbMedSmall:gap-4 border-[#E7E8EC] border-b-2 p-4">
         <div className="flex justify-start items-center gap-2 mbSmall:gap-3 mbMedium:gap-4 w-full font-Gilroy-Medium">
           <div>
