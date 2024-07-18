@@ -13,6 +13,8 @@ import { Menu } from "lucide-react";
 import toast from "react-hot-toast";
 import { useInView } from "react-intersection-observer";
 import Loader from "@/components/ui/Loader/Loader";
+import Link from "next/link";
+
 const CommunitySection = () => {
   const [postData, setPostData] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState(postdata);
@@ -28,6 +30,7 @@ const CommunitySection = () => {
   const handleFileInputChange = () => {
     document.getElementById("fileInput").click();
   };
+
   useEffect(() => {
     setIsLoading(true);
     getAllPost(0, 10)
@@ -133,9 +136,7 @@ const CommunitySection = () => {
   };
 
   const POSTS_PER_PAGE = 10;
-
   const [offset, setOffset] = useState(POSTS_PER_PAGE);
-
   const [hasMoreData, setHasMoreData] = useState(true);
   const [scrollTrigger, isInView] = useInView();
 
@@ -144,9 +145,7 @@ const CommunitySection = () => {
       const apiPosts = (await getAllPost(offset, POSTS_PER_PAGE)).result;
 
       console.log(offset, POSTS_PER_PAGE);
-      if (apiPosts.length === 0) {
-        setHasMoreData(false);
-      }
+      if (apiPosts.length === 0) setHasMoreData(false);
 
       setPostData((prevPosts) => [...prevPosts, ...apiPosts]);
       setOffset((prevOffset) => prevOffset + POSTS_PER_PAGE);
@@ -157,10 +156,6 @@ const CommunitySection = () => {
       loadMorePosts();
     }
   }, [isInView, hasMoreData]);
-
-  const handlePostClick = (id) => {
-    router.push(`/community/${id}`);
-  };
 
   return (
     <div className="flex">
@@ -176,19 +171,12 @@ const CommunitySection = () => {
         <div className="flex items-center justify-between p-6">
           <div className="h-4 w-4 ml-4 flex items-center justify-center gap-2.5">
             <Image src="/images/back.png" width={20} height={20} />
-            <button
-              className=""
-              onClick={() => {
-                router.push("/");
-              }}
-            >
-              Back
-            </button>
+            <Link href="/">Back</Link>
           </div>
         </div>
 
         <div className="flex flex-col laptop:flex-row items-center laptop:items-start justify-start gap-10 laptop:gap-8 max-w-full mt-10">
-          <div className="order-2 laptop:order-2 flex flex-col gap-6 items-center justify-center w-[90%] mbXSmall:w-[90%] mbSmall:w-[85%] mbMedium:w-[85%] laptop:w-[55%] tbPortrait:w-[55%]">
+          <div className="order-2 laptop:order-2 flex flex-col gap-6 items-center justify-center w-[90%] mbXSmall:w-[90%] mbMedSmall:w-[90%] mbSmall:w-[85%] mbMedium:w-[85%] laptop:w-[55%] tbPortrait:w-[55%]">
             {/* Search bar */}
             <div className="relative ml-10 mbXSmall:ml-0">
               <div className="absolute inset-y-0 left-0 pl-4 pt-1 flex items-center">
@@ -212,6 +200,7 @@ const CommunitySection = () => {
               <Loader />
             ) : (
               <>
+                {error && <p className="my-10 text-5xl">{error}</p>}
                 {searchQuery !== "" || selectedTag
                   ? filteredPosts.map((item) => (
                       <Post
@@ -223,7 +212,6 @@ const CommunitySection = () => {
                         image={item.image}
                         user_created={item.user_created}
                         likes={item.likes}
-                        handlePostClick={handlePostClick}
                       />
                     ))
                   : postData.map((item) => (
@@ -236,7 +224,6 @@ const CommunitySection = () => {
                         image={item.image}
                         user_created={item.user_created}
                         likes={item.likes}
-                        handlePostClick={handlePostClick}
                       />
                     ))}
               </>

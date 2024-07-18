@@ -7,8 +7,9 @@ import { resetPassword } from "@/actions/user";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import { useParams } from "next/navigation";
 export default function page() {
+  const { token } = useParams();
   const router = useRouter();
   const [formData, setFormData] = useState({
     // email: "",
@@ -84,7 +85,7 @@ export default function page() {
   return (
     <>
       <div className="content h-screen flex justify-center  items-center w-screen max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
-        <div className="flex flex-col justify-center  mx-auto gap-4 overflow-hidden pr-10 pb-[9rem]">
+        <div className="flex flex-col  mx-auto gap-4 overflow-hidden pr-10 ">
           <div
             className="back-button text-base absolute top-2  items-center justify-center h-10 cursor-pointer left-5 flex "
             onClick={handleBackButtonClick}
@@ -195,13 +196,18 @@ export default function page() {
           </div>
         </div>
 
-        <div className="image-container w-[45%] tbLandscape:w-[50%] h-full max-h-screen  hidden lg:block">
+        <div className="image-container w-[45%] tbLandscape:w-[50%] h-full hidden lg:block">
           <Image
             src="/images/signup.png"
             alt="signup-image"
             height={500}
             width={500}
-            style={{ width: "100%", height: "100%" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center",
+            }}
             className="max-h-screen"
           />
         </div>

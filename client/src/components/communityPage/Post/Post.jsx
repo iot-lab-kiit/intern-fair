@@ -1,9 +1,17 @@
 "use client";
-import { updatePost } from "@/actions/post";
+import {
+  updatePost,
+  getPostById,
+  updateLikes,
+  updateShare,
+} from "@/actions/post";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { parseISO, format } from "date-fns";
-
+import { FcLike } from "react-icons/fc";
+import { GoHeart } from "react-icons/go";
+import { jwtDecode } from "jwt-decode";
+import { RWebShare } from "react-web-share";
 const Post = ({
   id,
   description,
@@ -12,12 +20,15 @@ const Post = ({
   date_created,
   user_created,
   likes,
-  handlePostClick,
+  // share,
 }) => {
-  const [expanded, setExpanded] = useState(false);
-  const [liked, setLiked] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [expanded, setexpanded] = useState(false);
+  const [liked, setliked] = useState(false);
+  const [saved, setsaved] = useState(false);
   const [date, setDate] = useState(new Date(date_created));
+
+  const text =
+    "🌍 CSS stands for Cascading Style Sheets. It is a style sheet language used to describe the presentation and formatting of HTML CSS consists of selectors, properties, and values. Selectors are patterns that target HTML elements, allowing developers to apply styles selectively. Properties are the styling attributes, such as color, font-size.";
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -26,7 +37,7 @@ const Post = ({
     setSaved(!saved);
   };
   const toggleLike = () => {
-    setLiked((prev) => !prev);
+    setliked((prev) => !prev);
   };
 
   const handleLikes = (id, like) => {
@@ -34,7 +45,13 @@ const Post = ({
       .then((res) => console.log(res))
       .catch((e) => console.log(e));
   };
+  // const handleShare = (id, share) => {
+  //   updatePost(JSON.stringify({ id, share: share + 1 }))
+  //     .then((res) => console.log(res))
+  //     .catch((e) => console.log(e));
+  // };
 
+  // const date = new Date();
   const formattedDate = `${date.getDate()}-${
     date.getMonth() + 1
   }-${date.getFullYear()}`;
@@ -46,18 +63,16 @@ const Post = ({
   const formattedTime = formatter.format(date);
 
   return (
-    <div
-      className="p-2 mbSmall:p-4 border-[1.5px] max-h-[30rem] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0  mbSmall:w-[95%] cursor-pointer"
-      onClick={() => handlePostClick(id)}
-    >
-      <div className="flex flex-col items-start justify-center gap-3 mbMedSmall:gap-4 border-[#E7E8EC] border-b-2 p-4">
+    // w-[28rem] tbPortrait:w-[32rem] min-[1400px]:w-[36rem] tbLandscape:w-[40rem]
+    <div className="p-2 mbSmall:p-4 border-[1.5px] max-h-[30rem] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0  mbSmall:w-[95%]">
+      <div className=" flex flex-col items-start justify-center gap-3 mbMedSmall:gap-4 border-[#E7E8EC] border-b-2 p-4">
         <div className="flex justify-start items-center gap-2 mbSmall:gap-3 mbMedium:gap-4 w-full font-Gilroy-Medium">
           <div>
             <span className="w-10 h-10 inline-block rounded-full relative cursor-pointer">
               <Image
                 src={`/images/profile.png`}
                 fill
-                alt="profile"
+                alt="about"
                 className="object-contain"
               />
             </span>
@@ -97,13 +112,15 @@ const Post = ({
             ))}
         </div>
         {image && (
-          <div className="w-full relative overflow-hidden aspect-video">
-            <Image
-              src={`https://directus.iotkiit.in/assets/${image}`}
-              fill
-              alt="about"
-              className="object-cover"
-            />
+          <div className="w-full">
+            <span className="w-full h-[8rem] mbXSmall:h-[10rem] mbMedSmall:h-[12rem] mbSmall:h-[14rem] mbMedium:h-[16rem] laptop:h-[18rem] tbPortrait:h-[20rem]  inline-block relative">
+              {/* <Image
+                src={`https://directus.iotkiit.in/assets/${image}`}
+                fill
+                alt="about"
+                className="object-cover"
+              /> */}
+            </span>
           </div>
         )}
       </div>
@@ -111,12 +128,31 @@ const Post = ({
         <div className="flex items-start justify-center gap-6">
           <div
             className="flex items-center justify-center gap-2"
-            onClick={() => handleLikes(id, likes)}
+            onClick={() => handleLikes(id, decode.id)}
           >
+            {/* <GoHeart size={32} color="#FF0000" /> */}
+            {/* <FcLike size={32} color="#00FF00" /> */}
             <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
               {likes}
             </p>
           </div>
+          {/* currently share is removed */}
+          {/* <div
+            className="flex items-center justify-center gap-2"
+            onClick={() => handleShare(id, share)}
+          >
+            <span className="w-5 h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-6 laptop:h-6 tbPortrait:w-8 tbPortrait:h-8  inline-block rounded-full relative cursor-pointer">
+              <Image
+                src="/images/SharePost.png"
+                fill
+                alt="about"
+                className="object-contain"
+              />
+            </span>
+            <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
+              {share}
+            </p>
+          </div> */}
         </div>
       </div>
     </div>
