@@ -158,6 +158,10 @@ const CommunitySection = () => {
     }
   }, [isInView, hasMoreData]);
 
+  const handlePostClick = (id) => {
+    router.push(`/community/${id}`);
+  };
+
   return (
     <div className="flex">
       <Sidebar
@@ -204,7 +208,7 @@ const CommunitySection = () => {
                 className="pl-10  min-w-[15rem] w-[60vw] mbMedium:w-[45vw] laptop:w-[30vw] tbLandscape:w-[30rem] border-[1.5px] border-[#DCDCE7] rounded-full py-2.5"
               />
             </div>
-            {isLoading ? ( // Show loader while loading
+            {isLoading ? (
               <Loader />
             ) : (
               <>
@@ -219,6 +223,7 @@ const CommunitySection = () => {
                         image={item.image}
                         user_created={item.user_created}
                         likes={item.likes}
+                        handlePostClick={handlePostClick}
                       />
                     ))
                   : postData.map((item) => (
@@ -231,6 +236,7 @@ const CommunitySection = () => {
                         image={item.image}
                         user_created={item.user_created}
                         likes={item.likes}
+                        handlePostClick={handlePostClick}
                       />
                     ))}
               </>
