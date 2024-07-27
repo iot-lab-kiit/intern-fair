@@ -14,7 +14,10 @@ const LearningResources = () => {
                 )} */}
             </div>
          
+         <div className="pb-12">
+
             <Carousel arr={arr1} speed={2000} />
+         </div>
             {/* <AutoSlider arr={arr2} speed={2000} /> */}
         </section>
     );
