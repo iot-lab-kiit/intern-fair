@@ -29,8 +29,7 @@ const Carousel = ({ data }) => {
               fill
               src={item.url}
               alt="image"
-              className="rounded-xl"
-              objectPosition="center"
+              className="rounded-xl object-center"
             />
           </div>
         </SwiperSlide>
