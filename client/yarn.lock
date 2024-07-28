@@ -597,7 +597,7 @@
   resolved "https://registry.yarnpkg.com/@firebase/auth-types/-/auth-types-0.12.2.tgz#f12d890585866e53b6ab18b16fa4d425c52eee6e"
   integrity sha512-qsEBaRMoGvHO10unlDJhaKSuPn4pyoTtlQuP1ghZfzB6rNQPuhp/N/DcFZxm9i4v0SogjCbf9reWupwIvfmH6w==
 
-"@firebase/auth@1.7.5":
+"@firebase/auth@1.7.5", "@firebase/auth@^1.7.5":
   version "1.7.5"
   resolved "https://registry.yarnpkg.com/@firebase/auth/-/auth-1.7.5.tgz#8135e0933e874231d7ebafc94f5796a19f5df39b"
   integrity sha512-DMFR1OA/f1/voeuFbSORg9AP36pMgOoSb/DRgiDalLmIJsDTlQNMCu+givjMP4s/XL85+tBk2MerYnK/AscJjw==
