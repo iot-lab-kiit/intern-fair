@@ -13,6 +13,7 @@ const LearningResources = () => {
                     "Explore all the things we offer to help you learn and grow. We have modern labs and online libraries full of useful stuff. You can find study materials, research databases, and career help to do well in your studies and future career."
                 )}
             </div>
+            
             <Carousel arr={arr1} speed={3000} direction={false} />
             <Carousel arr={arr2} speed={3000} direction={true} />
         </>
