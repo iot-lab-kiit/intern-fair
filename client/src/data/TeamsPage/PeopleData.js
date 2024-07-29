@@ -1,5 +1,26 @@
 export const people = [
   {
+    name: "Anshul Kumar",
+    img: "/images/anshul.webp",
+    githubUrl: "https://github.com/anshulkumarx7",
+    linkedinUrl:
+      "https://www.linkedin.com/in/anshul-kumar-811ab7238/",
+  },
+  {
+    name: "Upasana Chaudhuri",
+    img: "/images/upasana.webp",
+    githubUrl: "https://github.com/Upasana0710",
+    linkedinUrl:
+      "https://www.linkedin.com/in/upasana-chaudhuri-2a2bb5231/",
+  },
+  {
+    name: "Dhruv Singh Bora",
+    img: "/images/druv.webp",
+    githubUrl: "https://github.com/DhruvSinghBora",
+    linkedinUrl:
+      "https://www.linkedin.com/in/dhruv-singh-bora/",
+  },
+  {
     name: "Jatin Chaudhary",
     img: "/images/jatin.jpg",
     githubUrl: "https://github.com/JATIN0926/",
