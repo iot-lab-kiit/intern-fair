@@ -50,7 +50,7 @@ const Carousel = ({ arr, speed }) => {
         <SwiperSlide key={i} className="swiper-slide">
           <a
             href="#"
-            className="swiper-item cursor-pointer box-border flex bg-white justify-center items-center gap-2 border-[#EEEEEE] hover:border-[#1F3DD9] hover:border-2 transition-all duration-100 rounded-full shadow-md px-2 py-3 mx-2 text-xs mbSmall:text-sm laptop:text-base w-full max-w-[16rem]"
+            className="swiper-item my-4 cursor-pointer box-border flex justify-center items-center gap-2 border-[#EEEEEE] hover:border-[#1F3DD9] hover:border-2 transition-all duration-100 rounded-full shadow-md border-[1px] px-2 py-3 mx-2 text-xs mbSmall:text-sm laptop:text-base w-full max-w-[16rem]"
           >
             {item}
           </a>
