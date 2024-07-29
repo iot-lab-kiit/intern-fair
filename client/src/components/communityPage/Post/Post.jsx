@@ -10,8 +10,9 @@ import { useState, useEffect } from "react";
 import { parseISO, format } from "date-fns";
 import { FcLike } from "react-icons/fc";
 import { GoHeart } from "react-icons/go";
-import { jwtDecode } from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import { RWebShare } from "react-web-share";
+
 const Post = ({
   id,
   description,
@@ -19,40 +20,60 @@ const Post = ({
   image,
   date_created,
   user_created,
-  likes,
+  likes: initialLikes,
+  likesUserCollection = [],
+  shareUserCollection = [],
+  share: initialShare,
   handlePostClick,
-  // share,
 }) => {
-  const [expanded, setexpanded] = useState(false);
-  const [liked, setliked] = useState(false);
-  const [saved, setsaved] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState(initialLikes || 0);
+  const [saved, setSaved] = useState(false);
   const [date, setDate] = useState(new Date(date_created));
-
-  const text =
-    "🌍 CSS stands for Cascading Style Sheets. It is a style sheet language used to describe the presentation and formatting of HTML CSS consists of selectors, properties, and values. Selectors are patterns that target HTML elements, allowing developers to apply styles selectively. Properties are the styling attributes, such as color, font-size.";
+  const [shared, setShared] = useState(false);
+  const [shareCount, setShareCount] = useState(parseInt(initialShare) || 0);
+  const token = document.cookie;
+  const decode = jwtDecode(token);
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
+
   const toggleSave = () => {
     setSaved(!saved);
   };
-  const toggleLike = () => {
-    setliked((prev) => !prev);
+
+  const handleLikes = (id, userID) => {
+    if (!liked) {
+      setLiked(true);
+      setLikes((prevLikes) => prevLikes + 1);
+      updateLikes(JSON.stringify({ id, userID }));
+    } else {
+      setLiked(false);
+      setLikes((prevLikes) => prevLikes - 1);
+      updateLikes(JSON.stringify({ id, userID }));
+    }
   };
 
-  const handleLikes = (id, like) => {
-    updatePost(JSON.stringify({ id, likes: like + 1 }))
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
-  };
-  // const handleShare = (id, share) => {
-  //   updatePost(JSON.stringify({ id, share: share + 1 }))
-  //     .then((res) => console.log(res))
-  //     .catch((e) => console.log(e));
-  // };
+  const handleShare = async (id, userID) => {
+    const hasShared = shareUserCollection.some(
+      (user) => user.directus_users_id.id === userID
+    );
 
-  // const date = new Date();
+    if (!hasShared) {
+      await updateShare(JSON.stringify({ id, userID }));
+      setShareCount((prevShareCount) => prevShareCount + 1);
+    }
+  };
+
+  useEffect(() => {
+    const liked = likesUserCollection.some(
+      (user) => user.directus_users_id.id === decode.id
+    );
+    if (liked) setLiked(true);
+  }, [likesUserCollection]);
+
   const formattedDate = `${date.getDate()}-${
     date.getMonth() + 1
   }-${date.getFullYear()}`;
@@ -64,9 +85,8 @@ const Post = ({
   const formattedTime = formatter.format(date);
 
   return (
-    // w-[28rem] tbPortrait:w-[32rem] min-[1400px]:w-[36rem] tbLandscape:w-[40rem]
     <div
-      className="p-2 mbSmall:p-4 border-[1.5px] max-h-[30rem] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0  mbSmall:w-[95%] cursor-pointer"
+      className="p-2 mbSmall:p-4 border-[1.5px] max-h-[32rem] min-[1400px]:max-h-[35rem] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0 mbMedSmall:w-[95%]"
       onClick={() => handlePostClick(id)}
     >
       <div className=" flex flex-col items-start justify-center gap-3 mbMedSmall:gap-4 border-[#E7E8EC] border-b-2 p-4">
@@ -77,7 +97,7 @@ const Post = ({
                 src={`/images/profile.png`}
                 fill
                 alt="about"
-                className="object-contain"
+                className="object-cover"
               />
             </span>
           </div>
@@ -117,7 +137,7 @@ const Post = ({
         </div>
         {image && (
           <div className="w-full">
-            <span className="w-full h-[8rem] mbXSmall:h-[10rem] mbMedSmall:h-[12rem] mbSmall:h-[14rem] mbMedium:h-[16rem] laptop:h-[18rem] tbPortrait:h-[20rem]  inline-block relative">
+            <span className="w-full h-[8rem] mbXSmall:h-[10rem] mbMedSmall:h-[12rem] mbSmall:h-[14rem] mbMedium:h-[16rem] laptop:h-[18rem] tbPortrait:h-[20rem] inline-block relative">
               {/* <Image
                 src={`https://directus.iotkiit.in/assets/${image}`}
                 fill
@@ -134,29 +154,33 @@ const Post = ({
             className="flex items-center justify-center gap-2"
             onClick={() => handleLikes(id, decode.id)}
           >
-            {/* <GoHeart size={32} color="#FF0000" /> */}
-            {/* <FcLike size={32} color="#00FF00" /> */}
-            <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
+            {liked ? <FcLike size={32} /> : <GoHeart size={32} />}
+            <p className="text-[#0f0f0f] text-sm mbSmall:text-base mbMedium:text-lg">
               {likes}
             </p>
           </div>
-          {/* currently share is removed */}
-          {/* <div
+          <div
             className="flex items-center justify-center gap-2"
-            onClick={() => handleShare(id, share)}
+            onClick={() => handleShare(id, decode.id)}
           >
-            <span className="w-5 h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-6 laptop:h-6 tbPortrait:w-8 tbPortrait:h-8  inline-block rounded-full relative cursor-pointer">
-              <Image
-                src="/images/SharePost.png"
-                fill
-                alt="about"
-                className="object-contain"
-              />
+            <span className="w-5 h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbMedium:w-6 mbMedium:h-6 laptop:w-6 laptop:h-6 tbPortrait:w-8 tbPortrait:h-8 inline-block rounded-full relative cursor-pointer">
+              <RWebShare
+                data={{
+                  text: description,
+                }}
+              >
+                <Image
+                  src="/images/SharePost.png"
+                  fill
+                  alt="about"
+                  className="object-contain"
+                />
+              </RWebShare>
             </span>
             <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
-              {share}
+              {shareCount}
             </p>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
