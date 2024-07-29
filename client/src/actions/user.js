@@ -118,11 +118,9 @@ export const googleGetUserr = async (formData,name) => {
       });
       return { success: true, message: "User logged in successfully", result };
     }
-    else{
-      console.log("Else block")
-      const [fName, lName] = name.split(" ");
-      const resp = await clientToken(process.env.TOKEN).request(
-        createUser({
+    const [fName, lName] = name.split(" ");
+    const resp = await clientToken(process.env.TOKEN).request(
+      createUser({
           first_name: fName,
           last_name: lName,
           email: formData.email,
@@ -137,7 +135,6 @@ export const googleGetUserr = async (formData,name) => {
       });
       console.log("User logged",resp)
       return { success: true, message: "User logged in successfully", result };
-    }
   } catch (e) {
     console.log(e)
     throw new Error(e.errors[0].message || e.message);
