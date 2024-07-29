@@ -123,7 +123,6 @@ const CommunitySection = () => {
       }
     } catch (e) {
       toast.error("Error uploading post");
-      setError("Error uploading post.");
     } finally {
       setIsLoading(false);
     }
@@ -199,7 +198,6 @@ const CommunitySection = () => {
               <Loader />
             ) : (
               <>
-                {error && <p className="my-10 text-5xl">{error}</p>}
                 {searchQuery !== "" || selectedTag
                   ? filteredPosts.map((item) => (
                       <Post
