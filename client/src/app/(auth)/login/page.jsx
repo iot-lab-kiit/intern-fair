@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
 import Image from "next/image";
-import { getUserr, googleCreateUserr, googleGetUserr } from "@/actions/user";
+import { getUserr, googleGetUserr } from "@/actions/user";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -38,15 +38,14 @@ export default function Login() {
 
       formData.email=user.email;
       formData.password=btoa(user.uid)
-      toast.promise(googleGetUserr(formData), {
+      toast.promise(googleGetUserr(formData,user.displayName), {
         loading: "Loggin in...",
         success: (res) => {
           setTimeout(() => {
             router.push("/");
           }, 2000);
           if (res.result.access_token)
-            document.cookie =
-              "user_session" + "=" + (res.result.access_token || "");
+            document.cookie = "user_session" + "=" + (res.result.access_token || "");
           ("; path=/");
           return <b>{res.message}</b>;
         },
