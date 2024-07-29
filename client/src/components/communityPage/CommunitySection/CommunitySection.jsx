@@ -182,23 +182,25 @@ const CommunitySection = () => {
         <div className="flex flex-col laptop:flex-row items-center laptop:items-start justify-start gap-10 laptop:gap-8 max-w-full mt-10">
           <div className="order-2 laptop:order-2 flex flex-col gap-6 items-center justify-center w-[90%] mbXSmall:w-[90%] mbMedSmall:w-[90%] mbSmall:w-[85%] mbMedium:w-[85%] laptop:w-[55%] tbPortrait:w-[55%]">
             {/* Search bar */}
-            <div className="relative ml-10 mbXSmall:ml-0">
-              <div className="absolute inset-y-0 left-0 pl-4 pt-1 flex items-center">
-                <span className=" w-4 h-4 mbXSmall:w-5 mbXSmall:h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 laptop:w-4 laptop:h-4 inline-block rounded-full relative cursor-pointer">
-                  <Image
-                    src="/images/search.png"
-                    fill
-                    alt="about"
-                    className="object-contain"
-                  />
-                </span>
+            <div className="sticky top-20">
+              <div className="relative ml-10 mbXSmall:ml-0">
+                <div className="absolute inset-y-0 left-0 pl-4 pt-1 flex items-center">
+                  <span className=" w-4 h-4 mbXSmall:w-5 mbXSmall:h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 laptop:w-4 laptop:h-4 inline-block rounded-full relative cursor-pointer">
+                    <Image
+                      src="/images/search.png"
+                      fill
+                      alt="about"
+                      className="object-contain"
+                    />
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search"
+                  onChange={handleSearchQuery}
+                  className="pl-10  min-w-[15rem] w-[60vw] mbMedium:w-[45vw] laptop:w-[30vw] tbLandscape:w-[30rem] border-[1.5px] border-[#DCDCE7] rounded-full py-2.5"
+                />
               </div>
-              <input
-                type="text"
-                placeholder="Search"
-                onChange={handleSearchQuery}
-                className="pl-10  min-w-[15rem] w-[60vw] mbMedium:w-[45vw] laptop:w-[30vw] tbLandscape:w-[30rem] border-[1.5px] border-[#DCDCE7] rounded-full py-2.5"
-              />
             </div>
             {isLoading ? (
               <Loader />
@@ -232,9 +234,9 @@ const CommunitySection = () => {
                         handlePostClick={handlePostClick}
                       />
                     ))}
-            <div className="...">
-              {hasMoreData && <div ref={scrollTrigger}></div>}
-            </div>
+                <div className="...">
+                  {hasMoreData && <div ref={scrollTrigger}></div>}
+                </div>
               </>
             )}
           </div>
