@@ -1,29 +1,39 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
-const Dropdown = ({ name, subTopicID = [], description }) => {
+const Dropdown = ({ name, subTopicID = [], description, hash }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const filteredsubTopicID = subTopicID.sort((a, b) => a.order - b.order);
+  const dropdownRef = useRef(null);
+  const filteredSubTopicID = subTopicID.sort((a, b) => a.order - b.order);
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    if (hash && hash === name.replace(/\s+/g, "-").toLowerCase()) {
+      setIsOpen(true);
+      dropdownRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [hash, name]);
+
   return (
     <>
       <button
-        id="myDropdownButton" // Added ID for potential specificity
-        className={`border-b border-[#DCDCE7] w-full  py-3 flex flex-col  justify-between p-4 transition duration-200 ease-in-out hover:text-[#1F3DD9] ${
+        ref={dropdownRef}
+        id="myDropdownButton"
+        className={`border-b border-[#DCDCE7] w-full py-3 flex flex-col justify-between p-4 transition duration-200 ease-in-out hover:text-[#1F3DD9] ${
           isOpen ? "" : "text-black"
         }`}
-        onClick={(e) => toggleDropdown()}
+        onClick={toggleDropdown}
       >
         <div className={`text-xl font-bold ${isOpen ? "text-[#1F3DD9]" : ""}`}>
           {name}
         </div>
         {description && (
           <div
-            className={`text-sm  text-gray-500 ${
+            className={`text-sm text-gray-500 ${
               isOpen ? "text-[#1F3DD9]" : ""
             }`}
           >
@@ -31,14 +41,13 @@ const Dropdown = ({ name, subTopicID = [], description }) => {
           </div>
         )}
       </button>
-      {/* Dropdown styling */}{" "}
       {isOpen && (
         <div
           className={`w-screen max-w-full flex flex-col items-center justify-center gap-6 mbSmall:px-5 mbMini:px-0`}
         >
-          {filteredsubTopicID &&
-            filteredsubTopicID.length > 0 &&
-            filteredsubTopicID.map((SubTopic) => (
+          {filteredSubTopicID &&
+            filteredSubTopicID.length > 0 &&
+            filteredSubTopicID.map((SubTopic) => (
               <Link
                 href={"/courses/" + SubTopic.id}
                 className="border-b border-[#081245] w-full h-16 flex items-center justify-between"
@@ -56,7 +65,23 @@ const Dropdown = ({ name, subTopicID = [], description }) => {
     </>
   );
 };
+
 export const ClientOnlyDropdown = ({ DropDownData }) => {
+  const [hash, setHash] = useState("");
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setHash(window.location.hash.slice(1));
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    handleHashChange(); // Initial check
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
+
   return (
     <>
       {DropDownData.map((data) => (
@@ -65,6 +90,7 @@ export const ClientOnlyDropdown = ({ DropDownData }) => {
           name={data.name}
           description={data.description}
           subTopicID={data.SubTopicID}
+          hash={hash}
         />
       ))}
     </>
