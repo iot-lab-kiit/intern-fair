@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa6";
 import Image from "next/image";
-import { createUserr, googleCreateUserr } from "@/actions/user";
+import { createUserr, googleCreateUserr, googleGetUserr } from "@/actions/user";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -98,7 +98,7 @@ export default function Signup() {
       formData.name=user.displayName
       formData.email=user.email
       formData.password=btoa(user.uid)
-      toast.promise(googleCreateUserr(formData), {
+      toast.promise(googleGetUserr(formData,user.displayName), {
         loading: "Creating Account...",
         success: (res) => {
           setTimeout(() => {
