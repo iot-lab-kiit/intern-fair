@@ -24,8 +24,7 @@ const Post = ({
   share: initialShare,
   handlePostClick,
 }) => {
-  console.log("User", user_created);
-  console.log(id, description);
+
   const [expanded, setexpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(initialLikes || 0);
@@ -144,7 +143,7 @@ const Post = ({
             )}
           </p>
         </div>
-        {/* {console.log(tag)} */}
+   
         <div
           className="flex items-center justify-center flex-wrap gap-1 mbMedSmall:gap-2 mbSmall:gap-3 "
           suppressHydrationWarning

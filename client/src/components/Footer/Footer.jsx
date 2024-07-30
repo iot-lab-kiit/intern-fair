@@ -43,7 +43,7 @@ const Footer = () => {
         else window.location.href = "/#faq";
         break;
       default:
-        console.log("Invalid choice");
+        break;
     }
     const elementPosition = scrollTo.getBoundingClientRect().top;
     const currentScrollPosition =

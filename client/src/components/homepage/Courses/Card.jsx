@@ -33,7 +33,7 @@ const Card = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getTopics();
-      console.log(response);
+  
       if (response && response.success) {
         setTopics(response.result);
       } else {
@@ -83,7 +83,7 @@ const Card = () => {
                 Duration
               </h2>
               <p className="text-[#A4A4A4] mbMini:text-[0.75rem] mbXSmall:text-[0.75rem] mbXSmall:leading-4 mbSmall:text-[0.85rem] mbSmall:leading-4 mbMedium:text-sm laptop:text-base tbPortrait:text-lg">
-                14 - 15 hours
+               {topic.duration}
               </p>
             </div>
             <div className="self-end">

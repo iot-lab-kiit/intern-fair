@@ -16,7 +16,10 @@ const Page = () => {
     const fetchTopics = async () => {
       try {
         const topicsData = await getTopics();
-        
+        const filteredTopics = topicsData.result.sort(
+          (a, b) => a.order - b.order
+        );
+     
         setTopics(topicsData.result);
       } catch (error) {
         console.error("Error fetching topics:", error);

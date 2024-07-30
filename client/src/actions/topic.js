@@ -12,7 +12,9 @@ export const getTopics = async () => {
         fields: [
           "id",
           "name",
+          "order",
           "description",
+          "duration",
           { SubTopicID: ["id", "name", "order"] },
         ],
       })
