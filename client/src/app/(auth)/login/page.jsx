@@ -49,7 +49,12 @@ export default function Login() {
           ("; path=/");
           return <b>{res.message}</b>;
         },
-        error: (err) => <b>{err.message}</b>,
+        error: (err) =>  {
+          if (err.message === "Invalid user credentials.") {
+            return <b>SignUp first</b>;
+          }
+          return <b>{err.message}</b>;
+        },
       });
     }).catch((error) => {
       // Handle Errors here.

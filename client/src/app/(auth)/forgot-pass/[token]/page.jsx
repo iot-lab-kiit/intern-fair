@@ -7,9 +7,10 @@ import { resetPasswordRequest } from "@/actions/user";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import { useParams } from "next/navigation";
 export default function page() {
   const router = useRouter();
+  const { token } = useParams();
   const [formData, setFormData] = useState({ email: "" });
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -55,7 +56,7 @@ export default function page() {
   return (
     <>
       <div className="content h-screen flex justify-center items-center w-screen max-w-full mx-auto p-[1.75rem] sm:p-[0rem] ">
-        <div className="flex flex-col justify-center  mx-auto gap-4 place-self-center lg:place-self-start pb-[14rem] lg:pt-24 pr-4 max-h-screen">
+        <div className="flex flex-col justify-center items-center   m-auto gap-4 place-self-center lg:place-self-start  lg:pt-24 pr-4 max-h-screen">
           <div
             className="back-button text-base absolute top-2  items-center justify-center h-10 cursor-pointer left-5 flex "
             onClick={handleBackButtonClick}
@@ -70,7 +71,7 @@ export default function page() {
             </div>
           </div>
 
-          <div className="form-container  flex flex-col items-center justify-center gap-[1rem] tbLandscape:gap-6 h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
+          <div className="form-container  flex flex-col items-center  justify-center gap-[1rem] tbLandscape:gap-6 h-auto w-full sm:w-full flex-grow-1 flex-shrink-0 ">
             <div className="header flex flex-col gap-3 tbLandscape:gap-4 w-full sm:w-[100%] text-start">
               <div className="font-extrabold text-2xl mbSmall:text-3xl tbLandscape:text-4xl ">
                 Forgot Password

@@ -123,7 +123,6 @@ const CommunitySection = () => {
       }
     } catch (e) {
       toast.error("Error uploading post");
-      setError("Error uploading post.");
     } finally {
       setIsLoading(false);
     }
@@ -199,7 +198,6 @@ const CommunitySection = () => {
               <Loader />
             ) : (
               <>
-                {error && <p className="my-10 text-5xl">{error}</p>}
                 {searchQuery !== "" || selectedTag
                   ? filteredPosts.map((item) => (
                       <Post
@@ -231,11 +229,11 @@ const CommunitySection = () => {
                         shareUserCollection={item.shareUserCollection}
                       />
                     ))}
+            <div className="...">
+              {hasMoreData && <div ref={scrollTrigger}></div>}
+            </div>
               </>
             )}
-            <div className="...">
-              {hasMoreData && <div ref={scrollTrigger}>Loading...</div>}
-            </div>
           </div>
 
           <div className="order-1 mbXSmall:mr-5 mbSmall:mr-10 mbMedium:mr-0 laptop:order-2 laptop:fixed laptop:right-5 md:ml-0 lg:ml-40  flex items-center justify-center gap-3 w-[90%] mbXSmall:w-[80%]  mbSmall:w-[60%] mbMedium:w-[70%] laptop:w-[28%] tbPortrait:w-[30%]">

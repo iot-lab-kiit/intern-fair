@@ -54,17 +54,14 @@ const Carousel = ({ arr, speed, direction }) => {
       slidesPerView={5}
       speed={speed}
       breakpoints={{
-        // when window width is >= 640px
         640: {
           slidesPerView: 2,
           spaceBetween: 5,
         },
-        // when window width is >= 768px
         768: {
           slidesPerView: 3,
           spaceBetween: 10,
         },
-        // when window width is >= 1024px
         1024: {
           slidesPerView: 5,
           spaceBetween: 10,
