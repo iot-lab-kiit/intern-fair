@@ -216,6 +216,9 @@ const CommunitySection = () => {
                         image={item.image}
                         user_created={item.user_created}
                         likes={item.likes}
+                        likesUserCollection={item.likesUserCollection}
+                        share={item.share}
+                        shareUserCollection={item.shareUserCollection}
                         handlePostClick={handlePostClick}
                       />
                     ))
@@ -229,6 +232,9 @@ const CommunitySection = () => {
                         image={item.image}
                         user_created={item.user_created}
                         likes={item.likes}
+                        likesUserCollection={item.likesUserCollection}
+                        share={item.share}
+                        shareUserCollection={item.shareUserCollection}
                         handlePostClick={handlePostClick}
                       />
                     ))}
