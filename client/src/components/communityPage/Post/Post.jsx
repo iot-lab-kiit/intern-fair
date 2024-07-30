@@ -7,7 +7,6 @@ import {
 } from "@/actions/post";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { parseISO, format } from "date-fns";
 import { FcLike } from "react-icons/fc";
 import { GoHeart } from "react-icons/go";
 import { jwtDecode } from "jwt-decode";
