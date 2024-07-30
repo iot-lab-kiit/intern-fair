@@ -10,10 +10,10 @@ const Sidebar = ({ tagOptions, handleTagClick, selectedTag }) => {
             <li key={tag.value}>
               <button
                 onClick={() => handleTagClick(tag.value)}
-                className={`block hover:text-[#1f3dd9] focus:text-white w-full text-start rounded-lg px-4 py-4 text-sm font-medium ${
+                className={`block  w-full text-start rounded-lg px-4 py-4 text-sm font-medium ${
                   selectedTag === tag.value
-                    ? "bg-blue-600 text-white"
-                    : "bg-white"
+                    ? "bg-blue-600 text-white hover:text-white"
+                    : "bg-white hover:text-[#1f3dd9]"
                 } `}
               >
                 {tag.label}
