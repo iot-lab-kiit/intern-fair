@@ -38,7 +38,8 @@ const Post = ({
   const text =
     "🌍 CSS stands for Cascading Style Sheets. It is a style sheet language used to describe the presentation and formatting of HTML CSS consists of selectors, properties, and values. Selectors are patterns that target HTML elements, allowing developers to apply styles selectively. Properties are the styling attributes, such as color, font-size.";
 
-  const toggleExpanded = () => {
+  const toggleExpanded = (e) => {
+    e.stopPropagation();
     setexpanded(!expanded);
   };
   const toggleSave = () => {
@@ -102,7 +103,8 @@ const Post = ({
   const formattedTime = formatter.format(date);
   return (
     // w-[28rem] tbPortrait:w-[32rem] min-[1400px]:w-[36rem] tbLandscape:w-[40rem]
-    <div className="p-2 mbSmall:p-4 border-[1.5px] max-h-[32rem] min-[1400px]:max-h-[35rem] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0 mbMedSmall:w-[95%]">
+
+    <div className="p-2 mbSmall:p-4 border-[1.5px] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0 mbMedSmall:w-[95%]">
       <div
         className="flex flex-col items-start justify-center gap-3 mbMedSmall:gap-4 border-[#E7E8EC] border-b-2 p-4 cursor-pointer"
         onClick={() => handlePostClick(id)}
@@ -132,7 +134,7 @@ const Post = ({
           <p className=" text-[0.7rem] leading-4 mbXSmall:text-xs mbMedSmall:text-[0.85rem] mbMedSmall:leading-4 mbSmall:text-base mbSmall:leading-5 mbMedium:text-base tbPortrait:text-lg mbMedium:leading-6 tbLandscape:text-xl">
             {expanded ? <>{description}</> : <>{description.slice(0, 200)} </>}
             {!expanded && description.length > 200 && (
-              <button className="text-[#2A5885]" onClick={toggleExpanded}>
+              <button className="text-[#2A5885]" onClick={(e) => toggleExpanded(e)}>
                 Show more...
               </button>
             )}
