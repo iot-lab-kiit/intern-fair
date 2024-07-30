@@ -3,8 +3,31 @@ import Image from "next/image";
 import { getTopics } from "@/actions/topic";
 import { useRouter } from "next/navigation";
 
+const SkeletonCard = () => {
+  return (
+    <div className="m-2 border-[#DCDCE7] border-2 rounded-lg p-4 laptop:p-6 flex flex-col items-start justify-between gap-5 flex-grow-0 flex-shrink-0 min-w-0 pl-4 basis-1/2 laptop:basis-[45%] mbMedSmall:basis-[70%] mbXSmall:basis-[85%] mbMini:basis-[95%] tbLandscape:basis-4/12 animate-pulse">
+      <div className="flex items-center justify-between w-full">
+        <div className="h-6 bg-gray-300 rounded w-3/4"></div>
+        <div className="h-6 bg-gray-300 rounded w-1/6"></div>
+      </div>
+      <div className="h-4 bg-gray-300 rounded w-full my-2"></div>
+      <div className="h-4 bg-gray-300 rounded w-full my-2"></div>
+      <div className="flex items-center justify-between w-full">
+        <div className="font-Gilroy-Medium">
+          <div className="h-4 bg-gray-300 rounded w-1/4"></div>
+          <div className="h-4 bg-gray-300 rounded w-1/2 mt-2"></div>
+        </div>
+        <div className="self-end">
+          <div className="h-8 bg-gray-300 rounded w-24"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Card = () => {
   const [topics, setTopics] = useState([]);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -15,6 +38,7 @@ const Card = () => {
       } else {
         console.error(response.message);
       }
+      setLoading(false);
     };
 
     fetchData();
@@ -24,9 +48,19 @@ const Card = () => {
     router.push(`/courses/#${name.replace(/\s+/g, "-").toLowerCase()}`);
   };
 
+  if (loading) {
+    return (
+      <>
+        {[...Array(4)].map((_, i) => (
+          <SkeletonCard key={i} />
+        ))}
+      </>
+    );
+  }
+
   return (
     <>
-      {topics && topics.map((topic, i) => (
+      {topics.map((topic, i) => (
         <div
           key={i}
           className="m-2 border-[#DCDCE7] border-2 rounded-lg p-4 laptop:p-6 flex flex-col items-start justify-between gap-5 flex-grow-0 flex-shrink-0 min-w-0 pl-4 basis-1/2 laptop:basis-[45%] mbMedSmall:basis-[70%] mbXSmall:basis-[85%] mbMini:basis-[95%] tbLandscape:basis-4/12"

@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import { Toaster } from "react-hot-toast";
 
 export const metadata = {
-  title: "InternFair",
+  title: "GuideLy",
   description: "Created by IoT Lab Web team, KIIT",
 };
 

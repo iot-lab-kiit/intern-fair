@@ -27,24 +27,7 @@ const Hero = () => {
             className="w-5 h-5"
           />
         </div>
-        <div className="flex items-center gap-3 mbMini:max-mbXSmall:mr-4">
-          <span className="text-[#081245] text-lg">Mock Test</span>
-          <img
-            src="icons/mdi_star-four-points.png"
-            alt="Icon 2"
-            className="w-5 h-5"
-          />
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-[#081245] text-lg mbMini:max-mbXSmall:hidden">
-            Interview Trends
-          </span>
-          <img
-            src="icons/mdi_star-four-points.png"
-            alt="Icon 2"
-            className="w-5 h-5 mbMini:max-mbXSmall:hidden"
-          />
-        </div>
+    
         <div className="flex items-center gap-3">
           <span className="text-[#081245] text-lg">Resources</span>
           <img

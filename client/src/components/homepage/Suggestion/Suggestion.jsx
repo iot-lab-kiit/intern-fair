@@ -71,7 +71,7 @@ const Suggestion = () => {
   };
 
   return (
-    <div className="w-screen max-w-full bg-[#081245] mbMedium:flex items-start justify-center mbXSmall:gap-1 gap-6 mbXSmall:p-0 mbSmall:p-6 mbMedium:p-12">
+    <div  id="suggestion" className="w-screen max-w-full bg-[#081245] mbMedium:flex items-start justify-center mbXSmall:gap-1 gap-6 mbXSmall:p-0 mbSmall:p-6 mbMedium:p-12">
       <div className="flex flex-col items-start mbMini:justify-center mbXSmall:justify-center mbSmall:justify-center mbMedium:justify-start mbMini:w-full mbMini:gap-3 mbXSmall:gap-2 mbMini:h-[30%] mbSmall:h-[30%] mbMedium:h-full mbSmall:gap-2 mbSmall:w-full mbMedium:gap-2 mbMedium:w-[60%] laptop:gap-4 w-1/2 laptop:w-1/2 mbXSmall:px-8 p-5">
         <button className="p-2 px-4 font-Gilroy-Medium text-white text-lg mbMini:text-[0.6rem] mbMini:px-3 mbMini:p-[0.15rem] mbXSmall:text-[0.65rem] mbXSmall:p-1 mbXSmall:px-3 mbMedSmall:p-[0.35rem] mbMedSmall:px-4 mbSmall:text-xs mbSmall:p-2 mbSmall:px-3 mbMedium:text-sm mbMedium:p-2 mbMedium:px-4 rounded-3xl font-medium bg-[#4E5680]">
           Suggestion ✍️
