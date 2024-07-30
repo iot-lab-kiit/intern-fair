@@ -1,5 +1,10 @@
 "use client";
-import { updatePost, getPostById, updateLikes,updateShare } from "@/actions/post";
+import {
+  updatePost,
+  getPostById,
+  updateLikes,
+  updateShare,
+} from "@/actions/post";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { parseISO, format } from "date-fns";
@@ -18,14 +23,15 @@ const Post = ({
   likesUserCollection = [],
   shareUserCollection = [],
   share: initialShare,
+  handlePostClick,
 }) => {
   const [expanded, setexpanded] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(initialLikes||0);
+  const [likes, setLikes] = useState(initialLikes || 0);
   const [saved, setsaved] = useState(false);
-  
+
   const [date, setDate] = useState(new Date(date_created));
-  const [shared,setShared]=useState(false);
+  const [shared, setShared] = useState(false);
   const [shareCount, setShareCount] = useState(parseInt(initialShare) || 0);
   const token = document.cookie;
   const decode = jwtDecode(token);
@@ -73,20 +79,17 @@ const Post = ({
   //   const urlParams = new URLSearchParams(window.location.search);
   //   return window.location.href;
   // }
-// const url=getQueryParam();
-const handleShare = async (id, userID) => {
-  const hasShared = shareUserCollection.some(
-    (user) => user.directus_users_id.id === userID
-  );
+  // const url=getQueryParam();
+  const handleShare = async (id, userID) => {
+    const hasShared = shareUserCollection.some(
+      (user) => user.directus_users_id.id === userID
+    );
 
-  if (!hasShared) {
-    await updateShare(JSON.stringify({ id, userID }));
-    setShareCount((prevShareCount) => prevShareCount + 1);
-  }
-};
-
-
-
+    if (!hasShared) {
+      await updateShare(JSON.stringify({ id, userID }));
+      setShareCount((prevShareCount) => prevShareCount + 1);
+    }
+  };
 
   const formattedDate = `${date.getDate()}-${
     date.getMonth() + 1
@@ -99,7 +102,10 @@ const handleShare = async (id, userID) => {
   const formattedTime = formatter.format(date);
   return (
     // w-[28rem] tbPortrait:w-[32rem] min-[1400px]:w-[36rem] tbLandscape:w-[40rem]
-    <div className="p-2 mbSmall:p-4 border-[1.5px] max-h-[32rem] min-[1400px]:max-h-[35rem] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0 mbMedSmall:w-[95%]">
+    <div
+      className="p-2 mbSmall:p-4 border-[1.5px] max-h-[32rem] min-[1400px]:max-h-[35rem] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0 mbMedSmall:w-[95%]"
+      onClick={() => handlePostClick(id)}
+    >
       <div className=" flex flex-col items-start justify-center gap-3 mbMedSmall:gap-4 border-[#E7E8EC] border-b-2 p-4">
         <div className="flex justify-start items-center gap-2 mbSmall:gap-3 mbMedium:gap-4 w-full font-Gilroy-Medium">
           <div className="">
@@ -189,7 +195,7 @@ const handleShare = async (id, userID) => {
               </RWebShare>
             </span>
             <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
-            {shareCount}
+              {shareCount}
             </p>
           </div>
         </div>

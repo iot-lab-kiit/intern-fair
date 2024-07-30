@@ -24,7 +24,7 @@ const page = ({ params }) => {
   }
 
   return (
-    <div className="max-w-screen mbMedium:w-[80%] mbXSmall:px-10 mbMedium:px-16 flex flex-col items-start justify-center gap-4 mbMedSmall:gap-6 mbMedium:gap-8 ">
+    <div className="max-w-screen mbMedium:w-[80%] mbXSmall:px-10 mbMedium:px-16 pt-12 flex flex-col items-start justify-center gap-4 mbMedSmall:gap-6 mbMedium:gap-8 ">
       {data && (
         <div className="max-w-[90vw] overflow-x-hidden mx-4 my-12">
           {" "}
