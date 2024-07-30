@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { IoArrowUpOutline } from "react-icons/io5";
 import Link from "next/link";
+
 const Footer = () => {
   const handleClick = (ch) => {
     console.log(ch);
@@ -24,12 +25,12 @@ const Footer = () => {
       case 5:
         scrollTo = document.getElementById("hero");
         break;
-        case 6:
-          scrollTo = document.getElementById("suggestion");
-          break;
-          case 7:
-            scrollTo = document.getElementById("faq");
-            break;
+      case 6:
+        scrollTo = document.getElementById("suggestion");
+        break;
+      case 7:
+        scrollTo = document.getElementById("faq");
+        break;
       default:
         console.log("Invalid choice");
     }
@@ -61,7 +62,7 @@ const Footer = () => {
         </div>
         <div className="flex carousel:flex-col gap-6 carousel:w-[15%] flex-wrap justify-center cursor-pointer">
           <div>Community</div>
-          <div onClick={() => handleClick(6)} >Suggestion Box</div>
+          <div onClick={() => handleClick(6)}>Suggestion Box</div>
           <div onClick={() => handleClick(7)}>FQA's</div>
         </div>
         <div className=" carousel:h-[50%] flex flex-col justify-between ">
@@ -96,12 +97,12 @@ const Footer = () => {
           </div>
 
           <div
-            className="text-lg cursor-pointer"
+            className="text-lg cursor-pointer flex gap-1 items-center"
             onClick={() => {
               handleClick(5);
             }}
           >
-            Go to top <ArrowUpwardIcon />
+            Go to top <IoArrowUpOutline className="w-5 h-5" />
           </div>
         </div>
       </div>

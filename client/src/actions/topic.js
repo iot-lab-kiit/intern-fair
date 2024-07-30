@@ -22,7 +22,7 @@ export const getTopics = async () => {
     return { success: true, message: "Found all topics", result };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -35,7 +35,7 @@ export const getTopicById = async (id) => {
     return { success: true, message: "Found topic by ID", result: result };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -54,7 +54,7 @@ export const getSubtopicsByTopicId = async (subtopicIds) => {
     };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -72,6 +72,6 @@ export const getsubTopicContent = async (subtopicIds) => {
     };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };

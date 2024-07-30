@@ -34,6 +34,6 @@ export const createSuggestion = async (data) => {
     };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };

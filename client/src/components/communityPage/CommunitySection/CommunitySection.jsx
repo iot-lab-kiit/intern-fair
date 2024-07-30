@@ -1,7 +1,7 @@
 "use client";
+
 import { useRef, useState, useEffect } from "react";
 import Post from "../Post/Post";
-import CommunityList from "../CommunityList/CommunityList";
 import Image from "next/image";
 import { createPost, getAllPost } from "@/actions/post";
 import postdata from "@/data/communityPage/PostData";
@@ -10,7 +10,6 @@ import Select from "react-select";
 import Fuse from "fuse.js";
 import Sidebar from "./Sidebar";
 import { memo } from "react";
-import { Menu } from "lucide-react";
 import toast from "react-hot-toast";
 import { useInView } from "react-intersection-observer";
 import Loader from "@/components/ui/Loader/Loader";
