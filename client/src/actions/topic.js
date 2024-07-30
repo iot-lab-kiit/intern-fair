@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { clientToken } from "@/db/directus";
+import { clientToken } from "@/config/directus";
 import { readItem, readItems } from "@directus/sdk";
 
 export const getTopics = async () => {

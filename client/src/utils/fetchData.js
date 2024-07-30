@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 
 const dataUtilFunc = ({ payload, func }) => {

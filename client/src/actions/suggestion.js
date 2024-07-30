@@ -1,7 +1,7 @@
 "use server";
 
 import { createItem } from "@directus/sdk";
-import { clientToken } from "@/db/directus";
+import { clientToken } from "@/config/directus";
 
 const validateData = (data) => {
   if (!data.name || !data.email || !data.suggestion)

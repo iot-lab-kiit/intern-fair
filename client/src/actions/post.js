@@ -10,7 +10,7 @@ import {
   readUser,
 } from "@directus/sdk";
 import { cookies } from "next/headers";
-import { clientToken } from "@/db/directus";
+import { clientToken } from "@/config/directus";
 
 export const createPost = async (data, formData) => {
   try {

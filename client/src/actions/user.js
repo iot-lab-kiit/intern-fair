@@ -1,6 +1,6 @@
 "use server";
 
-import { client, clientToken } from "@/db/directus";
+import { client, clientToken } from "@/config/directus";
 import { createUser, passwordRequest, passwordReset } from "@directus/sdk";
 
 export const createUserr = async (data) => {

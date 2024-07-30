@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { clientToken } from "./db/directus";
+import { clientToken } from "./config/directus";
 import { readItems } from "@directus/sdk";
 
 export async function middleware(request) {
