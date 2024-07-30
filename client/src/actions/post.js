@@ -64,7 +64,6 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
           "tag",
           "image",
           "date_created",
-          
           { user_created: ["id", "first_name", "last_name", "email"] },
           "likes",
           {
@@ -85,7 +84,7 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
     );
 
     if (!result) throw new Error([{ message: "No post found" }]);
-    console.log("result:", result);
+
     return { success: true, message: "Found All Post", result: result };
   } catch (e) {
     console.error(e);
