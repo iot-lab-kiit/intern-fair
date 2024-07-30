@@ -13,9 +13,11 @@ const SinglePostPage = ({ params }) => {
   const tagOptions = [
     { value: "Web Development", label: "Web Development" },
     { value: "App Development", label: "App Development" },
-    { value: "Database Management", label: "Database Management" },
     { value: "UI/UX Design", label: "UI/UX Design" },
     { value: "Software Engineering", label: "Software Engineering" },
+    { value: "Cybersecurity", label: "Cybersecurity" },
+    { value: "Internet of Things", label: "Internet of Things" },
+    { value: "Machine Learning", label: "Machine Learning" },
   ];
 
   useEffect(() => {
@@ -23,8 +25,7 @@ const SinglePostPage = ({ params }) => {
       setIsLoading(true);
       try {
         const response = await getPostById({ id: params.id });
-        console.log(response);
-        console.log("id", params.id);
+
         if (response.success) {
           setPostData(response.result);
         } else {

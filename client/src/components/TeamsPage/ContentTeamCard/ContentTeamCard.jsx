@@ -14,7 +14,7 @@ const ContentTeamCard = ({ person }) => {
   };
 
   return (
-    <div className="border-[#DCDCE7] self-start hover:border-[#1F3DD9] transition-all border-2 rounded-xl h-[13rem] w-[10rem] mbMedSmall:h-[13rem] mbMedSmall:w-[8rem] mbSmall:h-[14rem] mbSmall:w-[9rem] mbMedium:h-[16rem] mbMedium:w-[10rem] laptop:h-[19rem] laptop:w-[13rem] tbPortrait:h-[22rem] tbPortrait:w-[16rem] min-[1440px]:h-[28rem] min-[1440px]:w-[24rem] tbLandscape:h-[28rem] tbLandscape:w-[22rem] p-3.5 flex flex-col items-center justify-start gap-1.5 mbSmall:gap-2.5 mbMedium:gap-4">
+    <div className="border-[#DCDCE7] self-start hover:border-[#1F3DD9] transition-all border-2 rounded-xl h-[13rem] w-[10rem] mbMedSmall:h-[13rem] mbMedSmall:w-[8rem] mbSmall:h-[14rem] mbSmall:w-[9rem] mbMedium:h-[16rem] mbMedium:w-[10rem] laptop:h-[19rem] laptop:w-[13rem] tbPortrait:h-[20rem] tbPortrait:w-[13rem]  tbLandscape:h-[20rem] tbLandscape:w-[18rem] p-3.5 flex flex-col items-center justify-start gap-1.5 mbSmall:gap-2.5 mbMedium:gap-4">
       <div className="h-[85%] w-full relative">
         <Image
           src={person.img}

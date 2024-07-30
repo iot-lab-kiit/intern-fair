@@ -3,33 +3,45 @@ import React from "react";
 import Image from "next/image";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 const Footer = () => {
+  const pathname = usePathname();
+
   const handleClick = (ch) => {
-    console.log(ch);
     let scrollToPosition;
     let scrollTo;
     switch (ch) {
       case 1:
-        scrollTo = document.getElementById("about");
+        if (pathname === "/") scrollTo = document.getElementById("about");
+        else window.location.href = "/#faq";
         break;
       case 2:
-        scrollTo = document.getElementById("mission");
+        if (pathname === "/") scrollTo = document.getElementById("mission");
+        else window.location.href = "/#mission";
         break;
       case 3:
         window.location.href = "/courses";
         break;
       case 4:
-        scrollTo = document.getElementById("bts");
+        if (pathname === "/") scrollTo = document.getElementById("bts");
+        else window.location.href = "/#bts";
+        break;
         break;
       case 5:
-        scrollTo = document.getElementById("hero");
+        if (pathname === "/") scrollTo = document.getElementById("hero");
+        else window.location.href = "/#hero";
         break;
-        case 6:
-          scrollTo = document.getElementById("suggestion");
-          break;
-          case 7:
-            scrollTo = document.getElementById("faq");
-            break;
+        break;
+      case 6:
+        if (pathname === "/") scrollTo = document.getElementById("suggestion");
+        else window.location.href = "/#suggestion";
+        break;
+        break;
+      case 7:
+        if (pathname === "/") scrollTo = document.getElementById("faq");
+        else window.location.href = "/#faq";
+        break;
       default:
         console.log("Invalid choice");
     }
@@ -61,8 +73,8 @@ const Footer = () => {
         </div>
         <div className="flex carousel:flex-col gap-6 carousel:w-[15%] flex-wrap justify-center cursor-pointer">
           <div>Community</div>
-          <div onClick={() => handleClick(6)} >Suggestion Box</div>
-          <div onClick={() => handleClick(7)}>FQA's</div>
+          <div onClick={() => handleClick(6)}>Suggestion Box</div>
+          <div onClick={() => handleClick(7)}>FAQ's</div>
         </div>
         <div className=" carousel:h-[50%] flex flex-col justify-between ">
           <div>

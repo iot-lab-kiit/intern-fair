@@ -29,7 +29,7 @@ export default function Login() {
   };
 
   const googleLogin=()=>{
-    console.log("google login")
+  
     signInWithPopup(auth, provider)
     .then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
