@@ -9,11 +9,16 @@ import { useRouter } from "next/navigation";
 import Select from "react-select";
 import Fuse from "fuse.js";
 import Sidebar from "./Sidebar";
+import { memo } from "react";
 import { Menu } from "lucide-react";
 import toast from "react-hot-toast";
 import { useInView } from "react-intersection-observer";
 import Loader from "@/components/ui/Loader/Loader";
 import Link from "next/link";
+import { useCallback } from "react";
+
+const MemoizedSidebar = memo(Sidebar);
+const MemoizedPost = memo(Post);
 
 const CommunitySection = () => {
   const [postData, setPostData] = useState([]);
@@ -32,18 +37,26 @@ const CommunitySection = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    getAllPost(0, 10)
-      .then((res) => setPostData(res.result))
-      .finally(() => setIsLoading(false));
+    const fetchPosts = async () => {
+      try {
+        setIsLoading(true);
+        const res = await getAllPost(0, 10);
+        setPostData(res.result);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchPosts();
   }, []);
+  
 
   const fuse = new Fuse(postData, {
     keys: ["content", "tag"],
     threshold: 0.3, // Adjust to make the search more/less fuzzy
   });
 
-  const handleSearchQuery = (e) => {
+  const handleSearchQuery =  useCallback( (e) => {
     const query = e.target.value.toLowerCase();
     setsearchQuery(query);
 
@@ -59,7 +72,7 @@ const CommunitySection = () => {
     if (result.length === 0) {
       toast.error(`No posts found for "` + searchQuery + `"`); // Error message
     }
-  };
+  }, [postData, fuse, searchQuery]);
 
   const tagOptions = [
     { value: "Web Development", label: "Web Development" },
@@ -72,7 +85,7 @@ const CommunitySection = () => {
   // Filter state
   const [selectedTag, setSelectedTag] = useState(null);
 
-  const handleTagClick = (tag) => {
+  const handleTagClick = useCallback( (tag) => {
     if (selectedTag === tag) {
       setSelectedTag(null);
       setFilteredPosts(postData);
@@ -87,7 +100,7 @@ const CommunitySection = () => {
         setError("");
       }
     }
-  };
+  },[postData, selectedTag]);
 
   const handleSubmit = async () => {
     const file = fileInputRef.current.files[0];
@@ -162,7 +175,7 @@ const CommunitySection = () => {
 
   return (
     <div className="flex">
-      <Sidebar
+      <MemoizedSidebar
         tagOptions={tagOptions}
         handleTagClick={handleTagClick}
         selectedTag={selectedTag}
@@ -181,7 +194,7 @@ const CommunitySection = () => {
         <div className="flex flex-col laptop:flex-row items-center laptop:items-start justify-start gap-10 laptop:gap-8 max-w-full mt-10">
           <div className="order-2 laptop:order-2 flex flex-col gap-6 items-center justify-center w-[90%] mbXSmall:w-[90%] mbMedSmall:w-[90%] mbSmall:w-[85%] mbMedium:w-[85%] laptop:w-[55%] tbPortrait:w-[55%]">
             {/* Search bar */}
-            <div className="sticky top-20">
+            <div className="sticky top-20 z-[20]">
               <div className="relative ml-10 mbXSmall:ml-0">
                 <div className="absolute inset-y-0 left-0 pl-4 pt-1 flex items-center">
                   <span className=" w-4 h-4 mbXSmall:w-5 mbXSmall:h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 laptop:w-4 laptop:h-4 inline-block rounded-full relative cursor-pointer">
@@ -207,7 +220,7 @@ const CommunitySection = () => {
               <>
                 {searchQuery !== "" || selectedTag
                   ? filteredPosts.map((item) => (
-                      <Post
+                      <MemoizedPost
                         key={item.id}
                         id={item.id}
                         date_created={item.date_created}
@@ -220,7 +233,7 @@ const CommunitySection = () => {
                       />
                     ))
                   : postData.map((item) => (
-                      <Post
+                      <MemoizedPost
                         key={item.id}
                         id={item.id}
                         date_created={item.date_created}
