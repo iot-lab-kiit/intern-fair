@@ -1,7 +1,7 @@
 "use server";
 
 import { createItem } from "@directus/sdk";
-import { clientToken } from "@/db/directus";
+import { clientToken } from "@/config/directus";
 
 const validateData = (data) => {
   if (!data.name || !data.email || !data.suggestion)
@@ -34,6 +34,6 @@ export const createSuggestion = async (data) => {
     };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };

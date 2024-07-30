@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { IoArrowUpOutline } from "react-icons/io5";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -108,12 +108,12 @@ const Footer = () => {
           </div>
 
           <div
-            className="text-lg cursor-pointer"
+            className="text-lg cursor-pointer flex gap-1 items-center"
             onClick={() => {
               handleClick(5);
             }}
           >
-            Go to top <ArrowUpwardIcon />
+            Go to top <IoArrowUpOutline className="w-5 h-5" />
           </div>
         </div>
       </div>

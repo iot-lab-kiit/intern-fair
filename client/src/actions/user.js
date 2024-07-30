@@ -1,6 +1,6 @@
 "use server";
 
-import { client, clientToken } from "@/db/directus";
+import { client, clientToken } from "@/config/directus";
 import { createUser, passwordRequest, passwordReset } from "@directus/sdk";
 
 export const createUserr = async (data) => {
@@ -20,7 +20,7 @@ export const createUserr = async (data) => {
     return { success: true, message: "User created successfully", result };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -32,7 +32,7 @@ export const getUserr = async (formData) => {
     return { success: true, message: "User logged in successfully", result };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -48,7 +48,7 @@ export const resetPasswordRequest = async (formData) => {
     };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -58,7 +58,7 @@ export const resetPassword = async (formData, token) => {
     return { success: true, message: "Password reset successfully" };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -81,7 +81,7 @@ export const googleCreateUserr = async (data) => {
     return { success: true, message: "User created successfully", result };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -93,6 +93,6 @@ export const googleGetUserr = async (formData) => {
     return { success: true, message: "User logged in successfully", result };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };

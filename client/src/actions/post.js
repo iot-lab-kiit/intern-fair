@@ -10,7 +10,7 @@ import {
   readUser,
 } from "@directus/sdk";
 import { cookies } from "next/headers";
-import { clientToken } from "@/db/directus";
+import { clientToken } from "@/config/directus";
 
 export const createPost = async (data, formData) => {
   try {
@@ -49,7 +49,7 @@ export const createPost = async (data, formData) => {
     };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -64,6 +64,7 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
           "tag",
           "image",
           "date_created",
+          
           { user_created: ["id", "first_name", "last_name", "email"] },
           "likes",
           {
@@ -84,10 +85,11 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
     );
 
     if (!result) throw new Error([{ message: "No post found" }]);
+    console.log("result:", result);
     return { success: true, message: "Found All Post", result: result };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -104,7 +106,7 @@ export const getPostById = async (data) => {
     return { success: true, message: "Post with the Id", result };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -125,7 +127,7 @@ export const updatePost = async (data) => {
     return { success: true, message: "Post Updated successfully", result };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -167,7 +169,7 @@ export const updateLikes = async (data) => {
     return { success: true, message: "Post liked successfully", result };
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -212,6 +214,6 @@ export const updateShare = async (data) => {
     );
   } catch (e) {
     console.error(e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };

@@ -33,10 +33,11 @@ const Card = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getTopics();
-      if (response.success) {
+      console.log(response);
+      if (response && response.success) {
         setTopics(response.result);
       } else {
-        console.error(response.message);
+        console.error("Failed to fetch topics");
       }
       setLoading(false);
     };
