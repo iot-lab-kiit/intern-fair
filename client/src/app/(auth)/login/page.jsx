@@ -6,12 +6,15 @@ import Image from "next/image";
 import { getUserr, googleCreateUserr, googleGetUserr } from "@/actions/user";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { GoogleAuthProvider,getAuth,signInWithPopup } from "firebase/auth";
-import firebase from '../../utils/firebase.js'
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import firebase from "../../utils/firebase.js";
 const provider = new GoogleAuthProvider();
-const auth=getAuth(firebase)
+const auth = getAuth(firebase);
+
 export default function Login() {
+  const redirectParams = useSearchParams().get("redirect");
+
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isFormValid, setIsFormValid] = useState(false);
@@ -28,47 +31,47 @@ export default function Login() {
     setIsFormValid(isEmailValid && isPasswordValid);
   };
 
-  const googleLogin=()=>{
-    console.log("google login")
+  const googleLogin = () => {
+    console.log("google login");
     signInWithPopup(auth, provider)
-    .then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      const user = result.user;
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
 
-      formData.email=user.email;
-      formData.password=btoa(user.uid)
-      toast.promise(googleGetUserr(formData), {
-        loading: "Loggin in...",
-        success: (res) => {
-          setTimeout(() => {
-            router.push("/");
-          }, 2000);
-          if (res.result.access_token)
-            document.cookie =
-              "user_session" + "=" + (res.result.access_token || "");
-          ("; path=/");
-          return <b>{res.message}</b>;
-        },
-        error: (err) =>  {
-          if (err.message === "Invalid user credentials.") {
-            return <b>SignUp first</b>;
-          }
-          return <b>{err.message}</b>;
-        },
+        formData.email = user.email;
+        formData.password = btoa(user.uid);
+        toast.promise(googleGetUserr(formData), {
+          loading: "Loggin in...",
+          success: (res) => {
+            setTimeout(() => {
+              router.push("/");
+            }, 2000);
+            if (res.result.access_token)
+              document.cookie =
+                "user_session" + "=" + (res.result.access_token || "");
+            ("; path=/");
+            return <b>{res.message}</b>;
+          },
+          error: (err) => {
+            if (err.message === "Invalid user credentials.") {
+              return <b>SignUp first</b>;
+            }
+            return <b>{err.message}</b>;
+          },
+        });
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
       });
-    }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-    });  
-
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -99,9 +102,7 @@ export default function Login() {
     toast.promise(getUserr(formData), {
       loading: "Loggin in...",
       success: (res) => {
-        setTimeout(() => {
-          router.push("/");
-        }, 2000);
+        setTimeout(() => router.push(redirectParams || "/"), 1500);
         if (res.result.access_token)
           document.cookie =
             "user_session" + "=" + (res.result.access_token || "");
@@ -235,7 +236,10 @@ export default function Login() {
                   </div>
                   <div className="separator w-[100%] h-[2px] bg-[#E0E5F2] my-4"></div>
                 </div>
-                <div className="google-signup cursor-pointer flex items-center justify-center bg-[#F4F5FA] w-[98%] sm:w-[100%] h-10 rounded-lg" onClick={googleLogin}>
+                <div
+                  className="google-signup cursor-pointer flex items-center justify-center bg-[#F4F5FA] w-[98%] sm:w-[100%] h-10 rounded-lg"
+                  onClick={googleLogin}
+                >
                   <div className="mr-2">
                     <Image
                       src="/images/Group.png"
@@ -260,16 +264,20 @@ export default function Login() {
         </div>
 
         <div className="image-container w-[45%] tbLandscape:w-[50%] h-full hidden lg:block">
-  <Image
-    src="/images/signup.png"
-    alt="signup-image"
-    height={500}
-    width={500}
-    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
-    className="max-h-screen"
-  />
-</div>
-
+          <Image
+            src="/images/signup.png"
+            alt="signup-image"
+            height={500}
+            width={500}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center",
+            }}
+            className="max-h-screen"
+          />
+        </div>
       </div>
     </>
   );
