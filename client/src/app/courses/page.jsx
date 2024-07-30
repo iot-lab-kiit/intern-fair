@@ -6,7 +6,6 @@ import Navigation from "@/components/courses/Navigation/Navigation";
 import ExploreComponent from "@/components/homepage/common/ExploreComponent";
 import { ClientOnlyDropdown } from "@/components/courses/Dropdown/Dropdown";
 import Link from "next/link";
-import { checkboxGroup } from "@nextui-org/react";
 import Loader from "@/components/ui/Loader/Loader";
 
 const Page = () => {
