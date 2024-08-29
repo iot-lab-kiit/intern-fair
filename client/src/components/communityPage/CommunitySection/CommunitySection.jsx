@@ -1,7 +1,7 @@
 "use client";
+
 import { useRef, useState, useEffect } from "react";
 import Post from "../Post/Post";
-import CommunityList from "../CommunityList/CommunityList";
 import Image from "next/image";
 import { createPost, getAllPost } from "@/actions/post";
 import postdata from "@/data/communityPage/PostData";
@@ -9,11 +9,15 @@ import { useRouter } from "next/navigation";
 import Select from "react-select";
 import Fuse from "fuse.js";
 import Sidebar from "./Sidebar";
-import { Menu } from "lucide-react";
+import { memo } from "react";
 import toast from "react-hot-toast";
 import { useInView } from "react-intersection-observer";
 import Loader from "@/components/ui/Loader/Loader";
 import Link from "next/link";
+import { useCallback } from "react";
+
+const MemoizedSidebar = memo(Sidebar);
+const MemoizedPost = memo(Post);
 
 const CommunitySection = () => {
   const [postData, setPostData] = useState([]);
@@ -32,10 +36,17 @@ const CommunitySection = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    getAllPost(0, 10)
-      .then((res) => setPostData(res.result))
-      .finally(() => setIsLoading(false));
+    const fetchPosts = async () => {
+      try {
+        setIsLoading(true);
+        const res = await getAllPost(0, 10);
+        setPostData(res.result);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   const fuse = new Fuse(postData, {
@@ -43,23 +54,26 @@ const CommunitySection = () => {
     threshold: 0.3, // Adjust to make the search more/less fuzzy
   });
 
-  const handleSearchQuery = (e) => {
-    const query = e.target.value.toLowerCase();
-    setsearchQuery(query);
+  const handleSearchQuery = useCallback(
+    (e) => {
+      const query = e.target.value.toLowerCase();
+      setsearchQuery(query);
 
-    if (query.trim() === "") {
-      setFilteredPosts(postData);
-      setError("");
-      return;
-    }
+      if (query.trim() === "") {
+        setFilteredPosts(postData);
+        setError("");
+        return;
+      }
 
-    const result = fuse.search(query).map(({ item }) => item);
+      const result = fuse.search(query).map(({ item }) => item);
 
-    setFilteredPosts(result);
-    if (result.length === 0) {
-      toast.error(`No posts found for "` + searchQuery + `"`); // Error message
-    }
-  };
+      setFilteredPosts(result);
+      if (result.length === 0) {
+        toast.error(`No posts found for "` + searchQuery + `"`); // Error message
+      }
+    },
+    [postData, fuse, searchQuery]
+  );
 
   const tagOptions = [
     { value: "Web Development", label: "Web Development" },
@@ -67,27 +81,33 @@ const CommunitySection = () => {
     { value: "Database Management", label: "Database Management" },
     { value: "UI/UX Design", label: "UI/UX Design" },
     { value: "Software Engineering", label: "Software Engineering" },
+    { value: "Cybersecurity", label: "Cybersecurity" },
+    { value: "Internet of Things", label: "Internet of Things" },
+    { value: "Machine Learning", label: "Machine Learning" },
   ];
 
   // Filter state
   const [selectedTag, setSelectedTag] = useState(null);
 
-  const handleTagClick = (tag) => {
-    if (selectedTag === tag) {
-      setSelectedTag(null);
-      setFilteredPosts(postData);
-      setError("");
-    } else {
-      setSelectedTag(tag);
-      const filteredData = postData.filter((post) => post.tag.includes(tag));
-      setFilteredPosts(filteredData);
-      if (filteredData.length === 0) {
-        setError("No posts found for this tag.");
-      } else {
+  const handleTagClick = useCallback(
+    (tag) => {
+      if (selectedTag === tag) {
+        setSelectedTag(null);
+        setFilteredPosts(postData);
         setError("");
+      } else {
+        setSelectedTag(tag);
+        const filteredData = postData.filter((post) => post.tag.includes(tag));
+        setFilteredPosts(filteredData);
+        if (filteredData.length === 0) {
+          setError("No posts found for this tag.");
+        } else {
+          setError("");
+        }
       }
-    }
-  };
+    },
+    [postData, selectedTag]
+  );
 
   const handleSubmit = async () => {
     const file = fileInputRef.current.files[0];
@@ -142,8 +162,6 @@ const CommunitySection = () => {
   const loadMorePosts = async () => {
     if (hasMoreData) {
       const apiPosts = (await getAllPost(offset, POSTS_PER_PAGE)).result;
-
-      console.log(offset, POSTS_PER_PAGE);
       if (apiPosts.length === 0) setHasMoreData(false);
 
       setPostData((prevPosts) => [...prevPosts, ...apiPosts]);
@@ -155,9 +173,14 @@ const CommunitySection = () => {
       loadMorePosts();
     }
   }, [isInView, hasMoreData]);
+
+  const handlePostClick = (id) => {
+    router.push(`/community/${id}`);
+  };
+
   return (
     <div className="flex">
-      <Sidebar
+      <MemoizedSidebar
         tagOptions={tagOptions}
         handleTagClick={handleTagClick}
         selectedTag={selectedTag}
@@ -176,31 +199,34 @@ const CommunitySection = () => {
         <div className="flex flex-col laptop:flex-row items-center laptop:items-start justify-start gap-10 laptop:gap-8 max-w-full mt-10">
           <div className="order-2 laptop:order-2 flex flex-col gap-6 items-center justify-center w-[90%] mbXSmall:w-[90%] mbMedSmall:w-[90%] mbSmall:w-[85%] mbMedium:w-[85%] laptop:w-[55%] tbPortrait:w-[55%]">
             {/* Search bar */}
-            <div className="relative ml-10 mbXSmall:ml-0">
-              <div className="absolute inset-y-0 left-0 pl-4 pt-1 flex items-center">
-                <span className=" w-4 h-4 mbXSmall:w-5 mbXSmall:h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 laptop:w-4 laptop:h-4 inline-block rounded-full relative cursor-pointer">
-                  <Image
-                    src="/images/search.png"
-                    fill
-                    alt="about"
-                    className="object-contain"
-                  />
-                </span>
+            <div className="sticky top-20 z-[20] w-full">
+              <div className="relative w-full ml-10 mbXSmall:ml-0">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pt-1">
+                  <span className="relative inline-block w-4 h-4 cursor-pointer rounded-full mbXSmall:w-5 mbXSmall:h-5 mbMedSmall:w-5 mbMedSmall:h-5 mbSmall:w-5 mbSmall:h-5 laptop:w-4 laptop:h-4">
+                    <Image
+                      src="/images/search.png"
+                      fill
+                      alt="search"
+                      className="object-contain"
+                    />
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search"
+                  onChange={handleSearchQuery}
+                  className="pl-10 w-full border-[1.5px] border-[#DCDCE7] rounded-full py-2.5 outline-none"
+                />
               </div>
-              <input
-                type="text"
-                placeholder="Search"
-                onChange={handleSearchQuery}
-                className="pl-10  min-w-[15rem] w-[60vw] mbMedium:w-[45vw] laptop:w-[30vw] tbLandscape:w-[30rem] border-[1.5px] border-[#DCDCE7] rounded-full py-2.5"
-              />
             </div>
+
             {isLoading ? (
               <Loader />
             ) : (
               <>
                 {searchQuery !== "" || selectedTag
                   ? filteredPosts.map((item) => (
-                      <Post
+                      <MemoizedPost
                         key={item.id}
                         id={item.id}
                         date_created={item.date_created}
@@ -209,13 +235,11 @@ const CommunitySection = () => {
                         image={item.image}
                         user_created={item.user_created}
                         likes={item.likes}
-                        likesUserCollection={item.likesUserCollection}
-                        share={item.share}
-                        shareUserCollection={item.shareUserCollection}
+                        handlePostClick={handlePostClick}
                       />
                     ))
                   : postData.map((item) => (
-                      <Post
+                      <MemoizedPost
                         key={item.id}
                         id={item.id}
                         date_created={item.date_created}
@@ -224,14 +248,12 @@ const CommunitySection = () => {
                         image={item.image}
                         user_created={item.user_created}
                         likes={item.likes}
-                        likesUserCollection={item.likesUserCollection}
-                        share={item.share}
-                        shareUserCollection={item.shareUserCollection}
+                        handlePostClick={handlePostClick}
                       />
                     ))}
-            <div className="...">
-              {hasMoreData && <div ref={scrollTrigger}></div>}
-            </div>
+                <div className="...">
+                  {hasMoreData && <div ref={scrollTrigger}></div>}
+                </div>
               </>
             )}
           </div>
@@ -255,7 +277,7 @@ const CommunitySection = () => {
                   onChange={(e) =>
                     setData({ ...data, description: e.target.value })
                   }
-                  className="border-[1.5px] border-[#DCDCE7] rounded-xl p-2 w-full h-[15rem] resize-none appearance-none"
+                  className="border-[1.5px] border-[#DCDCE7] outline-none rounded-xl p-2 w-full h-[15rem] resize-none appearance-none"
                 ></textarea>
                 <Select
                   isMulti

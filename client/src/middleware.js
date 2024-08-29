@@ -1,15 +1,22 @@
+import { jwtDecode } from "jwt-decode";
 import { NextResponse } from "next/server";
-import { clientToken } from "./db/directus";
-import { readItems } from "@directus/sdk";
 
 export async function middleware(request) {
-  const session = request.cookies.get("user_session");
-  if (!session) {
-    try {
-      await clientToken(session).request(readItems("Auth"));
-    } finally {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
+  const session = request.cookies.get("user_session")?.value;
+  const redirectUrl = new URL("/login", request.url);
+  redirectUrl.searchParams.set("redirect", request.url);
+
+  if (!session) return NextResponse.redirect(redirectUrl);
+
+  try {
+    const payload = jwtDecode(session);
+    const currentTime = Math.floor(Date.now() / 1000);
+
+    if (payload.exp < currentTime) return NextResponse.redirect(redirectUrl);
+    return NextResponse.next();
+  } catch (error) {
+    console.error(error);
+    return NextResponse.redirect(redirectUrl);
   }
 }
 

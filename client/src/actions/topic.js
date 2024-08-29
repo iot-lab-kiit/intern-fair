@@ -1,77 +1,70 @@
 "use server";
-import { clientToken } from "@/db/directus";
-import { readItem, readItems } from "@directus/sdk";
-import content from "@/data/courses/content";
 
-// Get all topics
+import { cookies } from "next/headers";
+import { clientToken } from "@/config/directus";
+import { readItem, readItems } from "@directus/sdk";
+
 export const getTopics = async () => {
   try {
-    const result = await clientToken(process.env.TOKEN).request(
+    const user_token = cookies().get("user_session").value;
+    const result = await clientToken(user_token).request(
       readItems("Topic", {
-        fields: ["id", "name","description", {SubTopicID: ["id", "name","order"] }],
+        fields: [
+          "id",
+          "name",
+          "order",
+          "description",
+          "duration",
+          { SubTopicID: ["id", "name", "order"] },
+        ],
       })
     );
 
     if (!result) throw new Error("No topics found");
-    console.log("results",result)
     return { success: true, message: "Found all topics", result };
   } catch (e) {
-    console.log(e);
-    // throw new Error(e.errors[0].message || e.message);
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
-// Get a topic by ID
 export const getTopicById = async (id) => {
   try {
-    const result = await clientToken(process.env.TOKEN).request(
-      readItem("Topic", id)
-    );
+    const user_token = cookies().get("user_session").value;
+    const result = await clientToken(user_token).request(readItem("Topic", id));
     if (!result) throw new Error("Topic not found");
 
     return { success: true, message: "Found topic by ID", result: result };
   } catch (e) {
-    console.log(e);
-    throw new Error(e.errors[0].message || e.message);
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
-// Get subtopics by their IDs
 export const getSubtopicsByTopicId = async (subtopicIds) => {
   try {
-    const subTopicData = await clientToken(process.env.TOKEN).request(
-      readItem("SubTopic",  {
-        fields: ["id", "name"],
-      })
+    const user_token = cookies().get("user_session").value;
+    const subTopicData = await clientToken(user_token).request(
+      readItem("SubTopic", { fields: ["id", "name"] })
     );
-    console.log("subtopicData",subTopicData);
+
     if (!subTopicData) throw new Error("No Subtopics found");
     return {
       success: true,
       message: "Found subtopics by IDs",
       result: subTopicData,
     };
-  } catch (error) {
-    console.log(error);
-    // throw new Error(e.errors[0].message || e.message);
+  } catch (e) {
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
-export const getDummySubSubtopics = async (subtopicIds) => {
-  return {
-    success: true,
-    message: "Found subtopics by IDs",
-    result: content,
-  };
-};
-
-// // Get subtopics by their IDs
 export const getsubTopicContent = async (subtopicIds) => {
   try {
-    const subSubTopicData = await clientToken(process.env.TOKEN).request(
-      readItem("SubTopic", subtopicIds,{
-        fields: ["content"],
-      })
+    const user_token = cookies().get("user_session").value;
+    const subSubTopicData = await clientToken(user_token).request(
+      readItem("SubTopic", subtopicIds, { fields: ["content"] })
     );
     if (!subSubTopicData) throw new Error("No Subtopics found");
     return {
@@ -79,8 +72,8 @@ export const getsubTopicContent = async (subtopicIds) => {
       message: "Found content",
       result: subSubTopicData,
     };
-  } catch (error) {
-    console.log(error);
-    // throw new Error(e.errors[0].message || e.message);
+  } catch (e) {
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };

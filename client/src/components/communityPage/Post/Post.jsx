@@ -1,8 +1,12 @@
 "use client";
-import { updatePost, getPostById, updateLikes,updateShare } from "@/actions/post";
+import {
+  updatePost,
+  getPostById,
+  updateLikes,
+  updateShare,
+} from "@/actions/post";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { parseISO, format } from "date-fns";
 import { FcLike } from "react-icons/fc";
 import { GoHeart } from "react-icons/go";
 import { jwtDecode } from "jwt-decode";
@@ -18,21 +22,24 @@ const Post = ({
   likesUserCollection = [],
   shareUserCollection = [],
   share: initialShare,
+  handlePostClick,
 }) => {
+
   const [expanded, setexpanded] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(initialLikes||0);
+  const [likes, setLikes] = useState(initialLikes || 0);
   const [saved, setsaved] = useState(false);
-  
+
   const [date, setDate] = useState(new Date(date_created));
-  const [shared,setShared]=useState(false);
+  const [shared, setShared] = useState(false);
   const [shareCount, setShareCount] = useState(parseInt(initialShare) || 0);
   const token = document.cookie;
   const decode = jwtDecode(token);
   const text =
     "🌍 CSS stands for Cascading Style Sheets. It is a style sheet language used to describe the presentation and formatting of HTML CSS consists of selectors, properties, and values. Selectors are patterns that target HTML elements, allowing developers to apply styles selectively. Properties are the styling attributes, such as color, font-size.";
 
-  const toggleExpanded = () => {
+  const toggleExpanded = (e) => {
+    e.stopPropagation();
     setexpanded(!expanded);
   };
   const toggleSave = () => {
@@ -73,20 +80,17 @@ const Post = ({
   //   const urlParams = new URLSearchParams(window.location.search);
   //   return window.location.href;
   // }
-// const url=getQueryParam();
-const handleShare = async (id, userID) => {
-  const hasShared = shareUserCollection.some(
-    (user) => user.directus_users_id.id === userID
-  );
+  // const url=getQueryParam();
+  const handleShare = async (id, userID) => {
+    const hasShared = shareUserCollection.some(
+      (user) => user.directus_users_id.id === userID
+    );
 
-  if (!hasShared) {
-    await updateShare(JSON.stringify({ id, userID }));
-    setShareCount((prevShareCount) => prevShareCount + 1);
-  }
-};
-
-
-
+    if (!hasShared) {
+      await updateShare(JSON.stringify({ id, userID }));
+      setShareCount((prevShareCount) => prevShareCount + 1);
+    }
+  };
 
   const formattedDate = `${date.getDate()}-${
     date.getMonth() + 1
@@ -99,8 +103,12 @@ const handleShare = async (id, userID) => {
   const formattedTime = formatter.format(date);
   return (
     // w-[28rem] tbPortrait:w-[32rem] min-[1400px]:w-[36rem] tbLandscape:w-[40rem]
-    <div className="p-2 mbSmall:p-4 border-[1.5px] max-h-[32rem] min-[1400px]:max-h-[35rem] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0 mbMedSmall:w-[95%]">
-      <div className=" flex flex-col items-start justify-center gap-3 mbMedSmall:gap-4 border-[#E7E8EC] border-b-2 p-4">
+
+    <div className="p-2 mbSmall:p-4 border-[1.5px] border-[#DCDCE7] min-w-[300px] rounded-lg ml-10 mbXSmall:ml-0 mbMedSmall:w-[95%]">
+      <div
+        className="flex flex-col items-start justify-center gap-3 mbMedSmall:gap-4 border-[#E7E8EC] border-b-2 p-4 cursor-pointer"
+        onClick={() => handlePostClick(id)}
+      >
         <div className="flex justify-start items-center gap-2 mbSmall:gap-3 mbMedium:gap-4 w-full font-Gilroy-Medium">
           <div className="">
             <span className="w-10 h-10 inline-block rounded-full relative cursor-pointer">
@@ -126,13 +134,16 @@ const handleShare = async (id, userID) => {
           <p className=" text-[0.7rem] leading-4 mbXSmall:text-xs mbMedSmall:text-[0.85rem] mbMedSmall:leading-4 mbSmall:text-base mbSmall:leading-5 mbMedium:text-base tbPortrait:text-lg mbMedium:leading-6 tbLandscape:text-xl">
             {expanded ? <>{description}</> : <>{description.slice(0, 200)} </>}
             {!expanded && description.length > 200 && (
-              <button className="text-[#2A5885]" onClick={toggleExpanded}>
+              <button
+                className="text-[#2A5885]"
+                onClick={(e) => toggleExpanded(e)}
+              >
                 Show more...
               </button>
             )}
           </p>
         </div>
-        {/* {console.log(tag)} */}
+   
         <div
           className="flex items-center justify-center flex-wrap gap-1 mbMedSmall:gap-2 mbSmall:gap-3 "
           suppressHydrationWarning
@@ -189,7 +200,7 @@ const handleShare = async (id, userID) => {
               </RWebShare>
             </span>
             <p className="text-[#191717] text-sm mbSmall:text-base mbMedium:text-lg">
-            {shareCount}
+              {shareCount}
             </p>
           </div>
         </div>
