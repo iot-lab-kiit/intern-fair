@@ -26,7 +26,7 @@ const Mission = () => {
           </div>
         </div>
         <div
-          className="content  font-sans text-base mbXSmall:text-lg sm:text-xl md:text-xl laptop:text-2xl tbPortrait:text-3xl tbLandscape:text-4xl"
+          className="content  font-sans text-base mbXSmall:text-lg sm:text-xl md:text-xl laptop:text-2xl  "
           style={{ marginTop: "-2rem", marginBottom: "-1rem" }}
         >
           <span className="font-medium leading-normal">

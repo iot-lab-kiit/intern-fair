@@ -1,34 +1,17 @@
 "use server";
-import { clientToken } from "@/db/directus";
+
 import {
   createItem,
   updateItem,
-  updateItems,
-  deleteItem,
   readItem,
   readItems,
   uploadFiles,
   updateFile,
   readUser,
 } from "@directus/sdk";
-
 import { cookies } from "next/headers";
+import { clientToken } from "@/config/directus";
 
-const validateData = (data) => {
-  if (!data.content || !data.tag)
-    throw new Error([{ message: "Missing Required Fields: Content, Tags" }]);
-
-  if (typeof data.content !== "string")
-    throw new Error([{ message: "Content must be a string" }]);
-
-  if (
-    !Array.isArray(data.tag) ||
-    !data.tag.every((tag) => typeof tag == "string")
-  )
-    throw new Error([{ message: "Tags must be an array of String" }]);
-};
-
-// Create POST
 export const createPost = async (data, formData) => {
   try {
     const user_token = cookies().get("user_session").value;
@@ -38,13 +21,11 @@ export const createPost = async (data, formData) => {
         uploadFiles(formData)
       );
 
-      if (!fileUploadResponse.id) {
-        throw new Error("File upload failed");
-      }
+      if (!fileUploadResponse.id) throw new Error("File upload failed");
 
       const updateResponse = await clientToken(user_token).request(
         updateFile(fileUploadResponse.id, {
-          location: "46e88712-846e-4e1d-af06-0a907aa5e04a",
+          location: "e8ac07d7-1503-41f6-bd0e-6528c9301ac7",
         })
       );
 
@@ -67,16 +48,15 @@ export const createPost = async (data, formData) => {
       result: postResponse,
     };
   } catch (e) {
-    console.error("Error in createPost:", e);
-    throw new Error(e.errors?.[0]?.message || e.message);
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
-// Get All POST
 export const getAllPost = async (offset, POSTS_PER_PAGE) => {
   try {
     const user_token = cookies().get("user_session").value;
-    const result = await clientToken(process.env.TOKEN).request(
+    const result = await clientToken(user_token).request(
       readItems("Post", {
         fields: [
           "id",
@@ -84,9 +64,7 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
           "tag",
           "image",
           "date_created",
-          {
-            user_created: ["id", "first_name", "last_name", "email"],
-          },
+          { user_created: ["id", "first_name", "last_name", "email"] },
           "likes",
           {
             likesUserCollection: [
@@ -101,24 +79,24 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
           },
         ],
         offset: parseInt(offset),
-        limit: parseInt(POSTS_PER_PAGE), // Limit for pagination
+        limit: parseInt(POSTS_PER_PAGE),
       })
     );
 
     if (!result) throw new Error([{ message: "No post found" }]);
+
     return { success: true, message: "Found All Post", result: result };
-  } catch (error) {
-    console.log(error);
-    // throw new Error(e.errors[0].message || e.message);
+  } catch (e) {
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
-// Get POST By Id
 export const getPostById = async (data) => {
   try {
     const user_token = cookies().get("user_session").value;
-    console.log("data:", data);
-    const result = await clientToken(process.env.TOKEN).request(
+    "data:", data;
+    const result = await clientToken(user_token).request(
       readItem("Post", data.id, {
         likesUserCollection: data.likedBy,
       })
@@ -126,17 +104,16 @@ export const getPostById = async (data) => {
     if (!result) throw new Error([{ message: "No post found with that id" }]);
     return { success: true, message: "Post with the Id", result };
   } catch (e) {
-    throw new Error(e.errors[0].message || e.message);
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
-// Update POst
 export const updatePost = async (data) => {
   try {
     const user_token = cookies().get("user_session").value;
     data = JSON.parse(data);
-    console.log(data);
-    const result = await clientToken(process.env.TOKEN).request(
+    const result = await clientToken(user_token).request(
       updateItem("Post", data.id, {
         content: data.content,
         tag: data.tag,
@@ -148,8 +125,8 @@ export const updatePost = async (data) => {
     if (!result) throw new Error([{ message: "Post Not updated" }]);
     return { success: true, message: "Post Updated successfully", result };
   } catch (e) {
-    console.log(e);
-    // throw new Error(e.errors[0].message || e.message);
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -157,9 +134,8 @@ export const updateLikes = async (data) => {
   try {
     const user_token = cookies().get("user_session").value;
     data = JSON.parse(data);
-    console.log(data);
 
-    const post = await clientToken(process.env.TOKEN).request(
+    const post = await clientToken(user_token).request(
       readItem("Post", data.id, {
         fields: [
           {
@@ -171,19 +147,14 @@ export const updateLikes = async (data) => {
       })
     );
 
-    console.log(post);
-
     let likedBy = post.likesUserCollection.map(
       (like) => like.directus_users_id.id
     );
 
-    if (!likedBy.includes(data.userID)) {
-      likedBy.push(data.userID);
-    } else {
-      likedBy = likedBy.filter((user) => user !== data.userID);
-    }
+    if (!likedBy.includes(data.userID)) likedBy.push(data.userID);
+    else likedBy = likedBy.filter((user) => user !== data.userID);
 
-    const result = await clientToken(process.env.TOKEN).request(
+    const result = await clientToken(user_token).request(
       updateItem("Post", data.id, {
         likesUserCollection: likedBy.map((userId) => ({
           directus_users_id: { id: userId },
@@ -193,25 +164,25 @@ export const updateLikes = async (data) => {
       })
     );
 
-    console.log(result);
     if (!result) throw new Error([{ message: "liked" }]);
     return { success: true, message: "Post liked successfully", result };
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
 export const updateShare = async (data) => {
   try {
+    const user_token = cookies().get("user_session").value;
     data = JSON.parse(data);
-    // console.log("data: ", data);
-    const user = await clientToken(process.env.TOKEN).request(
+
+    const user = await clientToken(user_token).request(
       readUser(data.userID, {
         fields: ["id", "first_name", "last_name", "email"],
       })
     );
-    console.log("user", user);
-    const post = await clientToken(process.env.TOKEN).request(
+    const post = await clientToken(user_token).request(
       readItem("Post", data.id, {
         fields: [
           {
@@ -231,7 +202,7 @@ export const updateShare = async (data) => {
       existingShareUsers.push({ id: data.userID });
     }
 
-    const result = await clientToken(process.env.TOKEN).request(
+    const result = await clientToken(user_token).request(
       updateItem("Post", data.id, {
         share: existingShareUsers.length,
         shareUserCollection: existingShareUsers.map((user) => ({
@@ -240,24 +211,8 @@ export const updateShare = async (data) => {
         })),
       })
     );
-    console.log("result", result);
   } catch (e) {
-    console.log(e);
-    // console.error(e.errors[0].message);
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
-
-// Delete POST
-// export const deletePost = async (data) => {
-//   try {
-//     if (!data.id) throw new Error([{ message: "Please provide the id" }]);
-
-//     const result = await clientToken(user_token).request(
-//       deleteItem("Post", data.id)
-//     );
-//     if (!result) throw new Error([{ message: "Post Not Deleted" }]);
-//     return { success: true, message: "Post Deleted successfully", result };
-//   } catch (e) {
-//     throw new Error(e.errors[0].message || e.message);
-//   }
-// };

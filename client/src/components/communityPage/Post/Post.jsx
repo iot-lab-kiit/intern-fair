@@ -7,7 +7,6 @@ import {
 } from "@/actions/post";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { parseISO, format } from "date-fns";
 import { FcLike } from "react-icons/fc";
 import { GoHeart } from "react-icons/go";
 import { jwtDecode } from "jwt-decode";
@@ -25,6 +24,7 @@ const Post = ({
   share: initialShare,
   handlePostClick,
 }) => {
+
   const [expanded, setexpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(initialLikes || 0);
@@ -134,13 +134,16 @@ const Post = ({
           <p className=" text-[0.7rem] leading-4 mbXSmall:text-xs mbMedSmall:text-[0.85rem] mbMedSmall:leading-4 mbSmall:text-base mbSmall:leading-5 mbMedium:text-base tbPortrait:text-lg mbMedium:leading-6 tbLandscape:text-xl">
             {expanded ? <>{description}</> : <>{description.slice(0, 200)} </>}
             {!expanded && description.length > 200 && (
-              <button className="text-[#2A5885]" onClick={(e) => toggleExpanded(e)}>
+              <button
+                className="text-[#2A5885]"
+                onClick={(e) => toggleExpanded(e)}
+              >
                 Show more...
               </button>
             )}
           </p>
         </div>
-        {/* {console.log(tag)} */}
+   
         <div
           className="flex items-center justify-center flex-wrap gap-1 mbMedSmall:gap-2 mbSmall:gap-3 "
           suppressHydrationWarning

@@ -61,8 +61,7 @@ const Suggestion = () => {
       error: (err) => <b>{err.message}</b>,
     });
     // Handle form submission logic here
-    console.log(formDetails);
-    // Optionally, reset form after submission
+     // Optionally, reset form after submission
     setFormDetails({
       name: "",
       email: "",
