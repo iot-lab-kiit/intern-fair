@@ -12,7 +12,10 @@ const nextConfig = {
       },
     ],
   },
-  output: "standalone"
+  output: "standalone",
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 export default nextConfig;
