@@ -1,0 +1,5 @@
+services:
+  intern-fair:
+    image: iot_lab/intern-fair
+    ports:
+      - "3000:3000"
