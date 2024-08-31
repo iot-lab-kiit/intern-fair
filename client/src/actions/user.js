@@ -1,11 +1,10 @@
 "use server";
-import { cookies } from "next/headers";
-import { client, clientToken } from "@/db/directus";
+
+import { client, clientToken } from "@/config/directus";
 import { createUser, passwordRequest, passwordReset } from "@directus/sdk";
 
 export const createUserr = async (data) => {
   try {
-    const user_token = cookies().get("user_token").value;
     const [fName, lName] = data.name.split(" ");
     const result = await clientToken(process.env.TOKEN).request(
       createUser({
@@ -20,7 +19,8 @@ export const createUserr = async (data) => {
     if (!result) throw new Error("User not created");
     return { success: true, message: "User created successfully", result };
   } catch (e) {
-    throw new Error(e.errors[0].message || e.message);
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
@@ -31,47 +31,38 @@ export const getUserr = async (formData) => {
     });
     return { success: true, message: "User logged in successfully", result };
   } catch (e) {
-    throw new Error(e.errors[0].message || e.message);
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
-// request password reset
 export const resetPasswordRequest = async (formData) => {
   try {
-    const cookieStore = cookies();
-    const user_email = cookieStore.get("email");
-    const user_password = cookieStore.get("password");
-    await client.login(process.env.USER, process.env.PASS);
-    // Use token
-   
-    await client.request(
-      passwordRequest(
-        JSON.parse(formData).email
-        
-      )
+    await clientToken(process.env.TOKEN).request(
+      passwordRequest(JSON.parse(formData).email)
     );
+
     return {
       success: true,
       message: "Reset password mail sent. If user exists.",
     };
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to send reset link");
+  } catch (e) {
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
 
-// password reset
 export const resetPassword = async (formData, token) => {
   try {
-    const result = await client.request(
-      passwordReset(token, formData.cnfpassword)
-    );
+    await client.request(passwordReset(token, formData.cnfpassword));
     return { success: true, message: "Password reset successfully" };
-  } catch (error) {
-    console.error(error);
-    throw new Error(e.errors[0].message);
+  } catch (e) {
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
+
+// Obsolete
 
 export const googleCreateUserr = async (data) => {
   try {
@@ -89,18 +80,19 @@ export const googleCreateUserr = async (data) => {
     if (!result) throw new Error("User not created");
     return { success: true, message: "User created successfully", result };
   } catch (e) {
-    console.log(e)
-    throw new Error("error Occured");
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };
+
 export const googleGetUserr = async (formData) => {
   try {
-    const result = await client.login(formData.email, formData.password,{
+    const result = await client.login(formData.email, formData.password, {
       mode: "cookie",
     });
     return { success: true, message: "User logged in successfully", result };
   } catch (e) {
-    console.log(e)
-    throw new Error(e.errors[0].message || e.message);
+    console.error(e);
+    //  throw new Error(e.errors?.[0]?.message || e.message);
   }
 };

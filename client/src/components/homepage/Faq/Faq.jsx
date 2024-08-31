@@ -9,7 +9,7 @@ const Faq = () => {
       <div className="flex flex-col items-center justify-center gap-4 w-[75%] h-full mbMini:w-full ">
         <div className="">
           <button className=" text-[#09123E] p-2 px-4 text-lg mbMini:text-sm mbMini:px-2 mbMini:p-1 mbMedium:text-base mbMedium:p-2 mbMedium:px-4 mbSmall:text-base rounded-3xl font-medium bg-[#F4F5FA]">
-            Top 05 FAQ’s 👌
+            Top 06 FAQ’s 👌
           </button>
         </div>
         <h1 className="text-[#09123E] font-Gilroy-Bold tbLandscape:text-4xl mbSmall:text-2xl mbMini:text-xl laptop:text-3xl font-black">

@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { GoPlus } from "react-icons/go";
+import { AiOutlineMinus } from "react-icons/ai";
 
 const Dropdown = ({ name, subTopicID = [], description, hash }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,24 +24,32 @@ const Dropdown = ({ name, subTopicID = [], description, hash }) => {
       <button
         ref={dropdownRef}
         id="myDropdownButton"
-        className={`border-b border-[#DCDCE7] w-full py-3 flex flex-col justify-between p-4 transition duration-200 ease-in-out hover:text-[#1F3DD9] ${
+        className={`border-b border-[#DCDCE7] w-full flex items-center justify-between py-3 p-4 transition duration-200 ease-in-out hover:text-[#1F3DD9] ${
           isOpen ? "" : "text-black"
         }`}
         onClick={toggleDropdown}
       >
-        <div className={`text-xl font-bold ${isOpen ? "text-[#1F3DD9]" : ""}`}>
-          {name}
-        </div>
-        {description && (
+        <div className="flex flex-col text-left">
           <div
-            className={`text-sm text-gray-500 ${
-              isOpen ? "text-[#1F3DD9]" : ""
-            }`}
+            className={`text-xl font-bold ${isOpen ? "text-[#1F3DD9]" : ""}`}
           >
-            {description}
+            {name}
           </div>
-        )}
+          {description && (
+            <div
+              className={`text-sm text-gray-500 ${
+                isOpen ? "text-[#1F3DD9]" : ""
+              }`}
+            >
+              {description}
+            </div>
+          )}
+        </div>
+        <div>
+          {isOpen ? <AiOutlineMinus color="black" size={25} /> : <GoPlus color="black" size={25} />}
+        </div>
       </button>
+
       {isOpen && (
         <div
           className={`w-screen max-w-full flex flex-col items-center justify-center gap-6 mbSmall:px-5 mbMini:px-0`}
