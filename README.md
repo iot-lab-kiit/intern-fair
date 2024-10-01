@@ -1,6 +1,6 @@
-# InternFair
+# GuideLy
 
-**InternFair** is a web application designed to help students learn and get guidance in various domains such as web development, app development, competitive programming (CP), machine learning (ML), information technology (IT), and more. It also harbors the legacy our IoT Lab holds.
+**GuideLy** is a web application designed to help students learn and get guidance in various domains such as web development, app development, competitive programming (CP), machine learning (ML), information technology (IT), and more. It also harbors the legacy our IoT Lab holds.
 ![image](https://github.com/user-attachments/assets/0d615fc7-7d60-4d78-bdfe-4a4ca3c44f0b)
 
 
