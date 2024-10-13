@@ -327,16 +327,16 @@
     prismjs "^1.29.0"
 
 "@directus/sdk@^15.0.3":
-  version "15.0.3"
-  resolved "https://registry.yarnpkg.com/@directus/sdk/-/sdk-15.0.3.tgz#a474c9925de4af40688e0cef046f4e3c2dab7343"
-  integrity sha512-Z6n1YaXSMSQuYH6ENG1W4lcpyPgfwRzBpEJOXeknAnJlneLeV/+iNtCB8WxjnH8D73Sv72peRLKMQtr/SZDz7Q==
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/@directus/sdk/-/sdk-15.1.0.tgz#813ad4b2e1f7b2e297212e69852afc3598382f3d"
+  integrity sha512-M2+Z1WmU8Q5KlR22K5ugmBHq10a6tcGl3QuvGKnN+jNwDnRyN5brJxt7FvgtWrY3Q1ToGLxmL37GHAH9s12dlQ==
   dependencies:
-    "@directus/system-data" "1.0.1"
+    "@directus/system-data" "1.0.2"
 
-"@directus/system-data@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@directus/system-data/-/system-data-1.0.1.tgz#41254a59c56e0eab5ec4bb907c70f457639fec2a"
-  integrity sha512-sm2gO9SUcRle5rCsmS4qby2K8OfvewnU9/Iao7brGyexLjXDrvfxBB2danNWVLw1qE+UrLX/R+caVrxQ4ZaMkw==
+"@directus/system-data@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@directus/system-data/-/system-data-1.0.2.tgz#958b3a4573601dec82bac8454ce2c7486fa42706"
+  integrity sha512-PweDAwTz4zImEGJnhoaX8apOCvcAfE0aGQrCSk+3cf1sLso0ShNlcDvUymtVfrqOXy0qT9sLa833bpJVaXF5ng==
 
 "@emnapi/runtime@^1.2.0":
   version "1.2.0"

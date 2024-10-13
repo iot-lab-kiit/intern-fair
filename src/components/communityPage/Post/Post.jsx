@@ -24,7 +24,6 @@ const Post = ({
   share: initialShare,
   handlePostClick,
 }) => {
-
   const [expanded, setexpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(initialLikes || 0);
@@ -143,7 +142,7 @@ const Post = ({
             )}
           </p>
         </div>
-   
+
         <div
           className="flex items-center justify-center flex-wrap gap-1 mbMedSmall:gap-2 mbSmall:gap-3 "
           suppressHydrationWarning
@@ -159,12 +158,12 @@ const Post = ({
         {image && (
           <div className="w-full">
             <span className="w-full h-[8rem] mbXSmall:h-[10rem] mbMedSmall:h-[12rem] mbSmall:h-[14rem] mbMedium:h-[16rem] laptop:h-[18rem] tbPortrait:h-[20rem]  inline-block relative">
-              {/* <Image
-                src={`https://directus.iotkiit.in/assets/${image}`}
+              <Image
+                src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${image}`}
                 fill
                 alt="about"
                 className="object-cover"
-              /> */}
+              />
             </span>
           </div>
         )}

@@ -33,7 +33,7 @@ export const createPost = async (data, formData) => {
     }
 
     const postResponse = await clientToken(user_token).request(
-      createItem("Post", {
+      createItem("post", {
         content: data.content,
         tag: data.tag,
         image: result || null,
@@ -57,7 +57,7 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
   try {
     const user_token = cookies().get("user_session").value;
     const result = await clientToken(user_token).request(
-      readItems("Post", {
+      readItems("post", {
         fields: [
           "id",
           "content",
@@ -68,23 +68,27 @@ export const getAllPost = async (offset, POSTS_PER_PAGE) => {
           "likes",
           {
             likesUserCollection: [
-              { directus_users_id: ["id", "first_name", "last_name", "email"] },
+              {
+                directus_users_id: ["id", "first_name", "last_name", "email"],
+              },
             ],
           },
           "share",
           {
             shareUserCollection: [
-              { directus_users_id: ["id", "first_name", "last_name", "email"] },
+              {
+                directus_users_id: ["id", "first_name", "last_name", "email"],
+              },
             ],
           },
         ],
+
         offset: parseInt(offset),
         limit: parseInt(POSTS_PER_PAGE),
       })
     );
 
     if (!result) throw new Error([{ message: "No post found" }]);
-
     return { success: true, message: "Found All Post", result: result };
   } catch (e) {
     console.error(e);
@@ -97,7 +101,7 @@ export const getPostById = async (data) => {
     const user_token = cookies().get("user_session").value;
     "data:", data;
     const result = await clientToken(user_token).request(
-      readItem("Post", data.id, {
+      readItem("post", data.id, {
         likesUserCollection: data.likedBy,
       })
     );
@@ -114,7 +118,7 @@ export const updatePost = async (data) => {
     const user_token = cookies().get("user_session").value;
     data = JSON.parse(data);
     const result = await clientToken(user_token).request(
-      updateItem("Post", data.id, {
+      updateItem("post", data.id, {
         content: data.content,
         tag: data.tag,
         likes: data.likes,
@@ -136,7 +140,7 @@ export const updateLikes = async (data) => {
     data = JSON.parse(data);
 
     const post = await clientToken(user_token).request(
-      readItem("Post", data.id, {
+      readItem("post", data.id, {
         fields: [
           {
             likesUserCollection: [
@@ -155,7 +159,7 @@ export const updateLikes = async (data) => {
     else likedBy = likedBy.filter((user) => user !== data.userID);
 
     const result = await clientToken(user_token).request(
-      updateItem("Post", data.id, {
+      updateItem("post", data.id, {
         likesUserCollection: likedBy.map((userId) => ({
           directus_users_id: { id: userId },
           Post_id: { id: data.id },
@@ -183,7 +187,7 @@ export const updateShare = async (data) => {
       })
     );
     const post = await clientToken(user_token).request(
-      readItem("Post", data.id, {
+      readItem("post", data.id, {
         fields: [
           {
             shareUserCollection: [
@@ -203,7 +207,7 @@ export const updateShare = async (data) => {
     }
 
     const result = await clientToken(user_token).request(
-      updateItem("Post", data.id, {
+      updateItem("post", data.id, {
         share: existingShareUsers.length,
         shareUserCollection: existingShareUsers.map((user) => ({
           directus_users_id: { id: user.id },
