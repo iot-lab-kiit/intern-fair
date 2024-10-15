@@ -215,8 +215,7 @@ const CommunitySection = () => {
                   type="text"
                   placeholder="Search"
                   onChange={handleSearchQuery}
-                  className="pl-10 w-full border-[1.5px] border-[#DCDCE7] rounded-full py-2.5 outline-none"
-                />
+                  className="pl-10 max-w-[500px] w-full border-[1.5px] border-[#DCDCE7] rounded-full py-2.5 outline-none transition-all duration-200 focus:ring-2 focus:ring-blue-400 focus:border-transparent shadow-sm mx-auto"/>
               </div>
             </div>
 
