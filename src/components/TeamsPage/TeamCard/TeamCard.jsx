@@ -1,65 +1,63 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { icons } from "@/data/TeamsPage/PeopleData";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const TeamCard = ({ person }) => {
-  const [hoveredIcon, setHoveredIcon] = useState(null);
-
-  const handleMouseEnter = (icon) => {
-    setHoveredIcon(icon);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredIcon(null);
-  };
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="border-[#DCDCE7] hover:border-[#1F3DD9] transition-all border-2 rounded-xl h-[15rem] w-[12rem] mbMedSmall:h-[18rem] mbMedSmall:w-[13rem] mbSmall:h-[20rem] mbSmall:w-[15rem] mbMedium:h-[23rem] mbMedium:w-[18rem] tbPortrait:h-[25rem] tbPortrait:w-[15rem] min-[1440px]:h-[28rem] min-[1440px]:w-[15rem] p-3.5 flex flex-col items-center justify-start gap-3 mbMedium:gap-4">
-      <div className="h-[85%] w-full relative">
+    <motion.div
+      className="bg-white rounded-2xl w-72 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      whileHover={{ scale: 1.05 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+    >
+      <div className="aspect-square relative overflow-hidden">
         <Image
           src={person.img}
           fill
-          alt="img"
-          className="rounded-xl aspect-video object-cover"
+          alt={`${person.name}'s photo`}
+          className="object-cover transition-transform duration-300 ease-in-out"
+          style={{ transform: isHovered ? "scale(1.1)" : "scale(1)" }}
+        />
+        <div
+          className={`absolute inset-0 bg-gradient-to-t from-black/70 to-transparent transition-opacity duration-300 ${
+            isHovered ? "opacity-100" : "opacity-0"
+          }`}
         />
       </div>
-      <h1 className="text-[1.1rem] mbSmall:text-[1.2rem] tbPortrait:text-2xl tbLandscape:text-3xl font-bold text-[#081245]">
-        {person.name}
-      </h1>
-      <div className="flex items-center justify-center gap-5 w-full">
-        {icons.map((icon) => (
-          <a
-            key={icon.id}
-            href={icon.id === "github" ? person.githubUrl : person.linkedinUrl}
+      <div className="p-6 flex flex-col items-center gap-4 relative">
+        <h1 className="text-2xl font-bold text-[#081245]">{person.name}</h1>
+        <p className="text-gray-600 text-center">{person.role}</p>
+        <div className="flex items-center justify-center gap-6 w-full">
+          <motion.a
+            href={person.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onMouseEnter={() => handleMouseEnter(icon.id)}
-            onMouseLeave={handleMouseLeave}
+            className="text-gray-600 hover:text-[#181717]"
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
           >
-            {hoveredIcon === icon.id ? (
-              <Image
-                src={icon.hoverSrc}
-                width={20}
-                height={20}
-                alt={`${icon.id}-icon`}
-                className="w-[1.75rem] h-[1.75rem] mbMedium:w-[2.1rem] mbMedium:h-[2.1rem] tbPortrait:w-[2.35rem] tbPortrait:h-[2.35rem] cursor-pointer"
-              />
-            ) : (
-              <div className="rounded-full border-[#9E9EA9] p-1.5 mbMedium:p-2 flex items-center justify-center border-[1.5px] relative">
-                <Image
-                  src={icon.defaultSrc}
-                  width={20}
-                  height={20}
-                  alt={`${icon.id}-icon`}
-                  className="w-3 h-3 mbMedium:w-4 mbMedium:h-4 tbPortrait:w-5 tbPortrait:h-5 cursor-pointer"
-                />
-              </div>
-            )}
-          </a>
-        ))}
+            <FaGithub size={30} />
+          </motion.a>
+          <motion.a
+            href={person.linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-600 hover:text-[#0A66C2]"
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <FaLinkedin size={30} />
+          </motion.a>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -59,16 +59,3 @@ export const people = [
     linkedinUrl: "https://www.linkedin.com/in/aryan-krishna-b1a7521b0/",
   },
 ];
-
-export const icons = [
-  {
-    id: "github",
-    defaultSrc: "/icons/github_grey.png",
-    hoverSrc: "/icons/github.png",
-  },
-  {
-    id: "linkedin",
-    defaultSrc: "/icons/linkedin_grey.png",
-    hoverSrc: "/icons/linkedin.png",
-  },
-];
