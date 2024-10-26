@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import React from "react";
 import Image from "next/image";
 import "./style.css";
+
 const Carousel = ({ data }) => {
   return (
     <Swiper
@@ -24,12 +25,14 @@ const Carousel = ({ data }) => {
     >
       {data.map((item, index) => (
         <SwiperSlide key={index}>
-          <div className="flex flex-col items-center justify-center w-[15rem] mbMini:w-[18rem] h-[20rem] mbXSmall:w-[22rem] sm:w-[40rem]  rounded-xl md:w-[46rem]   tbPortait:w-[55rem] xl:w-[60rem] lg:h-[65rem]  lg:max-h-[40rem] ">
+          {/* Aspect ratio box to prevent any stretching */}
+          <div className="relative w-full max-w-[60rem] aspect-video overflow-hidden rounded-xl flex items-center justify-center">
             <Image
-              fill
               src={item.url}
-              alt="image"
-              className="rounded-xl object-center"
+              alt="carousel image"
+              layout="fill" // Fills the container without stretching
+              className="object-cover" // Maintains aspect ratio within the box
+              priority
             />
           </div>
         </SwiperSlide>
