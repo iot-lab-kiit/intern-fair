@@ -1,34 +1,43 @@
 import Carousel from "@/components/ui/Carousel/Carousel";
 import TitleCard from "@/components/ui/TitleCard";
 import Image from "next/image";
+
 const About = ({ align1, data }) => {
   return (
-    <div
-      className="flex items-center justify-center pb-16  overflow-hidden"
-      id="about"
-    >
-      <div className="content flex flex-col mx-10 xl:ml-80 md:items-start xl:max-w-[120rem] lg: px-8">
-        <div
-          className={`flex items-center flex-col gap-10 justify-center tbPortrait:flex-row md:items-start max-h-[20rem] sm:max-h-none`}
-        >
-          <Carousel data={data.carousel1} />
-
-          <TitleCard title={data.about.title} img="/icons/us.png" />
-        </div>
-        <div
-          className={`flex flex-row justify-center xl:gap-[16rem] lg-[11rem] md:gap-4 mt-5 max-h-[12rem]`}
-        >
-          <div className="w-full text-center md:text-left xl:w-[30rem] text-sm ">
-            {data.about.description}
+    <div className="w-full py-16 bg-white" id="about">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <div className="flex flex-col tbPortrait:flex-row gap-12 items-start">
+          <div className="w-full tbPortrait:w-3/3">
+            <div className="relative aspect-video w-full overflow-hidden rounded-xl">
+              <Carousel
+                data={data.carousel1}
+                className="h-full w-full object-cover"
+              />
+            </div>
           </div>
-          <div className="w-[40rem] h-[50rem] relative tbPortrait:bottom-[100px]  bottom-[200px] z-20 hidden md:block">
-            <Image
-              src="/images/fixedAbout.jpg"
-              width={400}
-              height={500}
-              alt="about"
-              className="object-contain"
-            />
+
+          <div className="w-full tbPortrait:w-1/3">
+            <TitleCard title={data.about.title} img="/icons/us.png" />
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col md:flex-row justify-between gap-12">
+          <div className="w-full md:w-1/2">
+            <p className="text-base text-gray-900 leading-relaxed">
+              {data.about.description}
+            </p>
+          </div>
+
+          <div className="hidden md:block w-full md:w-1/2">
+            <div className="relative aspect-video overflow-hidden rounded-xl">
+              <Image
+                src="/images/fixedAbout.jpg"
+                alt="about"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
           </div>
         </div>
       </div>
